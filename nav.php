@@ -11,16 +11,22 @@
         print '><a href="index.php">Home</a></li>';
 
         print '<li ';
-        if (PATH_PARTS['filename'] == 'subject') {
+        if (PATH_PARTS['filename'] == 'order') {
             print ' class="activePage" ';
         }
-        print '><a href="subjects.php">Subjects</a></li>';
+        print '><a href="order.php">Order</a></li>';
 
         print '<li ';
-        if (PATH_PARTS['filename'] == 'classes') {
+        if (PATH_PARTS['filename'] == 'about') {
             print ' class="activePage" ';
         }
-        print '><a href="classes.php">Classes</a></li>';
+        print '><a href="about.php">About</a></li>';
+
+        print '<li ';
+        if (PATH_PARTS['filename'] == 'menu') {
+            print ' class="activePage" ';
+        }
+        print '><a href="menu.php">Menu</a></li>';
 
 
         ?>

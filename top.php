@@ -1,19 +1,12 @@
-<?php
-
-//$phpSelf = htmlentities($_SERVER['PHP_SELF'], ENT_QUOTES, "UTF-8");
-//$path_parts = pathinfo($phpSelf);
-
- ?>	
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <!-- ######################   Page Top   ############################## -->
-
         <meta charset="utf-8">
-        <title>CS 148 Lab 5</title>
-        <meta name="author" content="Matt Zahar">
-        <meta name="description" content="Pulling data from db for Lab 5">
-        <link rel="stylesheet" href="css/lab5.css">
+        <title>Name TBD</title>
+        <meta name="author" content="Matt Zahar & Jace Laquerre">
+        <meta name="description" content="CS148 final project">
+        <link rel="stylesheet" href="css/main.css">
 
         <?php
         // %^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%
