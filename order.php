@@ -14,36 +14,74 @@ function getData($field) {
 }
 ?>
 <main>
-    <?php
-
-    //print '<p>Post Array:</p><pre>';
-    //print_r($_POST);
-    //print '</pre>';
-
-    // process from when its submitted
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $dataIsGood = true;
-    }
-    $records = '';
-    $query = "";
-    if ($thisDatabaseReader->querySecurityOk($query, 0,1,0,0,0)) {
-        $query = $thisDatabaseReader->sanitizeQuery($query, 0, 0, 1, 0, 0);
-        $records = $thisDatabaseReader->select($query, '');
-    }
-    ?>
-
     <form action = "<?php print PHP_SELF; ?>"
           id="frmOption"
           method = "get">
         <fieldset class="buttons">
-            <legend></legend>
-            <input class="button" id="btnPickup" name = "btnPickup"
-                   tabindex="900" type = "button" value = "Pickup">
-            <input class="button" id="btnDelivery" name = "btnDelivery"
-                   tabindex="900" type = "button" value = "Delivery">
+            <legend>Delivery Option</legend>
+            <input type="button" value="pickup" name="btn"/>
+            <input type="button" value="delivery" name="btn"/>
         </fieldset>
     </form>
 
+    <form action = "<?php print PHP_SELF; ?>"
+          id="frmSandwhich"
+          method = "get">
+        <fieldset class="checkbox">
+            <legend class="legend">Select Your Sandwiches</legend>
+
+            <p class="left">
+                <label class="check-field">
+                    <input
+                        id="chkBLT"
+                        name="chkBLT"
+                        tabindex="800"
+                        type="checkbox"
+                        value="blt">BLT</label>
+            </p>
+        </fieldset>
+    </form>
+    <?php
+        $option = $_GET['btn'];
+        //print '<p>Post Array:</p><pre>';
+        //print_r($_POST);
+
+        // process from when its submitted
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $dataIsGood = true;
+        }
+
+        $query = "SELECT * FROM `Sandwiches`";
+        if ($thisDatabaseReader->querySecurityOk($query, 0,0,0,0,0)) {
+            $query = $thisDatabaseReader->sanitizeQuery($query, 0, 0, 0, 0, 0);
+            $sandwiches = $thisDatabaseReader->select($query, '');
+        }
+        print '<p>Post Array:</p><pre>';
+        print_r($_POST);
+        foreach ($sandwiches as $sandwich) {
+            print '<p><input type="checkbox" id="' . $sandwich["Sandwich_Code"] . '" name="checklist[]" value="' . $sandwich["Sandwich_Code"] . '">';
+            print $sandwich["Sandwich_Name"];
+            print $sandwich["Description"];
+            $sandwich["Price"];
+            print "</input></p>";
+        }
+    ?>
+    ?>
+    <?php
+        $option = $_GET['btn'];
+    ?>
+    <!-- Start Submit button -->
+    <fieldset class="buttons">
+        <legend class="legend">Submit</legend>
+        <input
+            class="button"
+            id="btnSubmit"
+            name="btnSubmit"
+            tabindex="1500"
+            type="submit"
+            value="Submit">
+
+    </fieldset> <!-- ends submit button -->
 </main>
 <?php
 include ("footer.php");
