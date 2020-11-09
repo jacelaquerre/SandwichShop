@@ -6,7 +6,7 @@
         <title>Name TBD</title>
         <meta name="author" content="Matt Zahar & Jace Laquerre">
         <meta name="description" content="CS148 final project">
-        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/custom.css">
 
         <?php
         // %^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%

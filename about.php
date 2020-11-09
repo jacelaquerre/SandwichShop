@@ -1,10 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>About</title>
-</head>
-<body>
+<?php
+include ("top.php");
+?>
 
-</body>
-</html>
+<?php
+include ("footer.php");
+?>
