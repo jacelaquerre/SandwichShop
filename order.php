@@ -35,7 +35,7 @@ function getData($field) {
             <p>---------------</p>
                 <?php
                 print'<p>++++++++++++++</p>';
-                $query = "SELECT * FROM `Sandwiches`";
+                $query = "SELECT () FROM `Sandwiches`";
                 if ($thisDatabaseReader->querySecurityOk($query, 0,0,0,0,0)) {
                     $query = $thisDatabaseReader->sanitizeQuery($query, 0, 0, 0, 0, 0);
                     $sandwiches = $thisDatabaseReader->select($query, '');
