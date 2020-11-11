@@ -1,5 +1,5 @@
 <?php
-define('DATABASE_NAME', 'MZAHAR_Registrar-Data-2020');
+define('DATABASE_NAME', 'MZAHAR_Sandwichshop');
 define('DATABASE_READER', 'mzahar_reader');
 define('DATABASE_READER_PWD', 'r');
 define('DATABASE_WRITER_PWD', 'w');
