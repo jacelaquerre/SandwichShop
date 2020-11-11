@@ -32,7 +32,9 @@ function getData($field) {
         <fieldset class="checkbox">
             <legend class="legend">Select Your Sandwiches</legend>
             <p class="left">
+            <p>---------------</p>
                 <?php
+                print'<p>++++++++++++++</p>';
                 $query = "SELECT * FROM `Sandwiches`";
                 if ($thisDatabaseReader->querySecurityOk($query, 0,0,0,0,0)) {
                     $query = $thisDatabaseReader->sanitizeQuery($query, 0, 0, 0, 0, 0);
