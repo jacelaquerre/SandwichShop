@@ -37,9 +37,11 @@ function getData($field) {
                 if ($thisDatabaseReader->querySecurityOk($query, 0,0,0,0,0)) {
                     $query = $thisDatabaseReader->sanitizeQuery($query, 0, 0, 0, 0, 0);
                     $sandwiches = $thisDatabaseReader->select($query, '');
+                    print"<p>Passed security </p>";
                 }
-                print '<p>Post Array:</p><pre>';
-                print_r($sandwiches);
+                //print '<p>Post Array:</p><pre>';
+                //print_r($sandwiches);
+                print"<p>Reached </p>";
                 foreach ($sandwiches as $sandwich) {
                     print'<input type="button" value="-" class="minus">';
                     print '<input type="number" step="1" min="0" max="" name="quantity" 
