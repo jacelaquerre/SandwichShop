@@ -19,8 +19,10 @@ function getData($field) {
           method = "get">
         <fieldset class="buttons">
             <legend>Delivery Option</legend>
-            <input type="button" value="pickup" name="btn"/>
-            <input type="button" value="delivery" name="btn"/>
+            <input type="radio" id="delivery" name="deliveryOption" value="delivery">
+            <label for="delivery">Delivery</label>
+            <input type="radio" id="pickup" name="deliveryOption" value="pickup">
+            <label for="pickup">Pick Up</label>
         </fieldset>
     </form>
 
@@ -29,15 +31,25 @@ function getData($field) {
           method = "get">
         <fieldset class="checkbox">
             <legend class="legend">Select Your Sandwiches</legend>
-
             <p class="left">
-                <label class="check-field">
-                    <input
-                        id="chkBLT"
-                        name="chkBLT"
-                        tabindex="800"
-                        type="checkbox"
-                        value="blt">BLT</label>
+                <?php
+                $query = "SELECT * FROM `Sandwiches`";
+                if ($thisDatabaseReader->querySecurityOk($query, 0,0,0,0,0)) {
+                    $query = $thisDatabaseReader->sanitizeQuery($query, 0, 0, 0, 0, 0);
+                    $sandwiches = $thisDatabaseReader->select($query, '');
+                }
+
+                foreach ($sandwiches as $sandwich) {
+                    print'<input type="button" value="-" class="minus">';
+                    print '<input type="number" step="1" min="0" max="" name="quantity" 
+                            value="0" title="Qty" class="input-text qty text" 
+                            size="4" pattern="" inputmode="">';
+                    print '<input type="button" value="+" class="plus">';
+                    print $sandwich["Sandwich_Name"];
+                    print $sandwich["Price"];
+                    print $sandwich["Description"];
+                }
+                ?>
             </p>
         </fieldset>
     </form>
@@ -50,28 +62,15 @@ function getData($field) {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $dataIsGood = true;
         }
-
-        $query = "SELECT * FROM `Sandwiches`";
-        if ($thisDatabaseReader->querySecurityOk($query, 0,0,0,0,0)) {
-            $query = $thisDatabaseReader->sanitizeQuery($query, 0, 0, 0, 0, 0);
-            $sandwiches = $thisDatabaseReader->select($query, '');
-        }
-        print '<p>Post Array:</p><pre>';
-        print_r($_POST);
-        foreach ($sandwiches as $sandwich) {
-            print '<p><input type="checkbox" id="' . $sandwich["Sandwich_Code"] . '" name="checklist[]" value="' . $sandwich["Sandwich_Code"] . '">';
-            print $sandwich["Sandwich_Name"];
-            print $sandwich["Description"];
-            $sandwich["Price"];
-            print "</input></p>";
-        }
-
-
     ?>
     <body>
-    <div class="quantity buttons_added">
-        <input type="button" value="-" class="minus"><input type="number" step="1" min="0" max="" name="quantity" value="0" title="Qty" class="input-text qty text" size="4" pattern="" inputmode=""><input type="button" value="+" class="plus">
-    </div>
+        <p class="quantity buttons_added">
+            <input type="button" value="-" class="minus">
+            <input type="number" step="1" min="0" max="" name="quantity"
+                   value="0" title="Qty" class="input-text qty text"
+                   size="4" pattern="" inputmode="">
+            <input type="button" value="+" class="plus">
+        </p>
     </body>
     <?php
         $option = $_GET['btn'];
