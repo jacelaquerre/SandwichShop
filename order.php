@@ -38,7 +38,8 @@ function getData($field) {
                     $query = $thisDatabaseReader->sanitizeQuery($query, 0, 0, 0, 0, 0);
                     $sandwiches = $thisDatabaseReader->select($query, '');
                 }
-
+                print '<p>Post Array:</p><pre>';
+                print_r($sandwiches);
                 foreach ($sandwiches as $sandwich) {
                     print'<input type="button" value="-" class="minus">';
                     print '<input type="number" step="1" min="0" max="" name="quantity" 
@@ -77,7 +78,6 @@ function getData($field) {
     ?>
     <!-- Start Submit button -->
     <fieldset class="buttons">
-        <legend class="legend">Submit</legend>
         <input
             class="button"
             id="btnSubmit"
