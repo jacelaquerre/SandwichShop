@@ -32,24 +32,21 @@ function getData($field) {
         <fieldset class="checkbox">
             <legend class="legend">Select Your Sandwiches</legend>
             <p class="left">
-            <p>---------------</p>
                 <?php
-                print'<p>++++++++++++++</p>';
                 $query = "SELECT * FROM `Sandwiches`";
                 if ($thisDatabaseReader->querySecurityOk($query, 0,0,0,0,0)) {
                     $query = $thisDatabaseReader->sanitizeQuery($query, 0, 0, 0, 0, 0);
                     $sandwiches = $thisDatabaseReader->select($query, '');
-                    print"<p>Passed security </p>";
                 }
-                //print '<p>Post Array:</p><pre>';
-                //print_r($sandwiches);
-                print"<p>Reached </p>";
+                
                 foreach ($sandwiches as $sandwich) {
+                    print '<p class="quantity buttons_added">';
                     print'<input type="button" value="-" class="minus">';
                     print '<input type="number" step="1" min="0" max="" name="quantity" 
                             value="0" title="Qty" class="input-text qty text" 
                             size="4" pattern="" inputmode="">';
                     print '<input type="button" value="+" class="plus">';
+                    print '</p>';
                     print $sandwich["Sandwich_Name"];
                     print $sandwich["Price"];
                     print $sandwich["Description"];
