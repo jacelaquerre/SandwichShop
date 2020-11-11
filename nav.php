@@ -28,6 +28,12 @@
         }
         print '><a href="menu.php">Menu</a></li>';
 
+        print '<li ';
+        if (PATH_PARTS['filename'] == 'updateOrder') {
+            print ' class="activePage" ';
+        }
+        print '><a href="updateOrder.php">Update Order</a></li>';
+
 
         ?>
     </ul>

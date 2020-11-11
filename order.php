@@ -65,8 +65,14 @@ function getData($field) {
             $sandwich["Price"];
             print "</input></p>";
         }
+
+
     ?>
-    ?>
+    <body>
+    <div class="quantity buttons_added">
+        <input type="button" value="-" class="minus"><input type="number" step="1" min="0" max="" name="quantity" value="0" title="Qty" class="input-text qty text" size="4" pattern="" inputmode=""><input type="button" value="+" class="plus">
+    </div>
+    </body>
     <?php
         $option = $_GET['btn'];
     ?>
