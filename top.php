@@ -6,6 +6,7 @@
         <title>Name TBD</title>
         <meta name="author" content="Matt Zahar & Jace Laquerre">
         <meta name="description" content="CS148 final project">
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <script data-require="jquery@3.1.1" data-semver="3.1.1" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script src="js/quantity.js"></script>
         <link rel="stylesheet" href="css/custom2.css">
