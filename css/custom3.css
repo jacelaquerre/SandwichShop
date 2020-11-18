@@ -1,33 +1,15 @@
 body{
   background-color: lightsteelblue;
   color: black;
-}
-
-figure{
-  float: left;
-  text-align: center;
-  width: 20em;
-}
-
-img{
-  max-width: 100%;
-}
-
-body{
-  max-width: 60em;
-  line-height: 1.3em;
   padding: 1%;
   margin: auto;
 }
-
 html{
   background-color: white;
 }
-
 nav{
   text-align: center;
 }
-
 ul {
   list-style-type: none;
   margin: 0;
@@ -35,124 +17,58 @@ ul {
   overflow: hidden;
   background-color: #333;
 }
-
 li {
   float: left;
 }
-
 li a {
   display: block;
   color: white;
   text-align: center;
-  padding: 14px 16px;
   text-decoration: none;
 }
-
 li a:hover {
   background-color: #111;
 }
-
 article, section, aside, nav{
   padding: 1%;
 }
-
 table{
   clear: both;
 }
-
 form{
-  max-width: 400px;
   border: medium solid lightsteelblue;
-  background-color: white;
-  color: goldenrod;
+  background-color: ghostwhite;
+  color: black;
   padding: 1%;
   margin: auto;
 }
-
-.contact label{
-  font-size: xx-small;
-}
-fieldset{
-  border: none;
-}
-
-fieldset p{
-  margin-bottom: 1em;
-}
-
-legend {
-  padding-bottom: 0;
-  margin-bottom: 0;
-  line-height: 1;
-}
-
-label + input, label + textarea{
-  display: block;
-}
-
 input[type=text]{
   border: 0;
-  background-color: black;
-  border-bottom: medium solid goldenrod;
+  background-color: lightgrey;
+  border-bottom: medium solid black;
   width: 100%;
-  height: 2em;
-  color: goldenrod;
+  color: black;
   font-size: large;
 }
-
-select{
-  font-size: large;
-}
-
 textarea{
-  width: 100%;
-  height: 5em;
+  width: 80%;
 }
-
 .buttons{
   text-align: center
 }
-
 input[type=submit]{
-  width: 80%;
+  width: 40%;
   text-align: center;
-  font-size: 2em;
-  background-color: goldenrod;
+  background-color: lightskyblue;
   color: cornsilk;
   border-color: cornsilk;
-  border-radius: .25em
-}
-
-.grid-layout.index article{
-  display: block;
-}
-
-.grid-layout.detail article{
-  display: grid;
-  grid-template-areas:
-        "habitat information"
-        "about about";
 
 }
-
-.grid-layout .about{
-  grid-area: about;
-}
-
-.grid-layout .information{
-  grid-area: information;
-}
-
-.grid-layout .habitat{
-  grid-area: habitat;
-}
-
 /* Position nav. Move nav before header and keep it there */
 .positioning{
   display: grid;
   grid-template-areas: "nav" "header" "main" "footer";
 }
-
 .positioning header{
   grid-area: header;
 }
@@ -161,6 +77,189 @@ input[type=submit]{
   position: sticky;
   top: 0;
   width: 98%;
+}
+
+/*@media only screen and (max-width:320px)  {
+  !* smartphones, iPhone, portrait 480x320 phones *!
+  body{
+    max-width: 40em;
+    line-height: 1.3em;
+  }
+  nav{
+    font-size: .2em;
+  }
+  li a {
+    padding: 14px 16px;
+  }
+  form{
+    max-width: 400px;
+  }
+  textarea{
+    height: 5em;
+  }
+  input[type=text] {
+    height: 2em;
+  }
+  input[type=submit]{
+    font-size: 2em;
+    border-radius: .25em
+  }
+}
+@media only screen and (max-width:481px)  {
+  !* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. *!
+  body{
+    max-width: 60em;
+    line-height: 1.3em;
+  }
+  nav{
+    font-size: .2em;
+  }
+  li a {
+    padding: 14px 16px;
+  }
+  form{
+    max-width: 400px;
+  }
+  textarea{
+    height: 5em;
+  }
+  input[type=text] {
+    height: 2em;
+  }
+  input[type=submit]{
+    font-size: 2em;
+    border-radius: .25em
+  }
+}
+@media only screen and (max-width:641px)  {
+  !* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones *!
+  body{
+    max-width: 60em;
+    line-height: 1.3em;
+  }
+  nav{
+    font-size: .2em;
+  }
+  li a {
+    padding: 14px 16px;
+  }
+  form{
+    max-width: 400px;
+  }
+  textarea{
+    height: 5em;
+  }
+  input[type=text] {
+    height: 2em;
+  }
+  input[type=submit]{
+    font-size: 2em;
+    border-radius: .25em
+  }
+}
+@media only screen and (max-width:961px)  {
+  !* tablet, landscape iPad, lo-res laptops ands desktops *!
+  body{
+    max-width: 60em;
+    line-height: 1.3em;
+  }
+  nav{
+    font-size: .2em;
+  }
+  li a {
+    padding: 14px 16px;
+  }
+  form{
+    max-width: 400px;
+  }
+  textarea{
+    height: 5em;
+  }
+  input[type=text] {
+    height: 2em;
+  }
+  input[type=submit]{
+    font-size: 2em;
+    border-radius: .25em
+  }
+}*/
+@media only screen and (max-width:1025px) {
+  /* big landscape tablets, laptops, and desktops */
+  body{
+    max-width: 60em;
+    line-height: 1.3em;
+  }
+  nav{
+    font-size: .2em;
+  }
+  li a {
+    padding: 14px 16px;
+  }
+  form{
+    max-width: 400px;
+  }
+  textarea{
+    height: 5em;
+  }
+  input[type=text] {
+    height: 2em;
+  }
+  input[type=submit]{
+    font-size: 2em;
+    border-radius: .25em
+  }
+}
+@media only screen and (max-width:1281px) {
+  /* hi-res laptops and desktops */
+  body{
+    max-width: 60em;
+    line-height: 1.3em;
+  }
+  nav{
+    font-size: .2em;
+  }
+  li a {
+    padding: 14px 16px;
+  }
+  form{
+    max-width: 400px;
+  }
+  textarea{
+    height: 5em;
+  }
+  input[type=text] {
+    height: 2em;
+  }
+  input[type=submit]{
+    font-size: 2em;
+    border-radius: .25em
+  }
+}
+@media only screen and (min-width:1282px) {
+  /* hi-res laptops and desktops */
+  body{
+    max-width: 60em;
+    line-height: 1.3em;
+  }
+  nav{
+    font-size: 2em;
+  }
+  li a {
+    padding: 14px 16px;
+  }
+  form{
+    max-width: 400px;
+  }
+  textarea{
+    height: 5em;
+  }
+  input[type=text] {
+    height: 2em;
+  }
+  input[type=submit]{
+    font-size: 2em;
+    border-radius: .25em
+  }
 }
 
 .positioning nav a{
