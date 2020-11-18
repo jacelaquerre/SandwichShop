@@ -1,18 +1,10 @@
 <?php
 include ("top.php");
 
-//Sanitize function from the text
-function getData($field) {
-    if(!isset($_GET[$field])) {
-        $data = "";
-
-    } else {
-        $data = trim($_POST[$field]);
-        $data = htmlspecialchars($data);
-    }
-    return $data;
-}
+// Get URL
 $thisURL = DOMAIN . PHP_SELF;
+
+// Initialize variables
 $deliveryOption = "pickup";
 $instructions = "";
 $name = "";
@@ -23,6 +15,7 @@ $town = "";
 $state = "";
 $zipcode = "";
 
+// Initialize error flags
 $deliveryOptionError = false;
 $instructionsError = false;
 $nameError = false;
@@ -32,11 +25,6 @@ $streetError = false;
 $townError = false;
 $stateError = false;
 $zipcodeError = false;
-
-
-//%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%
-//
-// misc variables
 
 $errorMsg = array();
 
@@ -220,7 +208,7 @@ if (isset($_POST["btnSubmit"]) AND empty($errorMsg)) { //closing if marked with:
     print '<p> To: ' . $email . '</p>';
 
     print $message;
-} else {
+    } else {
     print '';
 
     //#########################################################################
@@ -243,7 +231,7 @@ if (isset($_POST["btnSubmit"]) AND empty($errorMsg)) { //closing if marked with:
     <main>
         <form action = "<?php print PHP_SELF; ?>"
               id="frmOption"
-              method = "post">
+              method = "get">
             <fieldset class="deliveryOption">
                 <legend>Delivery Option</legend>
                 <input type="radio" id="pickup" name="deliveryOption" value="pickup">
@@ -319,7 +307,9 @@ if (isset($_POST["btnSubmit"]) AND empty($errorMsg)) { //closing if marked with:
         </form>
 
         <!-- Start Submit button -->
-        <form>
+        <form action = "<?php print PHP_SELF; ?>"
+              id="frmSubmit"
+              method = "post">
             <fieldset class="buttons">
                 <input
                     class="button"
