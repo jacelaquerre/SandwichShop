@@ -202,7 +202,11 @@ if (isset($_POST["btnSubmit"])) {
         $mailed = sendMail($to, $cc, $bcc, $from, $subject, $message);
     } // end if form is valid
 } // ends if from was submitted
+?>
 
+<article id="main">
+
+<?php
 if (isset($_POST["btnSubmit"]) AND empty($errorMsg)) { //closing if marked with: end body submit
     print '<h2>Thank you for providing your information.</h2>';
 
@@ -313,21 +317,24 @@ if (isset($_POST["btnSubmit"]) AND empty($errorMsg)) { //closing if marked with:
             </fieldset>
 
         </form>
-        <!-- Start Submit button -->
-        <fieldset class="buttons">
-            <input
-                class="button"
-                id="btnSubmit"
-                name="btnSubmit"
-                tabindex="1500"
-                type="submit"
-                value="Submit">
 
-        </fieldset> <!-- ends submit button -->
+        <!-- Start Submit button -->
+        <form>
+            <fieldset class="buttons">
+                <input
+                    class="button"
+                    id="btnSubmit"
+                    name="btnSubmit"
+                    tabindex="1500"
+                    type="submit"
+                    value="Submit">
+            </fieldset> <!-- ends submit button -->
+        </form>
     </main>
     <?php
-} //end body submit
-?>
+    } //end body submit
+    ?>
+</article>
 <?php
 include ("footer.php");
 ?>
