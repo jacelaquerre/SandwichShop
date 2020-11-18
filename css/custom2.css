@@ -51,7 +51,7 @@ input[type=text]{
   font-size: large;
 }
 textarea{
-  width: 100%;
+  width: 80%;
 }
 .buttons{
   text-align: center
@@ -79,14 +79,14 @@ input[type=submit]{
   width: 98%;
 }
 
-@media only screen and (max-width:320px)  {
-  /* smartphones, iPhone, portrait 480x320 phones */
+/*@media only screen and (max-width:320px)  {
+  !* smartphones, iPhone, portrait 480x320 phones *!
   body{
     max-width: 40em;
     line-height: 1.3em;
   }
   nav{
-    font-size: 2%;
+    font-size: .2em;
   }
   li a {
     padding: 14px 16px;
@@ -106,13 +106,13 @@ input[type=submit]{
   }
 }
 @media only screen and (max-width:481px)  {
-  /* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */
+  !* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. *!
   body{
     max-width: 60em;
     line-height: 1.3em;
   }
   nav{
-    font-size: 2%;
+    font-size: .2em;
   }
   li a {
     padding: 14px 16px;
@@ -132,13 +132,13 @@ input[type=submit]{
   }
 }
 @media only screen and (max-width:641px)  {
-  /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */
+  !* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones *!
   body{
     max-width: 60em;
     line-height: 1.3em;
   }
   nav{
-    font-size: 2em;
+    font-size: .2em;
   }
   li a {
     padding: 14px 16px;
@@ -158,13 +158,13 @@ input[type=submit]{
   }
 }
 @media only screen and (max-width:961px)  {
-  /* tablet, landscape iPad, lo-res laptops ands desktops */
+  !* tablet, landscape iPad, lo-res laptops ands desktops *!
   body{
     max-width: 60em;
     line-height: 1.3em;
   }
   nav{
-    font-size: 2em;
+    font-size: .2em;
   }
   li a {
     padding: 14px 16px;
@@ -182,7 +182,7 @@ input[type=submit]{
     font-size: 2em;
     border-radius: .25em
   }
-}
+}*/
 @media only screen and (max-width:1025px) {
   /* big landscape tablets, laptops, and desktops */
   body{
@@ -190,7 +190,7 @@ input[type=submit]{
     line-height: 1.3em;
   }
   nav{
-    font-size: 2em;
+    font-size: .2em;
   }
   li a {
     padding: 14px 16px;
@@ -216,7 +216,7 @@ input[type=submit]{
     line-height: 1.3em;
   }
   nav{
-    font-size: 2em;
+    font-size: .2em;
   }
   li a {
     padding: 14px 16px;
