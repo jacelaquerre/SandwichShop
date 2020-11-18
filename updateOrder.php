@@ -6,9 +6,9 @@ include ("top.php");
           id="frmOption"
           method = "post">
         <fieldset class="contact">
-            <label for="name">Order #</label>
-            <input type="text" id="order" name="order">
-        </fieldset>    
+            <label for="order">Order #</label>
+            </label><input type="text" id="order" name="order">
+        </fieldset>
     </form>
 
 </main>
