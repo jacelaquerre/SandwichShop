@@ -6,17 +6,17 @@ include ("top.php");
     <div class="slideshow-container">
         <div class="mySlides fade">
             <div class="numbertext"></div>
-            <img src="https://i.postimg.cc/hGJjmWhX/sandwhich-1.jpg" alt="" style="width:50%"/>
+            <img src="https://i.postimg.cc/N0QDGD0C/sandwhich-1-1.jpg" alt="" style="width:50%"/>
         </div>
 
         <div class="mySlides fade">
             <div class="numbertext"></div>
-            <img src="https://i.postimg.cc/KzB89PPF/sandwhich-2.jpg" alt="" style="width:50%"/>
+            <img src="https://i.postimg.cc/RFFTK0Kc/sandwhich-2-1.jpg" alt="" style="width:50%"/>
         </div>
 
         <div class="mySlides fade">
             <div class="numbertext"></div>
-            <img src="https://i.postimg.cc/rsTF7Dj4/sandwhich-3.jpg" alt="" style="width:50%"/>
+            <img src="https://i.postimg.cc/mrVwP9zL/sandwhich-3-1.jpg" alt="" style="width:50%"/>
         </div>
 
         <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
