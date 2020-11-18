@@ -27,16 +27,6 @@ $deliveryOption = "pickup";
             <label for="delivery">Delivery</label>
         </fieldset>
     </form>
-    <H3>Result:- <span class="result"><?php echo $deliveryOption; ?></span></h3>
-
-    <script>
-        $('input[type=radio]').click(function(e) {//jQuery works on clicking radio box
-            var deliveryOption = $(this).val(); //Get the clicked checkbox value
-            $('.result').html(deliveryOption);
-        });
-    </script>
-
-
 
     <form action = "<?php print PHP_SELF; ?>"
           id="frmSandwhich"
@@ -90,28 +80,17 @@ $deliveryOption = "pickup";
             <input type="text" id="email" name="email">
         </fieldset>
 
-        <?php
-            //print '<p>Post Array:</p><pre>';
-            //print_r($_POST);
-            print'<H3>Result:- <span class="result"><?php echo $deliveryOption; ?></span></h3>';
-            if ($deliveryOption == "delivery") {
-                print '<p>reached if statement</p>';
-                print '<fieldset class="address">';
-                print '<label for="street">Street Address</label>';
-                print '<input type="text" id="street" name="street">';
-                print '<label for="town">Town</label>';
-                print '<input type="text" id="town" name="town">';
-                print '<label for="state">State</label>';
-                print '<input type="text" id="state" name="state">';
-                print '<label for="zip">Zip Code</label>';
-                print '<input type="text" id="zip" name="zip">';
-                print '</fieldset>';
-            }
-            // process from when its submitted
-            if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                $dataIsGood = true;
-            }
-        ?>
+        <fieldset class="address">
+        <label for="street">Street Address</label>
+        <input type="text" id="street" name="street">
+        <label for="town">Town</label>
+        <input type="text" id="town" name="town">
+        <label for="state">State</label>
+        <input type="text" id="state" name="state">
+        <label for="zip">Zip Code</label>
+        <input type="text" id="zip" name="zip">
+        </fieldset>
+
     </form>
     <!-- Start Submit button -->
     <fieldset class="buttons">
