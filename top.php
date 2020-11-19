@@ -18,8 +18,10 @@
         // %^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%
         print '<!-- begin including libraries -->';
 
-        include 'lib/constants.php';
-
+        include LIB_PATH . '/constants.php';
+        include LIB_PATH . '/security.php';
+        include LIB_PATH . '/mail-message.php';
+        include LIB_PATH . '/validation-functions.php';
         include LIB_PATH . '/Connect-With-Database.php';
 
         print '<!-- libraries complete-->';

@@ -1,5 +1,6 @@
 <?php
 include ("top.php");
+include ("security.php");
 
 // Get URL
 $thisURL = DOMAIN . PHP_SELF;
@@ -34,16 +35,16 @@ $mailed = false;
 //
 // Process for when the form is submitted
 //
-if (isset($_POST["btnSubmit"])) {
-
+print_r($_GET);
+if (isset($_GET["btnSubmit"])) {
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     //
     // Security
     //
-    if (!securityCheck($thisURL)) {
+    if (securityCheck($thisURL)) {
         $msg = '<p>Sorry you cannot access this page. ';
         $msg .= 'Security breach detected and reported.</p>';
-        die($msg);
+        print($msg);
     }
 
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -58,6 +59,7 @@ if (isset($_POST["btnSubmit"])) {
     //eliminate every char except 0-9
     $phone = preg_replace("/[^0-9]/", '', $phone);
     //eliminate leading 1 if its there
+
     if (strlen($phone) == 11) {
         $phone = preg_replace("/^1/", '', $phone);
     }
@@ -143,11 +145,13 @@ if (isset($_POST["btnSubmit"])) {
         $zipcodeError = true;
     }
 
+    print_r($errorMsg);
+
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     //
     // Process Form - Passed Validation
     //
-    if (!$errorMsg) {
+    if (empty($errorMsg)) {
         //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         //
         // Save Data
@@ -195,7 +199,7 @@ if (isset($_POST["btnSubmit"])) {
 <article id="main">
 
 <?php
-if (isset($_POST["btnSubmit"]) AND empty($errorMsg)) { //closing if marked with: end body submit
+if (isset($_GET["btnSubmit"]) AND empty($errorMsg)) { //closing if marked with: end body submit
     print '<h2>Thank you for providing your information.</h2>';
 
     print '<p>For your records a copy of this data has ';
@@ -239,11 +243,7 @@ if (isset($_POST["btnSubmit"]) AND empty($errorMsg)) { //closing if marked with:
                 <input type="radio" id="delivery" name="deliveryOption" value="delivery">
                 <label for="delivery">Delivery</label>
             </fieldset>
-        </form>
 
-        <form action = "<?php print PHP_SELF; ?>"
-              id="frmSandwhich"
-              method = "get">
             <fieldset class="checkbox">
                 <legend class="legend">Select Your Sandwiches</legend>
                 <p class="left">
@@ -271,19 +271,12 @@ if (isset($_POST["btnSubmit"]) AND empty($errorMsg)) { //closing if marked with:
                     ?>
                 </p>
             </fieldset>
-        </form>
-        <form action = "<?php print PHP_SELF; ?>"
-              id="frmInstructions"
-              method = "get">
+
             <fieldset class="instructions">
                 <label for="instructions">Please List Any Additional Instructions</label>
                 <input type="text" id="instructions" name="instructions">
             </fieldset>
-        </form>
 
-        <form action = "<?php print PHP_SELF; ?>"
-              id="frmContact"
-              method = "get">
             <fieldset class="contact">
                 <label for="name">Name</label>
                 <input type="text" id="name" name="name">
@@ -304,12 +297,8 @@ if (isset($_POST["btnSubmit"]) AND empty($errorMsg)) { //closing if marked with:
             <input type="text" id="zip" name="zip">
             </fieldset>
 
-        </form>
-
         <!-- Start Submit button -->
-        <form action = "<?php print PHP_SELF; ?>"
-              id="frmSubmit"
-              method = "post">
+
             <fieldset class="buttons">
                 <input
                     class="button"
