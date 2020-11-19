@@ -18,11 +18,7 @@ include ("top.php");
             <div class="numbertext"></div>
             <img src="https://i.postimg.cc/mrVwP9zL/sandwhich-3-1.jpg" alt="" style="width:50%"/>
         </div>
-
-        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-        <a class="next" onclick="plusSlides(1)">&#10095;</a>
     </div>
-    <br>
 
     <div style="text-align:center">
         <span class="dot" onclick="currentSlide(1)"></span>

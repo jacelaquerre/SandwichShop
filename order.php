@@ -1,18 +1,10 @@
 <?php
 include ("top.php");
 
-//Sanitize function from the text
-function getData($field) {
-    if(!isset($_GET[$field])) {
-        $data = "";
-
-    } else {
-        $data = trim($_POST[$field]);
-        $data = htmlspecialchars($data);
-    }
-    return $data;
-}
+// Get URL
 $thisURL = DOMAIN . PHP_SELF;
+
+// Initialize variables
 $deliveryOption = "pickup";
 $instructions = "";
 $name = "";
@@ -23,6 +15,7 @@ $town = "";
 $state = "";
 $zipcode = "";
 
+// Initialize error flags
 $deliveryOptionError = false;
 $instructionsError = false;
 $nameError = false;
@@ -33,14 +26,7 @@ $townError = false;
 $stateError = false;
 $zipcodeError = false;
 
-
-//%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%
-//
-// misc variables
-
 $errorMsg = array();
-
-$dataRecord = array();
 
 $mailed = false;
 
@@ -48,7 +34,7 @@ $mailed = false;
 //
 // Process for when the form is submitted
 //
-if (isset($_GET["btnSubmit"])) {
+if (isset($_POST["btnSubmit"])) {
 
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     //
@@ -174,7 +160,7 @@ if (isset($_GET["btnSubmit"])) {
         //
         $message = '<h2>Your information:</h2>';
 
-        foreach ($_POST as $htmlName => $value) {
+        foreach ($_GET as $htmlName => $value) {
 
             $message .= '<p>';
 
@@ -204,8 +190,12 @@ if (isset($_GET["btnSubmit"])) {
         $mailed = sendMail($to, $cc, $bcc, $from, $subject, $message);
     } // end if form is valid
 } // ends if from was submitted
+?>
 
-if (isset($_GET["btnSubmit"]) AND empty($errorMsg)) { //closing if marked with: end body submit
+<article id="main">
+
+<?php
+if (isset($_POST["btnSubmit"]) AND empty($errorMsg)) { //closing if marked with: end body submit
     print '<h2>Thank you for providing your information.</h2>';
 
     print '<p>For your records a copy of this data has ';
@@ -218,7 +208,7 @@ if (isset($_GET["btnSubmit"]) AND empty($errorMsg)) { //closing if marked with: 
     print '<p> To: ' . $email . '</p>';
 
     print $message;
-} else {
+    } else {
     print '';
 
     //#########################################################################
@@ -237,97 +227,104 @@ if (isset($_GET["btnSubmit"]) AND empty($errorMsg)) { //closing if marked with: 
         print '</ol>' . PHP_EOL;
         print '</div>' . PHP_EOL;
     }
-}
-?>
-<main>
-    <form action = "<?php print PHP_SELF; ?>"
-          id="frmOption"
-          method = "post">
-        <fieldset class="deliveryOption">
-            <legend>Delivery Option</legend>
-            <input type="radio" id="pickup" name="deliveryOption" value="pickup">
-            <label for="pickup">Pick Up</label>
-            <input type="radio" id="delivery" name="deliveryOption" value="delivery">
-            <label for="delivery">Delivery</label>
-        </fieldset>
-    </form>
+    ?>
+    <main>
+        <form action = "<?php print PHP_SELF; ?>"
+              id="frmOption"
+              method = "get">
+            <fieldset class="deliveryOption">
+                <legend>Delivery Option</legend>
+                <input type="radio" id="pickup" name="deliveryOption" value="pickup">
+                <label for="pickup">Pick Up</label>
+                <input type="radio" id="delivery" name="deliveryOption" value="delivery">
+                <label for="delivery">Delivery</label>
+            </fieldset>
+        </form>
 
-    <form action = "<?php print PHP_SELF; ?>"
-          id="frmSandwhich"
-          method = "get">
-        <fieldset class="checkbox">
-            <legend class="legend">Select Your Sandwiches</legend>
-            <p class="left">
-                <?php
-                $query = "SELECT * FROM `Sandwiches`";
-                if ($thisDatabaseReader->querySecurityOk($query, 0,0,0,0,0)) {
-                    $query = $thisDatabaseReader->sanitizeQuery($query, 0, 0, 0, 0, 0);
-                    $sandwiches = $thisDatabaseReader->select($query, '');
-                }
+        <form action = "<?php print PHP_SELF; ?>"
+              id="frmSandwhich"
+              method = "get">
+            <fieldset class="checkbox">
+                <legend class="legend">Select Your Sandwiches</legend>
+                <p class="left">
+                    <?php
+                    $query = "SELECT * FROM `Sandwiches`";
+                    if ($thisDatabaseReader->querySecurityOk($query, 0,0,0,0,0)) {
+                        $query = $thisDatabaseReader->sanitizeQuery($query, 0, 0, 0, 0, 0);
+                        $sandwiches = $thisDatabaseReader->select($query, '');
+                    }
 
-                foreach ($sandwiches as $sandwich) {
-                    print '<p class="quantity buttons_added">';
-                    print'<input type="button" value="-" class="minus">';
-                    print '<input type="number" step="1" min="0" max="" name="quantity" 
-                            value="0" title="Qty" class="input-text qty text" 
-                            size="4" pattern="" inputmode="">';
-                    print '<input type="button" value="+" class="plus">';
-                    print $sandwich["Sandwich_Name"]. "     ";
-                    $english_format_money = "$" . number_format($sandwich["Price"], 2, '.', ',');
-                    print $english_format_money;
-                    print $sandwich["Description"];
-                    print '</p>';
+                    foreach ($sandwiches as $sandwich) {
+                        print '<p class="quantity buttons_added">';
+                        print'<input type="button" value="-" class="minus">';
+                        print '<input type="number" step="1" min="0" max="" name="quantity" 
+                                value="0" title="Qty" class="input-text qty text" 
+                                size="4" pattern="" inputmode="">';
+                        print '<input type="button" value="+" class="plus">';
+                        print $sandwich["Sandwich_Name"]. "     ";
+                        $english_format_money = "$" . number_format($sandwich["Price"], 2, '.', ',');
+                        print $english_format_money;
+                        print $sandwich["Description"];
+                        print '</p>';
 
-                }
-                ?>
-            </p>
-        </fieldset>
-    </form>
-    <form action = "<?php print PHP_SELF; ?>"
-          id="frmInstructions"
-          method = "get">
-        <fieldset class="instructions">
-            <label for="instructions">Please List Any Additional Instructions</label>
-            <input type="text" id="instructions" name="instructions">
-        </fieldset>
-    </form>
+                    }
+                    ?>
+                </p>
+            </fieldset>
+        </form>
+        <form action = "<?php print PHP_SELF; ?>"
+              id="frmInstructions"
+              method = "get">
+            <fieldset class="instructions">
+                <label for="instructions">Please List Any Additional Instructions</label>
+                <input type="text" id="instructions" name="instructions">
+            </fieldset>
+        </form>
 
-    <form action = "<?php print PHP_SELF; ?>"
-          id="frmContact"
-          method = "get">
-        <fieldset class="contact">
-            <label for="name">Name</label>
-            <input type="text" id="name" name="name">
-            <label for="email">Email</label>
-            <input type="text" id="email" name="email">
-            <label for="phone">Phone #</label>
-            <input type="text" id="phone" name="phone">
-        </fieldset>
+        <form action = "<?php print PHP_SELF; ?>"
+              id="frmContact"
+              method = "get">
+            <fieldset class="contact">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name">
+                <label for="email">Email</label>
+                <input type="text" id="email" name="email">
+                <label for="phone">Phone #</label>
+                <input type="text" id="phone" name="phone">
+            </fieldset>
 
-        <fieldset class="address">
-        <label for="street">Street Address</label>
-        <input type="text" id="street" name="street">
-        <label for="town">Town</label>
-        <input type="text" id="town" name="town">
-        <label for="state">State</label>
-        <input type="text" id="state" name="state">
-        <label for="zip">Zip Code</label>
-        <input type="text" id="zip" name="zip">
-        </fieldset>
+            <fieldset class="address">
+            <label for="street">Street Address</label>
+            <input type="text" id="street" name="street">
+            <label for="town">Town</label>
+            <input type="text" id="town" name="town">
+            <label for="state">State</label>
+            <input type="text" id="state" name="state">
+            <label for="zip">Zip Code</label>
+            <input type="text" id="zip" name="zip">
+            </fieldset>
 
-    </form>
-    <!-- Start Submit button -->
-    <fieldset class="buttons">
-        <input
-            class="button"
-            id="btnSubmit"
-            name="btnSubmit"
-            tabindex="1500"
-            type="submit"
-            value="Submit">
+        </form>
 
-    </fieldset> <!-- ends submit button -->
-</main>
+        <!-- Start Submit button -->
+        <form action = "<?php print PHP_SELF; ?>"
+              id="frmSubmit"
+              method = "post">
+            <fieldset class="buttons">
+                <input
+                    class="button"
+                    id="btnSubmit"
+                    name="btnSubmit"
+                    tabindex="1500"
+                    type="submit"
+                    value="Submit">
+            </fieldset> <!-- ends submit button -->
+        </form>
+    </main>
+    <?php
+    } //end body submit
+    ?>
+</article>
 <?php
 include ("footer.php");
 ?>

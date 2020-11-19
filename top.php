@@ -8,7 +8,7 @@
         <meta name="description" content="CS148 final project">
         <script data-require="jquery@3.1.1" data-semver="3.1.1" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script src="js/quantity.js"></script>
-        <link rel="stylesheet" href="css/custom3.css">
+        <link rel="stylesheet" href="css/custom4.css">
 
         <?php
         // %^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%
