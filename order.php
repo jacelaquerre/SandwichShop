@@ -1,6 +1,5 @@
 <?php
 include ("top.php");
-include ("security.php");
 
 // Get URL
 $thisURL = DOMAIN . PHP_SELF;
@@ -35,7 +34,6 @@ $mailed = false;
 //
 // Process for when the form is submitted
 //
-print_r($_GET);
 if (isset($_GET["btnSubmit"])) {
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     //
@@ -145,8 +143,6 @@ if (isset($_GET["btnSubmit"])) {
         #$zipcodeError = false;
     }
 
-    print_r($errorMsg);
-
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     //
     // Process Form - Passed Validation
@@ -183,10 +179,10 @@ if (isset($_GET["btnSubmit"])) {
         //
 
         $to = $email; // the person who filled out the form
-        $cc = '';
+        $cc = 'mzahar@uvm.edu';
         $bcc = '';
 
-        $from = 'customer.service@sandwiches.com';
+        $from = 'mzahar@uvm.edu';
 
         // subject of main should make sense to your form
         $subject = 'Your sandwiches order: ';
@@ -219,7 +215,6 @@ if (isset($_GET["btnSubmit"]) AND empty($errorMsg)) { //closing if marked with: 
     //
     // Error Messages
     //
-
     if ($errorMsg) {
         print '<div id="errors">' . PHP_EOL;
         print '<h2>Your form has the following mistakes that need to be fixed.</h2>' . PHP_EOL;
@@ -248,16 +243,13 @@ if (isset($_GET["btnSubmit"]) AND empty($errorMsg)) { //closing if marked with: 
                 <legend class="legend">Select Your Sandwiches</legend>
                 <p class="left">
                     <?php
-                    print 1;
                     $query = "SELECT * FROM `Sandwiches`";
 
                     if ($thisDatabaseReader->querySecurityOk($query, 0,0,0,0,0)) {
-                        print 2;
                         $query = $thisDatabaseReader->sanitizeQuery($query, 0, 0, 0, 0, 0);
                         $sandwiches = $thisDatabaseReader->select($query, '');
                     }
 
-                    print 2;
                     foreach ($sandwiches as $sandwich) {
                         print '<p class="quantity buttons_added">';
                         print'<input type="button" value="-" class="minus">';
@@ -270,7 +262,6 @@ if (isset($_GET["btnSubmit"]) AND empty($errorMsg)) { //closing if marked with: 
                         print $english_format_money;
                         print $sandwich["Description"];
                         print '</p>';
-                        print 3;
                     }
                     ?>
                 </p>
@@ -301,8 +292,7 @@ if (isset($_GET["btnSubmit"]) AND empty($errorMsg)) { //closing if marked with: 
             <input type="text" id="zip" name="zip">
             </fieldset>
 
-        <!-- Start Submit button -->
-
+            <!-- Start Submit button -->
             <fieldset class="buttons">
                 <input
                     class="button"
@@ -311,7 +301,8 @@ if (isset($_GET["btnSubmit"]) AND empty($errorMsg)) { //closing if marked with: 
                     tabindex="1500"
                     type="submit"
                     value="Submit">
-            </fieldset> <!-- ends submit button -->
+            </fieldset>
+            <!-- ends submit button -->
         </form>
     </main>
     <?php

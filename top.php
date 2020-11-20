@@ -35,4 +35,3 @@
         print PHP_EOL;
         include("nav.php");
     ?>
-

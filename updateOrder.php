@@ -10,7 +10,6 @@ include ("top.php");
             </label><input type="text" id="order" name="order">
         </fieldset>
     </form>
-
 </main>
 <?php
 include ("footer.php");

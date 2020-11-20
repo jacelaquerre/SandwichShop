@@ -193,7 +193,7 @@ input[type=submit]{
     padding: 14px 16px;
   }
   form{
-    max-width: 400px;
+    max-width: 600px;
   }
   textarea{
     height: 5em;
@@ -223,7 +223,7 @@ input[type=submit]{
     padding: 14px 16px;
   }
   form{
-    max-width: 400px;
+    max-width: 600px;
   }
   textarea{
     height: 5em;
@@ -253,7 +253,7 @@ input[type=submit]{
     padding: 14px 16px;
   }
   form{
-    max-width: 400px;
+    max-width: 600px;
   }
   textarea{
     height: 5em;
@@ -310,7 +310,6 @@ Quantity buttons
 Code taken from: https://embed.plnkr.co/B5waxZ/
  */
 /* -- quantity box -- */
-
 .quantity {
   display: inline-block; }
 
