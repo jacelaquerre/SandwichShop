@@ -92,14 +92,14 @@ if (isset($_GET["btnSubmit"])) {
     }
 
     foreach ($dict as $quantity) {
-        if (!verifyAlphaNum($quantity)) {
-            $errorMsg[] = "Your sandwich quantity values appear to be incorrect.";
-            $quantityError = true;
-        }
-        if ($quantity < 0) {
-            $errorMsg[] = "Your sandwich quantity values cannot be negative.";
-            $quantityError = true;
-        }
+//        if (!verifyAlphaNum($quantity)) {
+//            $errorMsg[] = "Your sandwich quantity values appear to be incorrect.";
+//            $quantityError = true;
+//        }
+//        if ($quantity < 0) {
+//            $errorMsg[] = "Your sandwich quantity values cannot be negative.";
+//            $quantityError = true;
+//        }
     }
 
     if ($instructions != "") {
