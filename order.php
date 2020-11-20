@@ -251,7 +251,7 @@ if (isset($_GET["btnSubmit"]) AND empty($errorMsg)) { //closing if marked with: 
                     }
 
                     foreach ($sandwiches as $sandwich) {
-                        print '<p class="quantity buttons_added">';
+                        print '<section class="quantity buttons_added">';
                         print'<input type="button" value="-" class="minus">';
                         print '<input type="number" step="1" min="0" max="" name="quantity" 
                                 value="0" title="Qty" class="input-text qty text" 
@@ -259,9 +259,9 @@ if (isset($_GET["btnSubmit"]) AND empty($errorMsg)) { //closing if marked with: 
                         print '<input type="button" value="+" class="plus">';
                         print $sandwich["Sandwich_Name"]. "     ";
                         $english_format_money = "$" . number_format($sandwich["Price"], 2, '.', ',');
-                        //print $english_format_money;
+                        print $english_format_money;
                         //print $sandwich["Description"];
-                        print '</p>';
+                        print '</section>';
                     }
                     ?>
                 </p>
