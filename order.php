@@ -92,7 +92,7 @@ if (isset($_GET["btnSubmit"])) {
     }
 
     foreach ($dict as $quantity) {
-        if (!verifyNumeric($quantity)) {
+        if (!verifyAlphaNum($quantity)) {
             $errorMsg[] = "Your sandwich quantity values appear to be incorrect.";
             $quantityError = true;
         }
@@ -166,8 +166,8 @@ if (isset($_GET["btnSubmit"])) {
     }
 
     if (!(preg_match('#[0-9]{5}#', $zipcode))) {
-        $errorMsg[] = 'Your zipcode appears to be incorrect.';
-        $zipcodeError = false;
+        //$errorMsg[] = 'Your zipcode appears to be incorrect.';
+        //$zipcodeError = false;
     }
 
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
