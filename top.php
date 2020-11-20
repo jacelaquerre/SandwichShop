@@ -3,7 +3,7 @@
     <head>
         <!-- ######################   Page Top   ############################## -->
         <meta charset="utf-8">
-        <title>Name TBD</title>
+        <title>Bob;s Sandwiches</title>
         <meta name="author" content="Matt Zahar & Jace Laquerre">
         <meta name="description" content="CS148 final project">
         <script data-require="jquery@3.1.1" data-semver="3.1.1" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>

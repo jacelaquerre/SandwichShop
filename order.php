@@ -259,8 +259,8 @@ if (isset($_GET["btnSubmit"]) AND empty($errorMsg)) { //closing if marked with: 
                         print '<input type="button" value="+" class="plus">';
                         print $sandwich["Sandwich_Name"]. "     ";
                         $english_format_money = "$" . number_format($sandwich["Price"], 2, '.', ',');
-                        print $english_format_money;
-                        print $sandwich["Description"];
+                        //print $english_format_money;
+                        //print $sandwich["Description"];
                         print '</p>';
                     }
                     ?>
