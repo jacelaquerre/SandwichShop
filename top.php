@@ -18,7 +18,7 @@
         // %^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%
         print '<!-- begin including libraries -->';
 
-        include LIB_PATH . '/constants.php';
+        include 'lib/constants.php';
         include LIB_PATH . '/security.php';
         include LIB_PATH . '/mail-message.php';
         include LIB_PATH . '/validation-functions.php';

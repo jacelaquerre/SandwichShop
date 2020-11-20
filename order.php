@@ -141,8 +141,8 @@ if (isset($_GET["btnSubmit"])) {
     }
 
     if (!(preg_match('#[0-9]{5}#', $zipcode))) {
-        $errorMsg[] = 'Your zipcode appears to be incorrect.';
-        $zipcodeError = true;
+        //$errorMsg[] = 'Your zipcode appears to be incorrect.';
+        #$zipcodeError = false;
     }
 
     print_r($errorMsg);
@@ -168,7 +168,7 @@ if (isset($_GET["btnSubmit"])) {
 
             $message .= '<p>';
 
-            $camelCase = preg_split('/(?=[A-Z])/', substr($htmlName, 3));
+            $camelCase = preg_split('/(?=[A-Z])/', substr($htmlName, 0));
 
             foreach ($camelCase as $oneWord) {
                 $message .= $oneWord . ' ';
@@ -248,12 +248,16 @@ if (isset($_GET["btnSubmit"]) AND empty($errorMsg)) { //closing if marked with: 
                 <legend class="legend">Select Your Sandwiches</legend>
                 <p class="left">
                     <?php
+                    print 1;
                     $query = "SELECT * FROM `Sandwiches`";
+
                     if ($thisDatabaseReader->querySecurityOk($query, 0,0,0,0,0)) {
+                        print 2;
                         $query = $thisDatabaseReader->sanitizeQuery($query, 0, 0, 0, 0, 0);
                         $sandwiches = $thisDatabaseReader->select($query, '');
                     }
 
+                    print 2;
                     foreach ($sandwiches as $sandwich) {
                         print '<p class="quantity buttons_added">';
                         print'<input type="button" value="-" class="minus">';
@@ -266,7 +270,7 @@ if (isset($_GET["btnSubmit"]) AND empty($errorMsg)) { //closing if marked with: 
                         print $english_format_money;
                         print $sandwich["Description"];
                         print '</p>';
-
+                        print 3;
                     }
                     ?>
                 </p>
