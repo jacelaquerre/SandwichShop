@@ -13,10 +13,11 @@ $email = "youremail@uvm.edu";
 $street = "";
 $town = "";
 $state = "";
-$zipcode = "";
+$zipcode = 0;
 
 // Initialize error flags
 $deliveryOptionError = false;
+$quantityError = false;
 $instructionsError = false;
 $nameError = false;
 $phoneError = false;
@@ -29,6 +30,19 @@ $zipcodeError = false;
 $errorMsg = array();
 
 $mailed = false;
+
+$dict = array();
+
+$query = "SELECT * FROM `Sandwiches`";
+
+if ($thisDatabaseReader->querySecurityOk($query, 0, 0, 0, 0, 0)) {
+    $query = $thisDatabaseReader->sanitizeQuery($query, 0, 0, 0, 0, 0);
+    $sandwiches = $thisDatabaseReader->select($query, '');
+}
+
+foreach ($sandwiches as $sandwich) {
+    $dict[$sandwich["Sandwich_Name"]] = 0;
+}
 
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 //
@@ -50,6 +64,9 @@ if (isset($_GET["btnSubmit"])) {
     // Sanitize (clean) data
 
     $deliveryOption = htmlentities($_GET["deliveryOption"], ENT_QUOTES, "UTF-8");
+    foreach ($sandwiches as $sandwich) {
+        $dict[$sandwich["Sandwich_Name"]] = htmlentities($_GET[$sandwich["Sandwich_Name"]], ENT_QUOTES, "UTF-8");
+    }
     $instructions = htmlentities($_GET["instructions"], ENT_QUOTES, "UTF-8");
     $name = htmlentities($_GET["name"], ENT_QUOTES, "UTF-8");
     $email = filter_var($_GET["email"], FILTER_SANITIZE_EMAIL);
@@ -57,7 +74,6 @@ if (isset($_GET["btnSubmit"])) {
     //eliminate every char except 0-9
     $phone = preg_replace("/[^0-9]/", '', $phone);
     //eliminate leading 1 if its there
-
     if (strlen($phone) == 11) {
         $phone = preg_replace("/^1/", '', $phone);
     }
@@ -73,6 +89,17 @@ if (isset($_GET["btnSubmit"])) {
     if ($deliveryOption != "pickup" and $deliveryOption != "delivery") {
         $errorMsg[] = "Please choose a delivery option.";
         $deliveryOptionError = true;
+    }
+
+    foreach ($dict as $quantity) {
+        if (!verifyNumeric($quantity)) {
+            $errorMsg[] = "Your sandwich quantity values appear to be incorrect.";
+            $quantityError = true;
+        }
+        if ($quantity < 0) {
+            $errorMsg[] = "Your sandwich quantity values cannot be negative.";
+            $quantityError = true;
+        }
     }
 
     if ($instructions != "") {
@@ -139,8 +166,8 @@ if (isset($_GET["btnSubmit"])) {
     }
 
     if (!(preg_match('#[0-9]{5}#', $zipcode))) {
-        //$errorMsg[] = 'Your zipcode appears to be incorrect.';
-        #$zipcodeError = false;
+        $errorMsg[] = 'Your zipcode appears to be incorrect.';
+        $zipcodeError = false;
     }
 
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -153,6 +180,32 @@ if (isset($_GET["btnSubmit"])) {
         // Save Data
         //
         // This block saves the data to the SQL database
+        $orderID = 0;
+        $query = "INSERT INTO `Orders`(`Order_Num`, `Order_Date`, `Order_Type`) 
+                       VALUES (?,?,?)";
+        if ($thisDatabaseWriter->querySecurityOk($query, 0, 0, 0, 0, 0)) {
+            $query = $thisDatabaseWriter->sanitizeQuery($query, 0, 0, 0, 0, 0);
+            $thisDatabaseWriter->insert($query, array(null, 'now()', $deliveryOption));
+            $orderID = $thisDatabaseWriter->lastInsert();
+        }
+        foreach($sandwiches as $sandwich) {
+            if ($dict[$sandwich["Sandwich_Name"]] > 0) {
+                $query = "INSERT INTO `Cart`(`Cart_OrderNum`, `Cart_SandwhichCode`, `Cart_Quantity`) 
+                               VALUES (?,?,?)";
+                if ($thisDatabaseWriter->querySecurityOk($query, 0, 0, 0, 0, 0)) {
+                    $query = $thisDatabaseWriter->sanitizeQuery($query, 0, 0, 0, 0, 0);
+                    $thisDatabaseWriter->insert($query, array($orderID, $sandwich["Sandwich_Code"], $dict[$sandwich["Sandwich_Name"]]));
+                }
+            }
+        }
+
+        $query = "INSERT INTO `Customer`(`Customer_ID`, `Customer_Name`, `Customer_Street`, 
+                       `Customer_City`, `Customer_State`, `Customer_Zip`, `Customer_Email`, `Customer_Phone`) 
+                       VALUES (?,?,?,?,?,?,?,?)";
+        if ($thisDatabaseWriter->querySecurityOk($query, 0, 0, 0, 0, 0)) {
+            $query = $thisDatabaseWriter->sanitizeQuery($query, 0, 0, 0, 0, 0);
+            $thisDatabaseWriter->insert($query, array(null, $name, $street, $town, $state, strval($zipcode), $email, $phone));
+        }
 
         //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         //
@@ -243,18 +296,11 @@ if (isset($_GET["btnSubmit"]) AND empty($errorMsg)) { //closing if marked with: 
                 <legend class="legend">Select Your Sandwiches</legend>
                 <p class="left">
                     <?php
-                    $query = "SELECT * FROM `Sandwiches`";
-
-                    if ($thisDatabaseReader->querySecurityOk($query, 0,0,0,0,0)) {
-                        $query = $thisDatabaseReader->sanitizeQuery($query, 0, 0, 0, 0, 0);
-                        $sandwiches = $thisDatabaseReader->select($query, '');
-                    }
-
                     foreach ($sandwiches as $sandwich) {
                         print '<body>';
                         print '<div class="quantity buttons_added">';
                         print'<input type="button" value="-" class="minus">';
-                        print '<input type="number" step="1" min="0" max="" name="quantity" 
+                        print '<input type="number" step="1" min="0" max="" name="' . $sandwich["Sandwich_Name"] . '" 
                                 value="0" title="Qty" class="input-text qty text" 
                                 size="4" pattern="" inputmode="">';
                         print '<input type="button" value="+" class="plus">';
@@ -264,7 +310,6 @@ if (isset($_GET["btnSubmit"]) AND empty($errorMsg)) { //closing if marked with: 
                         $english_format_money = "$" . number_format($sandwich["Price"], 2, '.', ',');
                         print $english_format_money;
                         //print $sandwich["Description"];
-
                     }
                     ?>
                 </p>
