@@ -316,7 +316,7 @@ Code taken from: https://embed.plnkr.co/B5waxZ/
  */
 /* -- quantity box -- */
 .quantity {
-  display: table-cell;; }
+  display: block; }
 
 .quantity .input-text.qty {
   width: 35px;
@@ -471,6 +471,8 @@ H3 { text-align: center }
 iframe {
   display: block;
   border-style:none;
+  alignment: center;
+  text-align: center;
 }
 
 footer {
