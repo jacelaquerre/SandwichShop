@@ -29,6 +29,7 @@ article, section, aside, nav{
 table{
   clear: both;
 }
+
 form{
   border: medium solid lightsteelblue;
   background-color: ghostwhite;
@@ -36,6 +37,7 @@ form{
   padding: 1%;
   margin: auto;
 }
+
 input[type=text]{
   border: 0;
   background-color: lightgrey;
@@ -188,6 +190,7 @@ input[type=submit]{
   }
   nav{
     font-size: .2em;
+    text-align: center;
   }
   li a {
     padding: 14px 16px;
@@ -218,6 +221,7 @@ input[type=submit]{
   }
   nav{
     font-size: .2em;
+    text-align: center;
   }
   li a {
     padding: 14px 16px;
@@ -248,6 +252,7 @@ input[type=submit]{
   }
   nav{
     font-size: 2em;
+    text-align: center;
   }
   li a {
     padding: 14px 16px;
@@ -311,7 +316,7 @@ Code taken from: https://embed.plnkr.co/B5waxZ/
  */
 /* -- quantity box -- */
 .quantity {
-  display: inline-block; }
+  display: table-cell;; }
 
 .quantity .input-text.qty {
   width: 35px;
@@ -326,7 +331,7 @@ Code taken from: https://embed.plnkr.co/B5waxZ/
   text-align: left;
   position: relative;
   white-space: nowrap;
-  vertical-align: top; }
+  vertical-align: center; }
 
 .quantity.buttons_added input {
   display: inline-block;
@@ -462,3 +467,15 @@ P { text-align: center }
 H1 { text-align: center }
 H2 { text-align: center }
 H3 { text-align: center }
+
+iframe {
+  display: block;
+  border-style:none;
+}
+
+footer {
+  display: table;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}

@@ -83,7 +83,7 @@ if (isset($_GET["btnSubmit"])) {
     $zipcode = htmlentities($_GET["town"], ENT_QUOTES, "UTF-8");
 
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-    //
+    // 
     // SECTION: 2c Validation
     //
     if ($deliveryOption != "pickup" and $deliveryOption != "delivery") {
@@ -292,12 +292,12 @@ if (isset($_GET["btnSubmit"]) AND empty($errorMsg)) { //closing if marked with: 
                 <label for="delivery">Delivery</label>
             </fieldset>
 
-            <fieldset class="checkbox">
+            <fieldset>
                 <legend class="legend">Select Your Sandwiches</legend>
                 <p class="left">
                     <?php
                     foreach ($sandwiches as $sandwich) {
-                        print '<body>';
+                        print '<section>';
                         print '<div class="quantity buttons_added">';
                         print'<input type="button" value="-" class="minus">';
                         print '<input type="number" step="1" min="0" max="" name="' . $sandwich["Sandwich_Name"] . '" 
@@ -305,7 +305,7 @@ if (isset($_GET["btnSubmit"]) AND empty($errorMsg)) { //closing if marked with: 
                                 size="4" pattern="" inputmode="">';
                         print '<input type="button" value="+" class="plus">';
                         print '</div>';
-                        print '</body>';
+                        print '<section>';
                         print $sandwich["Sandwich_Name"]. "     ";
                         $english_format_money = "$" . number_format($sandwich["Price"], 2, '.', ',');
                         print $english_format_money;
@@ -316,11 +316,13 @@ if (isset($_GET["btnSubmit"]) AND empty($errorMsg)) { //closing if marked with: 
             </fieldset>
 
             <fieldset class="instructions">
+                <legend class="legend">Instructions</legend>
                 <label for="instructions">Please List Any Additional Instructions</label>
                 <input type="text" id="instructions" name="instructions">
             </fieldset>
 
             <fieldset class="contact">
+                <legend class="legend">Contact Information</legend>
                 <label for="name">Name</label>
                 <input type="text" id="name" name="name">
                 <label for="email">Email</label>
@@ -330,6 +332,7 @@ if (isset($_GET["btnSubmit"]) AND empty($errorMsg)) { //closing if marked with: 
             </fieldset>
 
             <fieldset class="address">
+            <legend class="legend">Delivery Information</legend>
             <label for="street">Street Address</label>
             <input type="text" id="street" name="street">
             <label for="town">Town</label>
@@ -342,6 +345,7 @@ if (isset($_GET["btnSubmit"]) AND empty($errorMsg)) { //closing if marked with: 
 
             <!-- Start Submit button -->
             <fieldset class="buttons">
+                <legend class="legend">Submit Order</legend>
                 <input
                     class="button"
                     id="btnSubmit"
