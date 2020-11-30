@@ -2,7 +2,6 @@
 include ("top.php");
 
 ?>
-    <h1 style="text-align: center">Bob;s Sandwiches</h1>
     <section class="container">
         <section class="slideshow-container">
             <article class="mySlides fade">

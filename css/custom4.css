@@ -3,49 +3,47 @@ html{
   background-color: white;
 }
 
-nav ul {
-  overflow: hidden;
-  background-color: #839e99;
-  position: absolute;
+/* Nav */
+/* Style the side navigation */
+nav {
+  height: 100%;
+  width: 200px;
+  position: fixed;
+  z-index: 1;
   top: 0;
-  margin: 0;
-  padding: 0;
-  width: 100%;
-}
-nav ul li {
-  list-style-type: none;
-  display: inline-block;
-}
-nav ul li a {
-  display: block;
-  color: #eeeeee;
-  text-align: center;
-  padding: 15px 30px 15px 20px;
-  text-decoration: none;
-  font-size: 18px;
-  font-weight: bold;
-  font-family: arial;
+  left: 0;
+  background-color: #eeeeee;
+  overflow-x: hidden;
 }
 
+
+/* Side navigation links */
 nav a {
-  float: left;
-  display: block;
-  color: #eeeeee;
-  text-align: center;
-  padding: 15px 18px;
+  color: black;
+  padding: 16px;
   text-decoration: none;
-  font-size: 18px;
+  display: block;
 }
 
+/* Change color on hover */
 nav a:hover {
-  color: #efefef;
+  background-color: black;
+  color: #dddddd;
 }
 
-.container {
-  padding: 18px;
-  margin-top: 35px;
-  height: 1000px;
+nav a:active {
+  background-color: grey;
+  color: #dddddd;
 }
+
+/* Push everything over to account for nav */
+.container, header, form, footer{
+  margin-left: 200px;
+  padding-left: 20px;
+}
+
+/* Grid Layout */
+
 
 /* Form CSS */
 form{
