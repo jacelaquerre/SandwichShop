@@ -1,5 +1,5 @@
 <!-- ######################     Main Navigation   ########################## -->
-<nav>
+<nav class="nav_menu">
     <ul>
         <?php
         // This sets a class for current page so you can style it differently
@@ -37,6 +37,5 @@
 
         ?>
     </ul>
-
 </nav>
 <!-- ###################### End Of Main Navigation ########################## -->

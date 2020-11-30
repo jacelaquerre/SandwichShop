@@ -1,314 +1,72 @@
+/* General CSS */
 html{
   background-color: white;
 }
-nav{
-  text-align: center;
-}
-ul {
-  list-style-type: none;
+
+nav ul {
+  overflow: hidden;
+  background-color: #839e99;
+  position: absolute;
+  top: 0;
   margin: 0;
   padding: 0;
-  overflow: hidden;
-  background-color: #333;
-}
-li {
-  float: left;
-}
-li a {
-  display: block;
-  color: white;
-  text-align: center;
-  text-decoration: none;
-}
-li a:hover {
-  background-color: #111;
-}
-article, section, aside, nav{
-  padding: 1%;
-}
-table{
-  clear: both;
-}
-
-form{
-  border: medium solid lightsteelblue;
-  background-color: ghostwhite;
-  color: black;
-  padding: 1%;
-  margin: auto;
-}
-
-input[type=text]{
-  border: 0;
-  background-color: lightgrey;
-  border-bottom: medium solid black;
   width: 100%;
-  color: black;
-  font-size: large;
+}
+nav ul li {
+  list-style-type: none;
+  display: inline-block;
+}
+nav ul li a {
+  display: block;
+  color: #eeeeee;
+  text-align: center;
+  padding: 15px 30px 15px 20px;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: bold;
+  font-family: arial;
+}
+
+nav a {
+  float: left;
+  display: block;
+  color: #eeeeee;
+  text-align: center;
+  padding: 15px 18px;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+nav a:hover {
+  color: #efefef;
+}
+
+.container {
+  padding: 18px;
+  margin-top: 35px;
+  height: 1000px;
+}
+
+/* Form CSS */
+form{
+
+}
+input[type=text]{
+
 }
 textarea{
-  width: 80%;
+
 }
 .buttons{
-  text-align: center
+
 }
 input[type=submit]{
-  width: 40%;
-  text-align: center;
-  background-color: lightskyblue;
-  color: cornsilk;
-  border-color: cornsilk;
 
 }
-/* Position nav. Move nav before header and keep it there */
-.positioning{
-  display: grid;
-  grid-template-areas: "nav" "header" "main" "footer";
-}
-.positioning header{
-  grid-area: header;
-}
-.positioning nav {
-  grid-area: nav;
-  position: sticky;
-  top: 0;
-  width: 98%;
-}
 
-/*@media only screen and (max-width:320px)  {
-  !* smartphones, iPhone, portrait 480x320 phones *!
-  body{
-    max-width: 40em;
-    line-height: 1.3em;
-  }
-  nav{
-    font-size: .2em;
-  }
-  li a {
-    padding: 14px 16px;
-  }
-  form{
-    max-width: 400px;
-  }
-  textarea{
-    height: 5em;
-  }
-  input[type=text] {
-    height: 2em;
-  }
-  input[type=submit]{
-    font-size: 2em;
-    border-radius: .25em
-  }
+/* -- specific sizing on screen size -- */
+@media (max-width: 600px) {
 }
-@media only screen and (max-width:481px)  {
-  !* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. *!
-  body{
-    max-width: 60em;
-    line-height: 1.3em;
-  }
-  nav{
-    font-size: .2em;
-  }
-  li a {
-    padding: 14px 16px;
-  }
-  form{
-    max-width: 400px;
-  }
-  textarea{
-    height: 5em;
-  }
-  input[type=text] {
-    height: 2em;
-  }
-  input[type=submit]{
-    font-size: 2em;
-    border-radius: .25em
-  }
-}
-@media only screen and (max-width:641px)  {
-  !* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones *!
-  body{
-    max-width: 60em;
-    line-height: 1.3em;
-  }
-  nav{
-    font-size: .2em;
-  }
-  li a {
-    padding: 14px 16px;
-  }
-  form{
-    max-width: 400px;
-  }
-  textarea{
-    height: 5em;
-  }
-  input[type=text] {
-    height: 2em;
-  }
-  input[type=submit]{
-    font-size: 2em;
-    border-radius: .25em
-  }
-}
-@media only screen and (max-width:961px)  {
-  !* tablet, landscape iPad, lo-res laptops ands desktops *!
-  body{
-    max-width: 60em;
-    line-height: 1.3em;
-  }
-  nav{
-    font-size: .2em;
-  }
-  li a {
-    padding: 14px 16px;
-  }
-  form{
-    max-width: 400px;
-  }
-  textarea{
-    height: 5em;
-  }
-  input[type=text] {
-    height: 2em;
-  }
-  input[type=submit]{
-    font-size: 2em;
-    border-radius: .25em
-  }
-}*/
-@media only screen and (max-width:1025px) {
-  /* big landscape tablets, laptops, and desktops */
-  body{
-    background-color: lightsteelblue;
-    max-width: 80%;
-    line-height: 1.3em;
-    padding: 1%;
-    margin: auto
-  }
-  nav{
-    font-size: .2em;
-    text-align: center;
-  }
-  li a {
-    padding: 14px 16px;
-  }
-  form{
-    max-width: 600px;
-  }
-  textarea{
-    height: 5em;
-  }
-  input[type=text] {
-    height: 2em;
-  }
-  input[type=submit]{
-    font-size: 2em;
-    border-radius: .25em
-  }
-}
-@media only screen and (max-width:1281px) {
-  /* hi-res laptops and desktops */
-  body{
-    background-color: lightsteelblue;
-    color: black;
-    max-width: 80%;
-    line-height: 1.3em;
-    padding: 1%;
-    margin: auto
-  }
-  nav{
-    font-size: .2em;
-    text-align: center;
-  }
-  li a {
-    padding: 14px 16px;
-  }
-  form{
-    max-width: 600px;
-  }
-  textarea{
-    height: 5em;
-  }
-  input[type=text] {
-    height: 2em;
-  }
-  input[type=submit]{
-    font-size: 2em;
-    border-radius: .25em
-  }
-}
-@media only screen and (min-width:1282px) {
-  /* hi-res laptops and desktops */
-  body{
-    background-color: lightsteelblue;
-    color: black;
-    max-width: 80%;
-    line-height: 1.3em;
-    padding: 1%;
-    margin: auto
-  }
-  nav{
-    font-size: 2em;
-    text-align: center;
-  }
-  li a {
-    padding: 14px 16px;
-  }
-  form{
-    max-width: 600px;
-  }
-  textarea{
-    height: 5em;
-  }
-  input[type=text] {
-    height: 2em;
-  }
-  input[type=submit]{
-    font-size: 2em;
-    border-radius: .25em
-  }
-}
-
-.positioning nav a{
-  display: inline-block;
-  padding: 0 1em;
-}
-
-.positioning main{
-  grid-area: main;
-}
-
-.positioning footer{
-  grid-area: footer;
-}
-
-/**
-Table CSS
- */
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
-  width: 100%;
-  border: 1px solid #ddd;
-}
-
-th, td {
-  text-align: left;
-  padding: 16px;
-}
-
-tr:nth-child(even) {
-  background-color: lightgray;
-}
-
-tr:nth-child(odd) {
-  background-color: white;
-}
-
-tr:hover {background-color: lightcyan;}
 
 /**
 Quantity buttons
@@ -317,7 +75,6 @@ Code taken from: https://embed.plnkr.co/B5waxZ/
 /* -- quantity box -- */
 .quantity {
   display: block; }
-
 .quantity .input-text.qty {
   width: 35px;
   height: 39px;
@@ -326,20 +83,17 @@ Code taken from: https://embed.plnkr.co/B5waxZ/
   background-color: transparent;
   border: 1px solid #efefef;
 }
-
 .quantity.buttons_added {
   text-align: left;
   position: relative;
   white-space: nowrap;
   vertical-align: center; }
-
 .quantity.buttons_added input {
   display: inline-block;
   margin: 0;
   vertical-align: top;
   box-shadow: none;
 }
-
 .quantity.buttons_added .minus,
 .quantity.buttons_added .plus {
   padding: 7px 10px 8px;
@@ -347,23 +101,18 @@ Code taken from: https://embed.plnkr.co/B5waxZ/
   background-color: #ffffff;
   border: 1px solid #efefef;
   cursor:pointer;}
-
 .quantity.buttons_added .minus {
   border-right: 0; }
-
 .quantity.buttons_added .plus {
   border-left: 0; }
-
 .quantity.buttons_added .minus:hover,
 .quantity.buttons_added .plus:hover {
   background: #eeeeee; }
-
 .quantity input::-webkit-outer-spin-button,
 .quantity input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   -moz-appearance: none;
   margin: 0; }
-
 .quantity.buttons_added .minus:focus,
 .quantity.buttons_added .plus:focus {
   outline: none; }
@@ -372,7 +121,6 @@ Code taken from: https://embed.plnkr.co/B5waxZ/
 * {box-sizing:border-box}
 body {font-family: Verdana,sans-serif;}
 .mySlides {display:none}
-
 /* Slideshow container */
 .slideshow-container {
   max-width: 1500px;
@@ -380,7 +128,6 @@ body {font-family: Verdana,sans-serif;}
   text-align: center;
   margin: auto;
 }
-
 /* Next & previous buttons */
 .prev, .next {
   cursor: pointer;
@@ -395,18 +142,15 @@ body {font-family: Verdana,sans-serif;}
   transition: 0.6s ease;
   border-radius: 0 3px 3px 0;
 }
-
 /* Position the "next button" to the right */
 .next {
   right: 0;
   border-radius: 3px 0 0 3px;
 }
-
 /* On hover, add a black background color with a little bit see-through */
 .prev:hover, .next:hover {
   background-color: rgba(0,0,0,0.8);
 }
-
 /* Caption text */
 .text {
   color: #f2f2f2;
@@ -417,7 +161,6 @@ body {font-family: Verdana,sans-serif;}
   width: 100%;
   text-align: center;
 }
-
 /* Citaton text */
 .numbertext {
   color: black;
@@ -426,7 +169,6 @@ body {font-family: Verdana,sans-serif;}
   position: relative;
   top: 0;
 }
-
 /* The dots/bullets/indicators */
 .dot {
   cursor: pointer;
@@ -438,11 +180,9 @@ body {font-family: Verdana,sans-serif;}
   display: inline-block;
   transition: background-color 0.6s ease;
 }
-
 .active, .dot:hover {
   background-color: #717171;
 }
-
 /* Fading animation */
 .fade {
   -webkit-animation-name: fade;
@@ -450,34 +190,12 @@ body {font-family: Verdana,sans-serif;}
   animation-name: fade;
   animation-duration: 1.5s;
 }
-
 @keyframes fade {
   from {opacity: .4}
   to {opacity: 1}
 }
-
 /* On smaller screens, decrease text size */
 @media only screen and (max-width: 300px) {
   .prev, .next,.text {font-size: 11px}
 }
-
 /*/////////////////////////////// END JQuery Slider //////////////////////////*/
-
-P { text-align: center }
-H1 { text-align: center }
-H2 { text-align: center }
-H3 { text-align: center }
-
-iframe {
-  display: block;
-  border-style:none;
-  alignment: center;
-  text-align: center;
-}
-
-footer {
-  display: table;
-  text-align: center;
-  margin-left: auto;
-  margin-right: auto;
-}
