@@ -15,7 +15,7 @@ function securityCheck($myFormURL = ""){
         $fromPage = preg_replace('#^https?:#', '', $fromPage);
         
         if ($debugThis) {
-            print '<p>From: ' . $fromPage . ' should match your Url: ' . $myFormURL;
+            print '<p class="container">From: ' . trim($fromPage) . ' should match your Url: ' . trim($myFormURL);
         }
 
         if ($fromPage != $myFormURL) {

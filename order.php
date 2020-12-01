@@ -13,7 +13,8 @@ $email = "youremail@uvm.edu";
 $street = "";
 $town = "";
 $state = "";
-$zipcode = 0;
+$zipcode = "";
+$messages = [];
 
 // Initialize error flags
 $deliveryOptionError = false;
@@ -54,7 +55,7 @@ if (isset($_GET["btnSubmit"])) {
     // Security
     //
     if (securityCheck($thisURL)) {
-        $msg = '<p>Sorry you cannot access this page. ';
+        $msg = '<p class="container">Sorry you cannot access this page. ';
         $msg .= 'Security breach detected and reported.</p>';
         print($msg);
     }
@@ -80,13 +81,13 @@ if (isset($_GET["btnSubmit"])) {
     $street = htmlentities($_GET["street"], ENT_QUOTES, "UTF-8");
     $town = htmlentities($_GET["town"], ENT_QUOTES, "UTF-8");
     $state = htmlentities($_GET["state"], ENT_QUOTES, "UTF-8");
-    $zipcode = htmlentities($_GET["town"], ENT_QUOTES, "UTF-8");
+    $zipcode = htmlentities($_GET["zip"], ENT_QUOTES, "UTF-8");
 
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     // 
     // SECTION: 2c Validation
     //
-    if ($deliveryOption != "pickup" and $deliveryOption != "delivery") {
+    if ($deliveryOption != "pickup" and $deliveryOption != "delivery" and $deliveryOption != "cless_delivery") {
         $errorMsg[] = "Please choose a delivery option.";
         $deliveryOptionError = true;
     }
@@ -165,10 +166,12 @@ if (isset($_GET["btnSubmit"])) {
         }
     }
 
-    if (!(preg_match('#[0-9]{5}#', $zipcode))) {
-        //$errorMsg[] = 'Your zipcode appears to be incorrect.';
-        //$zipcodeError = false;
+    if (!(preg_match('/^\d{5}$/', substr($zipcode, 0), $matches))) {
+        $errorMsg[] = 'Your zipcode appears to be incorrect.';
+        $zipcodeError = false;
     }
+
+    print "matches[0]" . $matches[0];
 
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     //
@@ -187,7 +190,9 @@ if (isset($_GET["btnSubmit"])) {
             $query = $thisDatabaseWriter->sanitizeQuery($query, 0, 0, 0, 0, 0);
             $thisDatabaseWriter->insert($query, array(null, 'now()', $deliveryOption));
             $orderID = $thisDatabaseWriter->lastInsert();
+            print '<h1>' . $orderID . '</h1>';
         }
+
         foreach($sandwiches as $sandwich) {
             if ($dict[$sandwich["Sandwich_Name"]] > 0) {
                 $query = "INSERT INTO `Cart`(`Cart_OrderNum`, `Cart_SandwhichCode`, `Cart_Quantity`) 
@@ -231,7 +236,7 @@ if (isset($_GET["btnSubmit"])) {
         // Mail to user
         //
 
-        $to = $email; // the person who filled out the form
+        $to = //$email; // the person who filled out the form
         $cc = 'mzahar@uvm.edu';
         $bcc = '';
 
@@ -245,13 +250,13 @@ if (isset($_GET["btnSubmit"])) {
 } // ends if from was submitted
 ?>
 
-<article id="main">
+<article id="main" class="container">
 
 <?php
 if (isset($_GET["btnSubmit"]) AND empty($errorMsg)) { //closing if marked with: end body submit
     print '<h2>Thank you for providing your information.</h2>';
 
-    print '<p>For your records a copy of this data has ';
+    print '<<p>For your records a copy of this data has ';
 
     if (!$mailed) {
         print "not ";
@@ -269,34 +274,44 @@ if (isset($_GET["btnSubmit"]) AND empty($errorMsg)) { //closing if marked with: 
     // Error Messages
     //
     if ($errorMsg) {
-        print '<div id="errors">' . PHP_EOL;
-        print '<h2>Your form has the following mistakes that need to be fixed.</h2>' . PHP_EOL;
+        print '<section id="errors">' . PHP_EOL;
+        print '<h3>Your form has the following mistakes that need to be fixed.</h3>' . PHP_EOL;
         print '<ol>' . PHP_EOL;
 
         foreach ($errorMsg as $err) {
             print '<li>' . $err . '</li>' . PHP_EOL;
         }
         print '</ol>' . PHP_EOL;
-        print '</div>' . PHP_EOL;
+        print '</section>' . PHP_EOL;
     }
     ?>
-    <main>
+    <section>
         <form action = "<?php print PHP_SELF; ?>"
               id="frmOption"
-              method = "get">
-            <fieldset class="deliveryOption">
-                <legend>Delivery Option</legend>
-                <input type="radio" id="pickup" name="deliveryOption" value="pickup">
-                <label for="pickup">Pick Up</label>
-                <input type="radio" id="delivery" name="deliveryOption" value="delivery">
-                <label for="delivery">Delivery</label>
+              method = "get"
+              class = "form_container">
+            <fieldset class="deliveryOption row">
+                <section class="col-25">
+                    <legend>Delivery Option</legend>
+                </section>
+                <section class="col-75">
+                    <input type="radio" id="pickup" name="deliveryOption" value=pickup <?php if($deliveryOption === 'pickup') echo 'checked'; ?>>
+                    <label for="pickup">Pick Up</label>
+                    <input type="radio" id="delivery" name="deliveryOption" value=delivery <?php if($deliveryOption === 'delivery') echo 'checked'; ?>>
+                    <label for="delivery">Delivery</label>
+                    <input type="radio" id="cless_delivery" name="deliveryOption" value=cless_delivery <?php if($deliveryOption === 'cless_delivery') echo 'checked'; ?>>
+                    <label for="cless_delivery">Contactless Delivery</label>
+                </section>
             </fieldset>
 
-            <fieldset>
-                <legend class="legend">Select Your Sandwiches</legend>
-                <p class="left">
+            <fieldset class="row">
+                <section class="col-25">
+                    <legend class="legend">Select Your Sandwiches</legend>
+                </section>
+
+               <!-- <section class="col-75">
                     <?php
-                    foreach ($sandwiches as $sandwich) {
+/*                    foreach ($sandwiches as $sandwich) {
                         print '<section>';
                         print '<div class="quantity buttons_added">';
                         print'<input type="button" value="-" class="minus">';
@@ -305,58 +320,75 @@ if (isset($_GET["btnSubmit"]) AND empty($errorMsg)) { //closing if marked with: 
                                 size="4" pattern="" inputmode="">';
                         print '<input type="button" value="+" class="plus">';
                         print '</div>';
-                        print '<section>';
+
                         print $sandwich["Sandwich_Name"]. "     ";
                         $english_format_money = "$" . number_format($sandwich["Price"], 2, '.', ',');
                         print $english_format_money;
                         //print $sandwich["Description"];
+                        print '<section>';
+                    }
+                    */?>
+                </section>-->
+                <section class="col-75">
+                    <?php
+                    foreach ($sandwiches as $sandwich) {
+                        print '<p>';
+                        $english_format_money = "$" . number_format($sandwich["Price"], 2, '.', ',');
+                        print '<input type="number" value="';
+
+                        if (isset($dict[$sandwich[ "Sandwich_Name"]]))
+                            echo $dict[$sandwich["Sandwich_Name"]];
+
+                        print '"name="' . $sandwich["Sandwich_Name"] . '">';
+                        print '<label for="' . $sandwich["Sandwich_Name"] . '">' . $sandwich["Sandwich_Name"] . "      " .  $english_format_money . '</label>';
+                        print '</p>';
                     }
                     ?>
-                </p>
+                </section>
             </fieldset>
 
-            <fieldset class="instructions">
-                <legend class="legend">Instructions</legend>
-                <label for="instructions">Please List Any Additional Instructions</label>
-                <input type="text" id="instructions" name="instructions">
+            <fieldset class="contact row">
+                <section class="col-25">
+                    <legend class="legend">Contact Information</legend>
+                </section>
+                <section class="col-75">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" value="<?php if (isset($name)) echo $name; ?>">
+                    <label for="email">Email</label>
+                    <input type="text" id="email" name="email" value="<?php if (isset($email)) echo $email; ?>">
+                    <label for="phone">Phone #</label>
+                    <input type="text" id="phone" name="phone" value="<?php if (isset($phone)) echo $phone; ?>">
+                </section>
             </fieldset>
 
-            <fieldset class="contact">
-                <legend class="legend">Contact Information</legend>
-                <label for="name">Name</label>
-                <input type="text" id="name" name="name">
-                <label for="email">Email</label>
-                <input type="text" id="email" name="email">
-                <label for="phone">Phone #</label>
-                <input type="text" id="phone" name="phone">
-            </fieldset>
-
-            <fieldset class="address">
-            <legend class="legend">Delivery Information</legend>
-            <label for="street">Street Address</label>
-            <input type="text" id="street" name="street">
-            <label for="town">Town</label>
-            <input type="text" id="town" name="town">
-            <label for="state">State</label>
-            <input type="text" id="state" name="state">
-            <label for="zip">Zip Code</label>
-            <input type="text" id="zip" name="zip">
+            <fieldset class="address row">
+                <section class="col-25">
+                    <legend class="legend">Delivery Information</legend>
+                </section>
+                <section class="col-75">
+                <label for="street">Street Address</label>
+                <input type="text" id="street" name="street" value="<?php if (isset($street)) echo $street; ?>">
+                <label for="town">Town</label>
+                <input type="text" id="town" name="town" value="<?php if (isset($town)) echo $town; ?>">
+                <label for="state">State</label>
+                <input type="text" id="state" name="state" value="<?php if (isset($state)) echo $state; ?>">
+                <label for="zip">Zip Code</label>
+                <input type="text" id="zip" name="zip" value="<?php if (isset($zipcode)) echo $zipcode; ?>">
+                </section>
             </fieldset>
 
             <!-- Start Submit button -->
-            <fieldset class="buttons">
-                <legend class="legend">Submit Order</legend>
+            <fieldset class="buttons row">
                 <input
                     class="button"
                     id="btnSubmit"
                     name="btnSubmit"
-                    tabindex="1500"
                     type="submit"
                     value="Submit">
             </fieldset>
             <!-- ends submit button -->
         </form>
-    </main>
+    </section>
     <?php
     } //end body submit
     ?>
