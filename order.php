@@ -171,8 +171,6 @@ if (isset($_GET["btnSubmit"])) {
         $zipcodeError = false;
     }
 
-    print "matches[0]" . $matches[0];
-
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     //
     // Process Form - Passed Validation
@@ -216,8 +214,17 @@ if (isset($_GET["btnSubmit"])) {
         //
         // Create message
         //
-        $message = '<h2>Your information:</h2>';
+        $message = '<h2>Your order:</h2>';
+        $message .= '<p> Your order number is: $orderID </p>';
+        print_r($_GET);
 
+        foreach($sandwiches as $sandwich) {
+            if ($dict[$sandwich["Sandwich_Name"]] > 0) {
+                $message .= $sandwich["Sandwich_Name"] . $dict[$sandwich["Sandwich_Name"]];
+            }
+        }
+
+        /*
         foreach ($_GET as $htmlName => $value) {
 
             $message .= '<p>';
@@ -230,7 +237,8 @@ if (isset($_GET["btnSubmit"])) {
 
             $message .= ' = ' . htmlentities($value, ENT_QUOTES, "UTF-8") . '</p>';
         }
-
+        */
+        
         //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         //
         // Mail to user
@@ -256,7 +264,7 @@ if (isset($_GET["btnSubmit"])) {
 if (isset($_GET["btnSubmit"]) AND empty($errorMsg)) { //closing if marked with: end body submit
     print '<h2>Thank you for providing your information.</h2>';
 
-    print '<<p>For your records a copy of this data has ';
+    print '<p>For your records a copy of this data has ';
 
     if (!$mailed) {
         print "not ";
