@@ -60,9 +60,13 @@ input[type=submit] {
 input[type=submit]:hover {
   background-color: #839e99;
 }
+fieldset{
+  border-style: dashed;
+  border-color: lightsteelblue;
+}
 .form_container {
   border-radius: 5px;
-  background-color: powderblue;
+  background-color: white;
   padding: 20px;
 }
 .col-25 {

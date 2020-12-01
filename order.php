@@ -13,7 +13,7 @@ $email = "youremail@uvm.edu";
 $street = "";
 $town = "";
 $state = "";
-$zipcode = 0;
+$zipcode = "";
 $messages = [];
 
 // Initialize error flags
@@ -81,7 +81,7 @@ if (isset($_GET["btnSubmit"])) {
     $street = htmlentities($_GET["street"], ENT_QUOTES, "UTF-8");
     $town = htmlentities($_GET["town"], ENT_QUOTES, "UTF-8");
     $state = htmlentities($_GET["state"], ENT_QUOTES, "UTF-8");
-    $zipcode = htmlentities($_GET["town"], ENT_QUOTES, "UTF-8");
+    $zipcode = htmlentities($_GET["zip"], ENT_QUOTES, "UTF-8");
 
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     // 
@@ -166,10 +166,12 @@ if (isset($_GET["btnSubmit"])) {
         }
     }
 
-    if (!(preg_match('#[0-9]{5}#', $zipcode, $matches))) {
+    if (!(preg_match('/^\d{5}$/', substr($zipcode, 0), $matches))) {
         $errorMsg[] = 'Your zipcode appears to be incorrect.';
         $zipcodeError = false;
     }
+
+    print "matches[0]" . $matches[0];
 
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     //
