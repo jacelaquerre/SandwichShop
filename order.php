@@ -283,20 +283,30 @@ if (isset($_GET["btnSubmit"]) AND empty($errorMsg)) { //closing if marked with: 
     <main>
         <form action = "<?php print PHP_SELF; ?>"
               id="frmOption"
-              method = "get">
-            <fieldset class="deliveryOption">
-                <legend>Delivery Option</legend>
-                <input type="radio" id="pickup" name="deliveryOption" value="pickup">
-                <label for="pickup">Pick Up</label>
-                <input type="radio" id="delivery" name="deliveryOption" value="delivery">
-                <label for="delivery">Delivery</label>
+              method = "get"
+              class = "form_container">
+            <fieldset class="deliveryOption row">
+                <section class="col-25">
+                    <legend>Delivery Option</legend>
+                </section>
+                <section class="col-75">
+                    <input type="radio" id="pickup" name="deliveryOption" value=0>
+                    <label for="pickup">Pick Up</label>
+                    <input type="radio" id="delivery" name="deliveryOption" value=1>
+                    <label for="delivery">Delivery</label>
+                    <input type="radio" id="cless_delivery" name="deliveryOption" value=2>
+                    <label for="cless_delivery">Contactless Delivery</label>
+                </section>
             </fieldset>
 
-            <fieldset>
-                <legend class="legend">Select Your Sandwiches</legend>
-                <p class="left">
+            <fieldset class="row">
+                <section class="col-25">
+                    <legend class="legend">Select Your Sandwiches</legend>
+                </section>
+
+               <!-- <section class="col-75">
                     <?php
-                    foreach ($sandwiches as $sandwich) {
+/*                    foreach ($sandwiches as $sandwich) {
                         print '<section>';
                         print '<div class="quantity buttons_added">';
                         print'<input type="button" value="-" class="minus">';
@@ -305,52 +315,74 @@ if (isset($_GET["btnSubmit"]) AND empty($errorMsg)) { //closing if marked with: 
                                 size="4" pattern="" inputmode="">';
                         print '<input type="button" value="+" class="plus">';
                         print '</div>';
-                        print '<section>';
+
                         print $sandwich["Sandwich_Name"]. "     ";
                         $english_format_money = "$" . number_format($sandwich["Price"], 2, '.', ',');
                         print $english_format_money;
                         //print $sandwich["Description"];
+                        print '<section>';
+                    }
+                    */?>
+                </section>-->
+                <section class="col-75">
+                    <?php
+                    foreach ($sandwiches as $sandwich) {
+                        print '<p>';
+                        $english_format_money = "$" . number_format($sandwich["Price"], 2, '.', ',');
+                        print '<input type="number" value="0" name="' . $sandwich["Sandwich_Name"] . '">';
+                        print '<label for="' . $sandwich["Sandwich_Name"] . '">' . $sandwich["Sandwich_Name"] . "      " .  $english_format_money . '</label>';
+                        print '</p>';
                     }
                     ?>
-                </p>
+                </section>
             </fieldset>
 
-            <fieldset class="instructions">
-                <legend class="legend">Instructions</legend>
-                <label for="instructions">Please List Any Additional Instructions</label>
-                <input type="text" id="instructions" name="instructions">
+            <fieldset class="instructions row">
+                <section class="col-25">
+                    <legend class="legend">Instructions</legend>
+                </section>
+                <section class="col-75">
+                    <label for="instructions">Please List Any Additional Instructions</label>
+                    <input type="text" id="instructions" name="instructions">
+                </section>
             </fieldset>
 
-            <fieldset class="contact">
-                <legend class="legend">Contact Information</legend>
-                <label for="name">Name</label>
-                <input type="text" id="name" name="name">
-                <label for="email">Email</label>
-                <input type="text" id="email" name="email">
-                <label for="phone">Phone #</label>
-                <input type="text" id="phone" name="phone">
+            <fieldset class="contact row">
+                <section class="col-25">
+                    <legend class="legend">Contact Information</legend>
+                </section>
+                <section class="col-75">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name">
+                    <label for="email">Email</label>
+                    <input type="text" id="email" name="email">
+                    <label for="phone">Phone #</label>
+                    <input type="text" id="phone" name="phone">
+                </section>
             </fieldset>
 
-            <fieldset class="address">
-            <legend class="legend">Delivery Information</legend>
-            <label for="street">Street Address</label>
-            <input type="text" id="street" name="street">
-            <label for="town">Town</label>
-            <input type="text" id="town" name="town">
-            <label for="state">State</label>
-            <input type="text" id="state" name="state">
-            <label for="zip">Zip Code</label>
-            <input type="text" id="zip" name="zip">
+            <fieldset class="address row">
+                <section class="col-25">
+                    <legend class="legend">Delivery Information</legend>
+                </section>
+                <section class="col-75">
+                <label for="street">Street Address</label>
+                <input type="text" id="street" name="street">
+                <label for="town">Town</label>
+                <input type="text" id="town" name="town">
+                <label for="state">State</label>
+                <input type="text" id="state" name="state">
+                <label for="zip">Zip Code</label>
+                <input type="text" id="zip" name="zip">
+                </section>
             </fieldset>
 
             <!-- Start Submit button -->
-            <fieldset class="buttons">
-                <legend class="legend">Submit Order</legend>
+            <fieldset class="buttons row">
                 <input
                     class="button"
                     id="btnSubmit"
                     name="btnSubmit"
-                    tabindex="1500"
                     type="submit"
                     value="Submit">
             </fieldset>

@@ -15,55 +15,91 @@ nav {
   background-color: #eeeeee;
   overflow-x: hidden;
 }
-
-
 /* Side navigation links */
 nav a {
   color: black;
-  padding: 16px;
   text-decoration: none;
+  padding: 16px;
   display: block;
 }
-
 /* Change color on hover */
 nav a:hover {
   background-color: black;
   color: #dddddd;
 }
-
-nav a:active {
+.activePage {
   background-color: grey;
   color: #dddddd;
 }
-
 /* Push everything over to account for nav */
-.container, header, form, footer{
+.container, header, footer, main{
   margin-left: 200px;
   padding-left: 20px;
 }
 
-/* Grid Layout */
-
-
 /* Form CSS */
-form{
-
+input[type=text], select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
 }
-input[type=text]{
-
+label {
+  padding: 12px 12px 12px 0;
+  display: inline-block;
 }
-textarea{
-
+input[type=submit] {
+  background-color: #bbbbbb;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  width: 80%;
+  cursor: pointer;
+  float: right;
 }
-.buttons{
-
+input[type=submit]:hover {
+  background-color: #839e99;
 }
-input[type=submit]{
-
+.form_container {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
 }
+.col-25 {
+  float: left;
+  width: 25%;
+  margin-top: 6px;
+}
+.col-75 {
+  float: left;
+  width: 75%;
+  margin-top: 6px;
+}
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+button{
+  width: 100%;
+}
+@media screen and (max-width: 800px) {
+  .col-25, .col-75, input[type=submit] {
+    width: 100%;
+    margin-top: 0;
+  }
+  body{
+    font-size: larger;
+  }
 
-/* -- specific sizing on screen size -- */
-@media (max-width: 600px) {
+  input[type=submit]{
+    height: 10%;
+  }
+
 }
 
 /**

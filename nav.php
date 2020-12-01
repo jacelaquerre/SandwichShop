@@ -1,6 +1,6 @@
 <!-- ######################     Main Navigation   ########################## -->
 <nav class="nav_menu">
-    <ul>
+    <ul style="text-decoration: none">
         <?php
         // This sets a class for current page so you can style it differently
 
@@ -9,12 +9,6 @@
             print ' class="activePage" ';
         }
         print '><a href="index.php">Home</a></li>';
-
-        print '<li ';
-        if (PATH_PARTS['filename'] == 'order') {
-            print ' class="activePage" ';
-        }
-        print '><a href="order.php">Order</a></li>';
 
         print '<li ';
         if (PATH_PARTS['filename'] == 'about') {
@@ -29,12 +23,16 @@
         print '><a href="menu.php">Menu</a></li>';
 
         print '<li ';
+        if (PATH_PARTS['filename'] == 'order') {
+            print ' class="activePage" ';
+        }
+        print '><a href="order.php">Order</a></li>';
+
+        print '<li ';
         if (PATH_PARTS['filename'] == 'updateOrder') {
             print ' class="activePage" ';
         }
         print '><a href="updateOrder.php">Update Order</a></li>';
-
-
         ?>
     </ul>
 </nav>
