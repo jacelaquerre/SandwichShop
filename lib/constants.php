@@ -1,5 +1,5 @@
 <?php
-define('DATABASE_NAME', 'MZAHAR_SandwichShop');
+define('DATABASE_NAME', 'MZAHAR_Final');
 define('DATABASE_READER', 'mzahar_reader');
 define('DATABASE_READER_PWD', 'r');
 define('DATABASE_WRITER_PWD', 'w');
