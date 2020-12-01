@@ -55,7 +55,7 @@ if (isset($_GET["btnSubmit"])) {
     // Security
     //
     if (securityCheck($thisURL)) {
-        $msg = '<p>Sorry you cannot access this page. ';
+        $msg = '<p class="container">Sorry you cannot access this page. ';
         $msg .= 'Security breach detected and reported.</p>';
         print($msg);
     }
@@ -295,11 +295,11 @@ if (isset($_GET["btnSubmit"]) AND empty($errorMsg)) { //closing if marked with: 
                     <legend>Delivery Option</legend>
                 </section>
                 <section class="col-75">
-                    <input type="radio" id="pickup" name="deliveryOption" value=pickup>
+                    <input type="radio" id="pickup" name="deliveryOption" value=pickup <?php if($deliveryOption === 'pickup') echo 'checked'; ?>>
                     <label for="pickup">Pick Up</label>
-                    <input type="radio" id="delivery" name="deliveryOption" value=delivery>
+                    <input type="radio" id="delivery" name="deliveryOption" value=delivery <?php if($deliveryOption === 'delivery') echo 'checked'; ?>>
                     <label for="delivery">Delivery</label>
-                    <input type="radio" id="cless_delivery" name="deliveryOption" value=cless_delivery>
+                    <input type="radio" id="cless_delivery" name="deliveryOption" value=cless_delivery <?php if($deliveryOption === 'cless_delivery') echo 'checked'; ?>>
                     <label for="cless_delivery">Contactless Delivery</label>
                 </section>
             </fieldset>
@@ -334,21 +334,16 @@ if (isset($_GET["btnSubmit"]) AND empty($errorMsg)) { //closing if marked with: 
                     foreach ($sandwiches as $sandwich) {
                         print '<p>';
                         $english_format_money = "$" . number_format($sandwich["Price"], 2, '.', ',');
-                        print '<input type="number" value="0" name="' . $sandwich["Sandwich_Name"] . '">';
+                        print '<input type="number" value="';
+
+                        if (isset($dict[$sandwich[ "Sandwich_Name"]]))
+                            echo $dict[$sandwich["Sandwich_Name"]];
+
+                        print '"name="' . $sandwich["Sandwich_Name"] . '">';
                         print '<label for="' . $sandwich["Sandwich_Name"] . '">' . $sandwich["Sandwich_Name"] . "      " .  $english_format_money . '</label>';
                         print '</p>';
                     }
                     ?>
-                </section>
-            </fieldset>
-
-            <fieldset class="instructions row">
-                <section class="col-25">
-                    <legend class="legend">Instructions</legend>
-                </section>
-                <section class="col-75">
-                    <label for="instructions">Please List Any Additional Instructions</label>
-                    <input type="text" id="instructions" name="instructions">
                 </section>
             </fieldset>
 
@@ -358,11 +353,11 @@ if (isset($_GET["btnSubmit"]) AND empty($errorMsg)) { //closing if marked with: 
                 </section>
                 <section class="col-75">
                     <label for="name">Name</label>
-                    <input type="text" id="name" name="name">
+                    <input type="text" id="name" name="name" value="<?php if (isset($name)) echo $name; ?>">
                     <label for="email">Email</label>
-                    <input type="text" id="email" name="email">
+                    <input type="text" id="email" name="email" value="<?php if (isset($email)) echo $email; ?>">
                     <label for="phone">Phone #</label>
-                    <input type="text" id="phone" name="phone">
+                    <input type="text" id="phone" name="phone" value="<?php if (isset($phone)) echo $phone; ?>">
                 </section>
             </fieldset>
 
@@ -372,13 +367,13 @@ if (isset($_GET["btnSubmit"]) AND empty($errorMsg)) { //closing if marked with: 
                 </section>
                 <section class="col-75">
                 <label for="street">Street Address</label>
-                <input type="text" id="street" name="street">
+                <input type="text" id="street" name="street" value="<?php if (isset($street)) echo $street; ?>">
                 <label for="town">Town</label>
-                <input type="text" id="town" name="town">
+                <input type="text" id="town" name="town" value="<?php if (isset($town)) echo $town; ?>">
                 <label for="state">State</label>
-                <input type="text" id="state" name="state">
+                <input type="text" id="state" name="state" value="<?php if (isset($state)) echo $state; ?>">
                 <label for="zip">Zip Code</label>
-                <input type="text" id="zip" name="zip">
+                <input type="text" id="zip" name="zip" value="<?php if (isset($zipcode)) echo $zipcode; ?>">
                 </section>
             </fieldset>
 

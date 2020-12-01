@@ -3,7 +3,7 @@ print PHP_EOL . '<!-- BEGIN include security -->' . PHP_EOL;
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // performs a simple security check to see if our page has submitted the form to itself
 function securityCheck($myFormURL = ""){
-    $debugThis = false; // you have to specifically want to test this
+    $debugThis = true; // you have to specifically want to test this
     
     $status = true; // start off thinking everything is ok
     
@@ -15,7 +15,7 @@ function securityCheck($myFormURL = ""){
         $fromPage = preg_replace('#^https?:#', '', $fromPage);
         
         if ($debugThis) {
-            print '<p>From: ' . $fromPage . ' should match your Url: ' . $myFormURL;
+            print '<p class="container">From: ' . trim($fromPage) . ' should match your Url: ' . trim($myFormURL);
         }
 
         if ($fromPage != $myFormURL) {
