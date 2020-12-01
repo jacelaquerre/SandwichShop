@@ -1,10 +1,9 @@
-/* General CSS */
+/*//////////////////////////////// General CSS /////////////////////////*/
 html{
   background-color: white;
 }
 
-/* Nav */
-/* Style the side navigation */
+/*//////////////////////////////////// Nav /////////////////////////*/
 nav {
   height: 100%;
   width: 200px;
@@ -15,14 +14,12 @@ nav {
   background-color: #eeeeee;
   overflow-x: hidden;
 }
-/* Side navigation links */
 nav a {
   color: black;
   text-decoration: none;
   padding: 16px;
   display: block;
 }
-/* Change color on hover */
 nav a:hover {
   background-color: black;
   color: #dddddd;
@@ -31,13 +28,14 @@ nav a:hover {
   background-color: grey;
   color: #dddddd;
 }
-/* Push everything over to account for nav */
+
+/*//////////////////////////// Account for Side Nav /////////////////////////*/
 .container, header, footer, main{
   margin-left: 200px;
   padding-left: 20px;
 }
 
-/* Form CSS */
+/*///////////////////////////////// Form /////////////////////////*/
 input[type=text], select, textarea {
   width: 100%;
   padding: 12px;
@@ -64,7 +62,7 @@ input[type=submit]:hover {
 }
 .form_container {
   border-radius: 5px;
-  background-color: #f2f2f2;
+  background-color: powderblue;
   padding: 20px;
 }
 .col-25 {
@@ -83,73 +81,20 @@ input[type=submit]:hover {
   display: table;
   clear: both;
 }
-/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
 button{
   width: 100%;
 }
+
+/*//////////////////////////////////// Resizing /////////////////////////*/
 @media screen and (max-width: 800px) {
   .col-25, .col-75, input[type=submit] {
     width: 100%;
     margin-top: 0;
   }
-  body{
-    font-size: larger;
-  }
-
-  input[type=submit]{
+  input[type=submit] {
     height: 10%;
   }
-
 }
-
-/**
-Quantity buttons
-Code taken from: https://embed.plnkr.co/B5waxZ/
- */
-/* -- quantity box -- */
-.quantity {
-  display: block; }
-.quantity .input-text.qty {
-  width: 35px;
-  height: 39px;
-  padding: 0 5px;
-  text-align: center;
-  background-color: transparent;
-  border: 1px solid #efefef;
-}
-.quantity.buttons_added {
-  text-align: left;
-  position: relative;
-  white-space: nowrap;
-  vertical-align: center; }
-.quantity.buttons_added input {
-  display: inline-block;
-  margin: 0;
-  vertical-align: top;
-  box-shadow: none;
-}
-.quantity.buttons_added .minus,
-.quantity.buttons_added .plus {
-  padding: 7px 10px 8px;
-  height: 41px;
-  background-color: #ffffff;
-  border: 1px solid #efefef;
-  cursor:pointer;}
-.quantity.buttons_added .minus {
-  border-right: 0; }
-.quantity.buttons_added .plus {
-  border-left: 0; }
-.quantity.buttons_added .minus:hover,
-.quantity.buttons_added .plus:hover {
-  background: #eeeeee; }
-.quantity input::-webkit-outer-spin-button,
-.quantity input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  margin: 0; }
-.quantity.buttons_added .minus:focus,
-.quantity.buttons_added .plus:focus {
-  outline: none; }
 
 /*//////////////////////////////////// JQuery Slider /////////////////////////*/
 * {box-sizing:border-box}
@@ -232,4 +177,4 @@ body {font-family: Verdana,sans-serif;}
 @media only screen and (max-width: 300px) {
   .prev, .next,.text {font-size: 11px}
 }
-/*/////////////////////////////// END JQuery Slider //////////////////////////*/
+
