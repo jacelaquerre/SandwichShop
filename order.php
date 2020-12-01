@@ -238,7 +238,7 @@ if (isset($_GET["btnSubmit"])) {
             $message .= ' = ' . htmlentities($value, ENT_QUOTES, "UTF-8") . '</p>';
         }
         */
-        
+
         //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         //
         // Mail to user
@@ -316,27 +316,7 @@ if (isset($_GET["btnSubmit"]) AND empty($errorMsg)) { //closing if marked with: 
                 <section class="col-25">
                     <legend class="legend">Select Your Sandwiches</legend>
                 </section>
-
-               <!-- <section class="col-75">
-                    <?php
-/*                    foreach ($sandwiches as $sandwich) {
-                        print '<section>';
-                        print '<div class="quantity buttons_added">';
-                        print'<input type="button" value="-" class="minus">';
-                        print '<input type="number" step="1" min="0" max="" name="' . $sandwich["Sandwich_Name"] . '" 
-                                value="0" title="Qty" class="input-text qty text" 
-                                size="4" pattern="" inputmode="">';
-                        print '<input type="button" value="+" class="plus">';
-                        print '</div>';
-
-                        print $sandwich["Sandwich_Name"]. "     ";
-                        $english_format_money = "$" . number_format($sandwich["Price"], 2, '.', ',');
-                        print $english_format_money;
-                        //print $sandwich["Description"];
-                        print '<section>';
-                    }
-                    */?>
-                </section>-->
+                
                 <section class="col-75">
                     <?php
                     foreach ($sandwiches as $sandwich) {
