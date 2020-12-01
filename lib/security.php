@@ -3,7 +3,7 @@ print PHP_EOL . '<!-- BEGIN include security -->' . PHP_EOL;
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // performs a simple security check to see if our page has submitted the form to itself
 function securityCheck($myFormURL = ""){
-    $debugThis = true; // you have to specifically want to test this
+    $debugThis = false; // you have to specifically want to test this
     
     $status = true; // start off thinking everything is ok
     

@@ -14,6 +14,7 @@ $street = "";
 $town = "";
 $state = "";
 $zipcode = 0;
+$messages = [];
 
 // Initialize error flags
 $deliveryOptionError = false;
@@ -86,7 +87,7 @@ if (isset($_GET["btnSubmit"])) {
     // 
     // SECTION: 2c Validation
     //
-    if ($deliveryOption != "pickup" and $deliveryOption != "delivery") {
+    if ($deliveryOption != "pickup" and $deliveryOption != "delivery" and $deliveryOption != "cless_delivery") {
         $errorMsg[] = "Please choose a delivery option.";
         $deliveryOptionError = true;
     }
@@ -165,9 +166,9 @@ if (isset($_GET["btnSubmit"])) {
         }
     }
 
-    if (!(preg_match('#[0-9]{5}#', $zipcode))) {
-        //$errorMsg[] = 'Your zipcode appears to be incorrect.';
-        //$zipcodeError = false;
+    if (!(preg_match('#[0-9]{5}#', $zipcode, $matches))) {
+        $errorMsg[] = 'Your zipcode appears to be incorrect.';
+        $zipcodeError = false;
     }
 
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -187,7 +188,9 @@ if (isset($_GET["btnSubmit"])) {
             $query = $thisDatabaseWriter->sanitizeQuery($query, 0, 0, 0, 0, 0);
             $thisDatabaseWriter->insert($query, array(null, 'now()', $deliveryOption));
             $orderID = $thisDatabaseWriter->lastInsert();
+            print '<h1>' . $orderID . '</h1>';
         }
+
         foreach($sandwiches as $sandwich) {
             if ($dict[$sandwich["Sandwich_Name"]] > 0) {
                 $query = "INSERT INTO `Cart`(`Cart_OrderNum`, `Cart_SandwhichCode`, `Cart_Quantity`) 
@@ -231,7 +234,7 @@ if (isset($_GET["btnSubmit"])) {
         // Mail to user
         //
 
-        $to = $email; // the person who filled out the form
+        $to = //$email; // the person who filled out the form
         $cc = 'mzahar@uvm.edu';
         $bcc = '';
 
@@ -245,13 +248,13 @@ if (isset($_GET["btnSubmit"])) {
 } // ends if from was submitted
 ?>
 
-<article id="main">
+<article id="main" class="container">
 
 <?php
 if (isset($_GET["btnSubmit"]) AND empty($errorMsg)) { //closing if marked with: end body submit
     print '<h2>Thank you for providing your information.</h2>';
 
-    print '<p>For your records a copy of this data has ';
+    print '<<p>For your records a copy of this data has ';
 
     if (!$mailed) {
         print "not ";
@@ -269,18 +272,18 @@ if (isset($_GET["btnSubmit"]) AND empty($errorMsg)) { //closing if marked with: 
     // Error Messages
     //
     if ($errorMsg) {
-        print '<div id="errors">' . PHP_EOL;
-        print '<h2>Your form has the following mistakes that need to be fixed.</h2>' . PHP_EOL;
+        print '<section id="errors">' . PHP_EOL;
+        print '<h3>Your form has the following mistakes that need to be fixed.</h3>' . PHP_EOL;
         print '<ol>' . PHP_EOL;
 
         foreach ($errorMsg as $err) {
             print '<li>' . $err . '</li>' . PHP_EOL;
         }
         print '</ol>' . PHP_EOL;
-        print '</div>' . PHP_EOL;
+        print '</section>' . PHP_EOL;
     }
     ?>
-    <main>
+    <section>
         <form action = "<?php print PHP_SELF; ?>"
               id="frmOption"
               method = "get"
@@ -290,11 +293,11 @@ if (isset($_GET["btnSubmit"]) AND empty($errorMsg)) { //closing if marked with: 
                     <legend>Delivery Option</legend>
                 </section>
                 <section class="col-75">
-                    <input type="radio" id="pickup" name="deliveryOption" value=0>
+                    <input type="radio" id="pickup" name="deliveryOption" value=pickup>
                     <label for="pickup">Pick Up</label>
-                    <input type="radio" id="delivery" name="deliveryOption" value=1>
+                    <input type="radio" id="delivery" name="deliveryOption" value=delivery>
                     <label for="delivery">Delivery</label>
-                    <input type="radio" id="cless_delivery" name="deliveryOption" value=2>
+                    <input type="radio" id="cless_delivery" name="deliveryOption" value=cless_delivery>
                     <label for="cless_delivery">Contactless Delivery</label>
                 </section>
             </fieldset>
@@ -388,7 +391,7 @@ if (isset($_GET["btnSubmit"]) AND empty($errorMsg)) { //closing if marked with: 
             </fieldset>
             <!-- ends submit button -->
         </form>
-    </main>
+    </section>
     <?php
     } //end body submit
     ?>
