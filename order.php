@@ -47,6 +47,8 @@ foreach ($sandwiches as $sandwich) {
 
 echo "<h6>Num " . $_GET["updateOrderNum"] . "</h6>";
 echo "<h6>Phone " . $_GET["updateOrderPhone"] . "</h6>";
+echo "<h6>Num " . $_POST["updateOrderNum"] . "</h6>";
+echo "<h6>Phone " . $_POST["updateOrderPhone"] . "</h6>";
 
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 //
