@@ -266,6 +266,11 @@ if (isset($_GET["btnSubmit"])) {
 <article id="main" class="container">
 
 <?php
+echo "<h6>Num " . $_GET["updateOrderNum"] . "</h6>";
+echo "<h6>Phone " . $_GET["updateOrderPhone"] . "</h6>";
+echo "<h6>Num " . $_POST["updateOrderNum"] . "</h6>";
+echo "<h6>Phone " . $_POST["updateOrderPhone"] . "</h6>";
+print_r($_GET);
 if (isset($_GET["btnSubmit"]) AND empty($errorMsg)) { //closing if marked with: end body submit
     print '<h2>Thank you for providing your information.</h2>';
 
