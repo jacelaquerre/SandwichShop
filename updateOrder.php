@@ -12,6 +12,8 @@ $phoneError = false;
 
 $errorMsg = array();
 
+print $updateOrderNum;
+
 if (isset($_GET["btnSubmit"])) {
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     //

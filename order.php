@@ -45,10 +45,6 @@ foreach ($sandwiches as $sandwich) {
     $dict[$sandwich["Sandwich_Name"]] = 0;
 }
 
-if ($GLOBALS['$updating']) {
-    print '<p>Reached updating</p>';
-}
-
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 //
 // Process for when the form is submitted
