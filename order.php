@@ -49,7 +49,7 @@ echo "<h6>Num " . $_GET["updateOrderNum"] . "</h6>";
 echo "<h6>Phone " . $_GET["updateOrderPhone"] . "</h6>";
 echo "<h6>Num " . $_POST["updateOrderNum"] . "</h6>";
 echo "<h6>Phone " . $_POST["updateOrderPhone"] . "</h6>";
-
+print_r($_GET);
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 //
 // Process for when the form is submitted
