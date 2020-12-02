@@ -3,7 +3,7 @@ include ("top.php");
 ?>
 <body>
     <main>
-        <p> Bob’s Sandwiches is a locally owned deli named after the professor who taught us how to make this website.
+        <p style="padding-left: 2em; padding-right: 2em;"> Bob’s Sandwiches is a locally owned deli named after the professor who taught us how to make this website.
             Established in Nov 2nd, 2020, with the hard work and commitment of Jace and Matt and loyal employees,
             the market strives to bring both quality and value to it’s customers.
             The market uses only Boar’s Head Brand meats and cheeses, the freshest produce, and locally baked bread in making its sandwiches.

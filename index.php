@@ -26,12 +26,13 @@ include ("top.php");
             <span class="dot" onclick="currentSlide(3)"></span>
         </section>
 
-        <p>
+        <p style="padding-left: 3em; padding-right: 3em">
             We have also worked to adapt during the Coronavirus pandemic which a special contactless delivery option and
             we have worked to keep our prices steady in the face of rising food costs. We appreciate your support for
             local businesses.
         </p>
-        <p> Bob’s Sandwiches is locally owned and operated and famous for the biggest and best sandwiches around.
+        <p style="padding-left: 3em; padding-right: 3em">
+            Bob’s Sandwiches is locally owned and operated and famous for the biggest and best sandwiches around.
             Bob’s also offers a full line of catering options including platters, party sandwiches, pastas and salads.
             Bob’s bakery is stocked with fresh baked muffins, breads, cookies and brownies.
             You can order online, for pickup or delivery. We also have catering options for small or large events.
