@@ -26,7 +26,7 @@ include ("top.php");
             <span class="dot" onclick="currentSlide(3)"></span>
         </section>
 
-        <p style="padding-left: 2em; padding-right: 2em">
+        <p style="padding-left: 3em; padding-right: 3em">
             We have also worked to adapt during the Coronavirus pandemic which a special contactless delivery option and
             we have worked to keep our prices steady in the face of rising food costs. We appreciate your support for
             local businesses.

@@ -8,6 +8,8 @@
         <meta name="description" content="CS148 final project">
         <script data-require="jquery@3.1.1" data-semver="3.1.1" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script src="js/quantity.js"></script>
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Nerko+One&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="css/custom4.css">
 
         <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
