@@ -35,6 +35,10 @@
         include LIB_PATH . '/Connect-With-Database.php';
 
         print '<!-- libraries complete-->';
+
+        // global update variables
+        $updateOrderNum = 0;
+        $updateOrderPhone = "";
         ?>
     </head>
     <!-- ######################   End of Page Top   ############################## -->
