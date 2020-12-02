@@ -105,29 +105,42 @@ if (isset($_GET["btnSubmit"])) {
     <p>If you wish to change your order after you have submitted it, you can do so by looking it up below.</p>
     <form action = "<?php print PHP_SELF; ?>"
           id="frmOption"
-          method = "get">
-        <fieldset class="contact">
-            <legend class="legend">Search by Order Number</legend>
-            <label for="order">Order #</label>
-            <input type="text" id="order" name="order">
+          method = "get"
+          class="form_container">
+        <fieldset class="contact row">
+            <section class="col-25">
+                <legend class="legend">Search by Order Number</legend>
+            </section>
+            <section class="col-75">
+                <label for="order">Order #</label>
+                <input type="text" id="order" name="order">
+            </section>
         </fieldset>
 
-        <fieldset class="contact">
-            <legend class="legend">Search by Phone Number</legend>
-            <label for="phone">Phone #</label>
-            <input type="text" id="phone" name="phone">
+        <fieldset class="contact row">
+            <section class="col-25">
+                <legend class="legend">Search by Phone Number</legend>
+            </section>
+            <section class="col-75">
+                <label for="phone">Phone #</label>
+                <input type="text" id="phone" name="phone">
+            </section>
         </fieldset>
 
         <!-- Start Submit button -->
-        <fieldset class="buttons">
-            <legend class="legend">Lookup Order</legend>
-            <input
-                    class="button"
-                    id="btnSubmit"
-                    name="btnSubmit"
-                    tabindex="1500"
-                    type="submit"
-                    value="Update">
+        <fieldset class="buttons row">
+            <section class="col-25">
+                <legend class="legend">Lookup Order</legend>
+            </section>
+            <section class="col-75">
+                <input
+                        class="button"
+                        id="btnSubmit"
+                        name="btnSubmit"
+                        tabindex="1500"
+                        type="submit"
+                        value="Update">
+            </section>
         </fieldset>
         <!-- ends submit button -->
     </form>
