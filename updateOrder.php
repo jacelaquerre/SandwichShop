@@ -26,7 +26,7 @@ if (isset($_GET["btnSubmit"])) {
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     //
     // Sanitize (clean) data
-    $orderNum = htmlentities($_GET["phone"], ENT_QUOTES, "UTF-8");
+    $orderNum = htmlentities($_GET["order"], ENT_QUOTES, "UTF-8");
     $phone = htmlentities($_GET["phone"], ENT_QUOTES, "UTF-8");
     //eliminate every char except 0-9
     $phone = preg_replace("/[^0-9]/", '', $phone);
@@ -103,7 +103,7 @@ if (isset($_GET["btnSubmit"])) {
     <p>If you wish to change your order after you have submitted it, you can do so by looking it up below.</p>
     <form action = "<?php print PHP_SELF; ?>"
           id="frmOption"
-          method = "post">
+          method = "get">
         <fieldset class="contact">
             <legend class="legend">Search by Order Number</legend>
             <label for="order">Order #</label>
@@ -112,8 +112,8 @@ if (isset($_GET["btnSubmit"])) {
 
         <fieldset class="contact">
             <legend class="legend">Search by Phone Number</legend>
-            <label for="order">Phone #</label>
-            <input type="text" id="order" name="order">
+            <label for="phone">Phone #</label>
+            <input type="text" id="phone" name="phone">
         </fieldset>
 
         <!-- Start Submit button -->
