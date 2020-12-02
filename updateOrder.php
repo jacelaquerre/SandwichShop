@@ -73,8 +73,10 @@ if (isset($_GET["btnSubmit"])) {
         if ($orderNum != "" and $phone == "") {
 //            $_GET['updateOrderNum'] = $orderNum;
 //            $_GET['updateOrderPhone']= "";
+
             $location = 'Location: https://jlaquerr.w3.uvm.edu/cs148/live-final/order.php' . '?updateOrderNum=' . strval($orderNum);
-            header($location);
+            print '<script type="text/javascript">location.href = ' . $location . ';</script>';
+            //header($location);
         } else if ($orderNum == "" and $phone != "") {
 //            $_GET['updateOrderNum'] = 0;
 //            $_GET['updateOrderPhone'] = $phone;
@@ -82,7 +84,7 @@ if (isset($_GET["btnSubmit"])) {
         }
         //$GLOBALS['$updating'] = true;
         //$updating = true;
-        header('Location: https://jlaquerr.w3.uvm.edu/cs148/live-final/order.php');
+        //header('Location: https://jlaquerr.w3.uvm.edu/cs148/live-final/order.php');
     } else {
         print '';
 
