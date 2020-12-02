@@ -37,8 +37,13 @@
         print '<!-- libraries complete-->';
 
         // global update variables
-        $updateOrderNum = 0;
-        $updateOrderPhone = "";
+        $GLOBALS['updateOrderNum'] = 0;
+        $GLOBALS['updateOrderPhone'] = "";
+        $GLOBALS['$updating'] = false;
+
+//        $updateOrderNum = 0;
+//        $updateOrderPhone = "";
+//        $updating = false;
         ?>
     </head>
     <!-- ######################   End of Page Top   ############################## -->
