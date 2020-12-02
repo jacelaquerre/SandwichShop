@@ -45,6 +45,8 @@ foreach ($sandwiches as $sandwich) {
     $dict[$sandwich["Sandwich_Name"]] = 0;
 }
 
+print $_GET['updateOrderNum'];
+
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 //
 // Process for when the form is submitted

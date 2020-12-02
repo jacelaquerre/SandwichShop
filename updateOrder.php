@@ -73,11 +73,11 @@ if (isset($_GET["btnSubmit"])) {
         //
         // This block saves the data to the global variables in top to pass to next form
         if ($orderNum != "" and $phone == "") {
-            $GLOBALS['updateOrderNum'] = $orderNum;
-            $GLOBALS['updateOrderPhone'] = "";
+            $_GET['updateOrderNum'] = $orderNum;
+            $_GET['updateOrderPhone']= "";
         } else if ($orderNum == "" and $phone != "") {
-            $GLOBALS['updateOrderNum'] = 0;
-            $GLOBALS['updateOrderPhone'] = $phone;
+            $_GET['updateOrderNum'] = 0;
+            $_GET['updateOrderPhone'] = $phone;
         }
         //$GLOBALS['$updating'] = true;
         $updating = true;
