@@ -41,9 +41,10 @@
         $GLOBALS['updateOrderPhone'] = "";
         $GLOBALS['$updating'] = false;
 
-//        $updateOrderNum = 0;
-//        $updateOrderPhone = "";
-//        $updating = false;
+        global $updateOrderNum;
+        $updateOrderNum = 0;
+        $updateOrderPhone = "";
+        $updating = false;
         ?>
     </head>
     <!-- ######################   End of Page Top   ############################## -->

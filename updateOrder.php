@@ -77,7 +77,8 @@ if (isset($_GET["btnSubmit"])) {
             $GLOBALS['updateOrderNum'] = 0;
             $GLOBALS['updateOrderPhone'] = $phone;
         }
-        $GLOBALS['$updating'] = true;
+        //$GLOBALS['$updating'] = true;
+        $updating = true;
         header('Location: https://jlaquerr.w3.uvm.edu/cs148/live-final/order.php');
     } else {
         print '';
