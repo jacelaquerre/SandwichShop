@@ -299,6 +299,7 @@ if (isset($_GET["btnSubmit"]) AND empty($errorMsg)) { //closing if marked with: 
     ?>
     <section>
         <?php
+        print $GLOBALS['$updating'];
         if ($GLOBALS['$updating']) {
             print '<p>Reached updating</p>';
         }
