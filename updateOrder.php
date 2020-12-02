@@ -17,11 +17,11 @@ if (isset($_GET["btnSubmit"])) {
     //
     // Security
     //
-    if (securityCheck($thisURL)) {
-        $msg = '<p class="container">Sorry you cannot access this page. ';
-        $msg .= 'Security breach detected and reported.</p>';
-        print($msg);
-    }
+    //    if (securityCheck($thisURL)) {
+    //        $msg = '<p class="container">Sorry you cannot access this page. ';
+    //        $msg .= 'Security breach detected and reported.</p>';
+    //        print($msg);
+    //    }
 
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     //

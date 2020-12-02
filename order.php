@@ -4,17 +4,70 @@ include ("top.php");
 // Get URL
 $thisURL = DOMAIN . PHP_SELF;
 
-// Initialize variables
-$deliveryOption = "pickup";
-$instructions = "";
-$name = "";
-$phone = "";
-$email = "";
-$street = "";
-$town = "";
-$state = "";
-$zipcode = "";
-$messages = [];
+$updateOrderNum = 0;
+$updateOrderPhone = "";
+$updating = false;
+
+if ($_GET["updateOrderNum"] != 58) {
+    $updateOrderNum = $_GET["updateOrderNum"];
+    $updating = true;
+
+//    $query = "$sql = "SELECT `fldFirstName`, `fldLastName`, ` Subj`, `#`, `Title`, `Start Time`, `End Time`, `Days`, `Bldg`, `Room` , `Instructor`
+//              FROM `tblEnrollments`
+//         LEFT JOIN tblStudentEnrollments As enroll ON enroll.pfkEnrollmentId = `pfkEnrollmentId`
+//         LEFT JOIN tblStudents ON pmkNetId = `pfkStudentNetId`
+//             WHERE  `pmkEnrollmentId` = enroll.pfkEnrollmentId
+//          ORDER BY `tblEnrollments`.`Start Time` ASC";";
+
+    $query = "SELECT `Order_Type`, `Customer_Name`, `Customer_Street`, `Customer_City`, `Customer_State`, 
+    `Customer_Zip`, `Customer_Email`, `Customer_Phone`, `Cart_OrderNum`, `Cart_SandwhichCode`, `Cart_Quantity`
+                FROM `Orders`
+           LEFT JOIN ";
+
+    if ($thisDatabaseReader->querySecurityOk($query, 0, 0, 0, 0, 0)) {
+        $query = $thisDatabaseReader->sanitizeQuery($query, 0, 0, 0, 0, 0);
+        $sandwiches = $thisDatabaseReader->select($query, '');
+    }
+
+    foreach ($sandwiches as $sandwich) {
+        $dict[$sandwich["Sandwich_Name"]] = 0;
+    }
+
+} elseif ($_GET["updateOrderPhone"] != "asdasdad") {
+    $updateOrderPhone = $_GET["updateOrderPhone"];
+    $updating = true;
+
+    $query = "";
+
+    if ($thisDatabaseReader->querySecurityOk($query, 0, 0, 0, 0, 0)) {
+        $query = $thisDatabaseReader->sanitizeQuery($query, 0, 0, 0, 0, 0);
+        $sandwiches = $thisDatabaseReader->select($query, '');
+    }
+
+} else {
+    // Initialize variables
+    $deliveryOption = "pickup";
+    $instructions = "";
+    $name = "";
+    $phone = "";
+    $email = "";
+    $street = "";
+    $town = "";
+    $state = "";
+    $zipcode = "";
+    $messages = [];
+
+    $query = "SELECT * FROM `Sandwiches`";
+
+    if ($thisDatabaseReader->querySecurityOk($query, 0, 0, 0, 0, 0)) {
+        $query = $thisDatabaseReader->sanitizeQuery($query, 0, 0, 0, 0, 0);
+        $sandwiches = $thisDatabaseReader->select($query, '');
+    }
+
+    foreach ($sandwiches as $sandwich) {
+        $dict[$sandwich["Sandwich_Name"]] = 0;
+    }
+}
 
 // Initialize error flags
 $deliveryOptionError = false;
@@ -34,22 +87,6 @@ $mailed = false;
 
 $dict = array();
 
-$query = "SELECT * FROM `Sandwiches`";
-
-if ($thisDatabaseReader->querySecurityOk($query, 0, 0, 0, 0, 0)) {
-    $query = $thisDatabaseReader->sanitizeQuery($query, 0, 0, 0, 0, 0);
-    $sandwiches = $thisDatabaseReader->select($query, '');
-}
-
-foreach ($sandwiches as $sandwich) {
-    $dict[$sandwich["Sandwich_Name"]] = 0;
-}
-
-echo "<h6>Num " . $_GET["updateOrderNum"] . "</h6>";
-echo "<h6>Phone " . $_GET["updateOrderPhone"] . "</h6>";
-echo "<h6>Num " . $_POST["updateOrderNum"] . "</h6>";
-echo "<h6>Phone " . $_POST["updateOrderPhone"] . "</h6>";
-print_r($_GET);
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 //
 // Process for when the form is submitted
@@ -59,11 +96,11 @@ if (isset($_GET["btnSubmit"])) {
     //
     // Security
     //
-    if (securityCheck($thisURL)) {
-        $msg = '<p class="container">Sorry you cannot access this page. ';
-        $msg .= 'Security breach detected and reported.</p>';
-        print($msg);
-    }
+    //    if (securityCheck($thisURL)) {
+    //        $msg = '<p class="container">Sorry you cannot access this page. ';
+    //        $msg .= 'Security breach detected and reported.</p>';
+    //        print($msg);
+    //    }
 
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     //
@@ -98,14 +135,14 @@ if (isset($_GET["btnSubmit"])) {
     }
 
     foreach ($dict as $quantity) {
-//        if (!verifyAlphaNum($quantity)) {
-//            $errorMsg[] = "Your sandwich quantity values appear to be incorrect.";
-//            $quantityError = true;
-//        }
-//        if ($quantity < 0) {
-//            $errorMsg[] = "Your sandwich quantity values cannot be negative.";
-//            $quantityError = true;
-//        }
+        if (!verifyNumeric($quantity)) {
+            $errorMsg[] = "Your sandwich quantity values appear to be incorrect.";
+            $quantityError = true;
+        }
+        if ($quantity < 0) {
+            $errorMsg[] = "Your sandwich quantity values cannot be negative.";
+            $quantityError = true;
+        }
     }
 
     if ($instructions != "") {
@@ -186,12 +223,22 @@ if (isset($_GET["btnSubmit"])) {
         // Save Data
         //
         // This block saves the data to the SQL database
-        $orderID = 0;
-        $query = "INSERT INTO `Orders`(`Order_Num`, `Order_Date`, `Order_Type`) 
-                       VALUES (?,?,?)";
+        $customerID = 0;
+        $query = "INSERT INTO `Customer`(`Customer_ID`, `Customer_Name`, `Customer_Street`, 
+                       `Customer_City`, `Customer_State`, `Customer_Zip`, `Customer_Email`, `Customer_Phone`) 
+                       VALUES (?,?,?,?,?,?,?,?)";
         if ($thisDatabaseWriter->querySecurityOk($query, 0, 0, 0, 0, 0)) {
             $query = $thisDatabaseWriter->sanitizeQuery($query, 0, 0, 0, 0, 0);
-            $thisDatabaseWriter->insert($query, array(null, 'now()', $deliveryOption));
+            $thisDatabaseWriter->insert($query, array(null, $name, $street, $town, $state, strval($zipcode), $email, $phone));
+            $customerID = $thisDatabaseWriter->lastInsert();
+        }
+
+        $orderID = 0;
+        $query = "INSERT INTO `Orders`(`Order_Num`, `Order_Date`, `Order_Type`, `cust_id`)
+                       VALUES (?,?,?,?)";
+        if ($thisDatabaseWriter->querySecurityOk($query, 0, 0, 0, 0, 0)) {
+            $query = $thisDatabaseWriter->sanitizeQuery($query, 0, 0, 0, 0, 0);
+            $thisDatabaseWriter->insert($query, array(null, 'now()', $deliveryOption, $customerID));
             $orderID = $thisDatabaseWriter->lastInsert();
             print '<h1>' . $orderID . '</h1>';
         }
@@ -205,14 +252,6 @@ if (isset($_GET["btnSubmit"])) {
                     $thisDatabaseWriter->insert($query, array($orderID, $sandwich["Sandwich_Code"], $dict[$sandwich["Sandwich_Name"]]));
                 }
             }
-        }
-
-        $query = "INSERT INTO `Customer`(`Customer_ID`, `Customer_Name`, `Customer_Street`, 
-                       `Customer_City`, `Customer_State`, `Customer_Zip`, `Customer_Email`, `Customer_Phone`) 
-                       VALUES (?,?,?,?,?,?,?,?)";
-        if ($thisDatabaseWriter->querySecurityOk($query, 0, 0, 0, 0, 0)) {
-            $query = $thisDatabaseWriter->sanitizeQuery($query, 0, 0, 0, 0, 0);
-            $thisDatabaseWriter->insert($query, array(null, $name, $street, $town, $state, strval($zipcode), $email, $phone));
         }
 
         //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -266,11 +305,6 @@ if (isset($_GET["btnSubmit"])) {
 <article id="main" class="container">
 
 <?php
-echo "<h6>Num " . $_GET["updateOrderNum"] . "</h6>";
-echo "<h6>Phone " . $_GET["updateOrderPhone"] . "</h6>";
-echo "<h6>Num " . $_POST["updateOrderNum"] . "</h6>";
-echo "<h6>Phone " . $_POST["updateOrderPhone"] . "</h6>";
-print_r($_GET);
 if (isset($_GET["btnSubmit"]) AND empty($errorMsg)) { //closing if marked with: end body submit
     print '<h2>Thank you for providing your information.</h2>';
 

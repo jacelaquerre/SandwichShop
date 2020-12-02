@@ -38,8 +38,6 @@
 
         print '<!-- libraries complete-->';
 
-        $updateOrderNum = 0;
-        $updateOrderPhone = "";
         ?>
     </head>
     <!-- ######################   End of Page Top   ############################## -->
