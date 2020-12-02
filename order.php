@@ -298,6 +298,11 @@ if (isset($_GET["btnSubmit"]) AND empty($errorMsg)) { //closing if marked with: 
     }
     ?>
     <section>
+        <?php
+        if ($GLOBALS['$updating']) {
+            print '<p>Reached updating</p>';
+        }
+        ?>
         <form action = "<?php print PHP_SELF; ?>"
               id="frmOption"
               method = "get"
