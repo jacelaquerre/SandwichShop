@@ -12,8 +12,6 @@ $phoneError = false;
 
 $errorMsg = array();
 
-print $updateOrderNum;
-
 if (isset($_GET["btnSubmit"])) {
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     //
@@ -73,12 +71,13 @@ if (isset($_GET["btnSubmit"])) {
         //
         // This block saves the data to the global variables in top to pass to next form
         if ($orderNum != "" and $phone == "") {
-            $_GET['updateOrderNum'] = $orderNum;
-            $_GET['updateOrderPhone']= "";
-            header('Location: https://jlaquerr.w3.uvm.edu/cs148/live-final/order.php' . '?updateOrderNum=' . strval($orderNum));
+//            $_GET['updateOrderNum'] = $orderNum;
+//            $_GET['updateOrderPhone']= "";
+            $location = 'Location: https://jlaquerr.w3.uvm.edu/cs148/live-final/order.php' . '?updateOrderNum=' . strval($orderNum);
+            header($location);
         } else if ($orderNum == "" and $phone != "") {
-            $_GET['updateOrderNum'] = 0;
-            $_GET['updateOrderPhone'] = $phone;
+//            $_GET['updateOrderNum'] = 0;
+//            $_GET['updateOrderPhone'] = $phone;
             header('Location: https://jlaquerr.w3.uvm.edu/cs148/live-final/order.php' . '?updateOrderPhone=' . $phone);
         }
         //$GLOBALS['$updating'] = true;

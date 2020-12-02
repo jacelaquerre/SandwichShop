@@ -45,9 +45,8 @@ foreach ($sandwiches as $sandwich) {
     $dict[$sandwich["Sandwich_Name"]] = 0;
 }
 
-if ($_GET['updateOrderNum'] != 0) {
-    print '<p>reached</p>';
-}
+echo "<h6>Num " . $_GET["updateOrderNum"] . "</h6>";
+echo "<h6>Phone " . $_GET["updateOrderPhone"] . "</h6>";
 
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 //
