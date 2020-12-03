@@ -43,7 +43,7 @@ if (isset($_GET["updateOrderNum"])) {
         $query = $thisDatabaseReader->sanitizeQuery($query, 1, 0, 1, 0, 0);
         $records = $thisDatabaseReader->select($query, array($updateOrderNum));
     }
-    print_r($records);
+    print($records);
     foreach ($records as $record) {
         $deliveryOption = $record['Order_Type'];
         $name = $record['Customer_Name'];
@@ -330,7 +330,6 @@ if (isset($_GET["btnSubmit"]) AND empty($errorMsg)) { //closing if marked with: 
     }
     ?>
     <section>
-        <?php print_r($dict); ?>
         <form action = "<?php print PHP_SELF; ?>"
               id="frmOption"
               method = "get"
