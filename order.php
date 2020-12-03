@@ -43,7 +43,7 @@ if (isset($_GET["updateOrderNum"])) {
         $query = $thisDatabaseReader->sanitizeQuery($query, 1, 0, 1, 0, 0);
         $records = $thisDatabaseReader->select($query, array($updateOrderNum));
     }
-    print($records);
+    print_r($records);
     foreach ($records as $record) {
         $deliveryOption = $record['Order_Type'];
         $name = $record['Customer_Name'];

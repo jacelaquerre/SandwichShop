@@ -48,7 +48,7 @@ if (isset($_GET["btnSubmit"])) {
         // Save Data
         //
         // This block saves the data to the global variables in top to pass to next form
-        header('Location: https://mzahar.w3.uvm.edu/cs148/final/order.php' . '?updateOrderNum=' . strval($orderNum));
+        header('Location: https://jlaquerr.w3.uvm.edu/cs148/final/order.php' . '?updateOrderNum=' . strval($orderNum));
     } else {
         print '';
 
