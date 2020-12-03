@@ -18,12 +18,12 @@ if ($_GET["updateOrderNum"] != "-1") {
     $query = "SELECT * FROM `Orders` 
            LEFT JOIN Customer ON Customer.Customer_ID = cust_id
            LEFT JOIN Cart ON Cart.Cart_OrderNum = Order_Num
-           LEFT JOIN Sandwiches on Sandwiches.Sandwich_Code = Cart.Cart_SandwhichCode
+           LEFT JOIN Sandwiches ON Sandwiches.Sandwich_Code = Cart.Cart_SandwhichCode
                WHERE Order_Num = " . $updateOrderNum;
     print $query;
     if ($thisDatabaseReader->querySecurityOk($query, 1, 0, 0, 0, 0)) {
         print '<p>reached ifffffffffffffffffffffffffffffffffffffffffffff</p>';
-        $query = $thisDatabaseReader->sanitizeQuery($query, 0, 0, 0, 0, 0);
+        $query = $thisDatabaseReader->sanitizeQuery($query, 1, 0, 1, 0, 0);
         $records = $thisDatabaseReader->select($query, '');
     }
 
