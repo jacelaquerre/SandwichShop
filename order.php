@@ -5,7 +5,6 @@ include ("top.php");
 $thisURL = DOMAIN . PHP_SELF;
 
 $updateOrderNum = -1;
-$updateOrderPhone = "";
 $updating = false;
 
 if ($_GET["updateOrderNum"] != -1) {
@@ -43,7 +42,6 @@ if ($_GET["updateOrderNum"] != -1) {
         $record['Cart_SandwhichCode'];
         print PHP_EOL;
     }
-
 } else {
     // Initialize variables
     $deliveryOption = "pickup";
@@ -278,7 +276,7 @@ if (isset($_GET["btnSubmit"])) {
         // Mail to user
         //
 
-        $to = //$email; // the person who filled out the form
+        $to = $email; // the person who filled out the form
         $cc = 'mzahar@uvm.edu';
         $bcc = '';
 
