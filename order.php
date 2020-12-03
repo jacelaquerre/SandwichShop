@@ -43,6 +43,7 @@ if ($_GET["updateOrderNum"] != -1) {
         print PHP_EOL;
     }
 } else {
+    print '<p>reached elseeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee</p>';
     // Initialize variables
     $deliveryOption = "pickup";
     $name = "";
