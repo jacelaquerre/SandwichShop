@@ -213,7 +213,9 @@ if (isset($_GET["btnSubmit"])) {
         // Save Data
         //
         // This block saves the data to the SQL database
+        print ($updateOrderNum);
         if ($updateOrderNum != "") {
+            print '<p>ifffffffffffffffffffffffffffffffffff</p>';
             $query = "UPDATE `Customer` 
                          SET `Customer_Name`= ?,
                              `Customer_Street`= ?, `Customer_City`= ?,`Customer_State`= ?,
@@ -224,6 +226,7 @@ if (isset($_GET["btnSubmit"])) {
                 $thisDatabaseWriter->update($query, array($name, $street, $town, $state, strval($zipcode), $email, $phone, $customerID));
             }
         } else {
+            print '<p>elseeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee</p>';
             $query = "INSERT INTO `Customer`(`Customer_ID`, `Customer_Name`, `Customer_Street`, 
                        `Customer_City`, `Customer_State`, `Customer_Zip`, `Customer_Email`, `Customer_Phone`) 
                        VALUES (?,?,?,?,?,?,?,?)";
