@@ -4,50 +4,49 @@ include ("top.php");
 // Get URL
 $thisURL = DOMAIN . PHP_SELF;
 
-$updateOrderNum = 0;
+$updateOrderNum = -1;
 $updateOrderPhone = "";
 $updating = false;
 
-if ($_GET["updateOrderNum"] != 58) {
+if ($_GET["updateOrderNum"] != -1) {
     $updateOrderNum = $_GET["updateOrderNum"];
     $updating = true;
 
-//    $query = "$sql = "SELECT `fldFirstName`, `fldLastName`, ` Subj`, `#`, `Title`, `Start Time`, `End Time`, `Days`, `Bldg`, `Room` , `Instructor`
-//              FROM `tblEnrollments`
-//         LEFT JOIN tblStudentEnrollments As enroll ON enroll.pfkEnrollmentId = `pfkEnrollmentId`
-//         LEFT JOIN tblStudents ON pmkNetId = `pfkStudentNetId`
-//             WHERE  `pmkEnrollmentId` = enroll.pfkEnrollmentId
-//          ORDER BY `tblEnrollments`.`Start Time` ASC";";
+//    $query = "SELECT `Order_Type`, `Customer_Name`, `Customer_Street`, `Customer_City`, `Customer_State`,
+//    `Customer_Zip`, `Customer_Email`, `Customer_Phone`, `Cart_OrderNum`, `Cart_SandwhichCode`, `Cart_Quantity`
+//                FROM `Orders`
+//           LEFT JOIN ";
+    $query = "SELECT * FROM `Orders` 
+           LEFT JOIN Customer ON Customer.Customer_ID = cust_id
+           LEFT JOIN Cart ON Cart.Cart_OrderNum = Order_Num
+           LEFT JOIN Sandwiches on Sandwiches.Sandwich_Code = Cart.Cart_SandwhichCode
+               WHERE Order_Num = " . $updateOrderNum;
 
-    $query = "SELECT `Order_Type`, `Customer_Name`, `Customer_Street`, `Customer_City`, `Customer_State`, 
-    `Customer_Zip`, `Customer_Email`, `Customer_Phone`, `Cart_OrderNum`, `Cart_SandwhichCode`, `Cart_Quantity`
-                FROM `Orders`
-           LEFT JOIN ";
-
-    if ($thisDatabaseReader->querySecurityOk($query, 0, 0, 0, 0, 0)) {
-        $query = $thisDatabaseReader->sanitizeQuery($query, 0, 0, 0, 0, 0);
-        $sandwiches = $thisDatabaseReader->select($query, '');
+    if ($thisDatabaseReader->querySecurityOk($query, 1, 3, 2, 0, 0)) {
+        print '<p>reached ifffffffffffffffffffffffffffffffffffffffffffff</p>';
+        $query = $thisDatabaseReader->sanitizeQuery($query, 0, 0, 1, 0, 0);
+        $records = $thisDatabaseReader->select($query, '');
     }
 
-    foreach ($sandwiches as $sandwich) {
-        $dict[$sandwich["Sandwich_Name"]] = 0;
-    }
+    print_r($records);
 
-} elseif ($_GET["updateOrderPhone"] != "asdasdad") {
-    $updateOrderPhone = $_GET["updateOrderPhone"];
-    $updating = true;
-
-    $query = "";
-
-    if ($thisDatabaseReader->querySecurityOk($query, 0, 0, 0, 0, 0)) {
-        $query = $thisDatabaseReader->sanitizeQuery($query, 0, 0, 0, 0, 0);
-        $sandwiches = $thisDatabaseReader->select($query, '');
+    foreach ($records as $record) {
+        $deliveryOption = $record['Order_Type'];
+        $name = $record['Customer_Name'];
+        $street = $record['Customer_Street'];
+        $town = $record['Customer_City'];
+        $state = $record['Customer_State'];
+        $zipcode = $record['Customer_Zip'];
+        $email = $record['Customer_Email'];
+        $phone = $record['Customer_Phone'];
+        $record['Cart_OrderNum'];
+        $record['Cart_SandwhichCode'];
+        print PHP_EOL;
     }
 
 } else {
     // Initialize variables
     $deliveryOption = "pickup";
-    $instructions = "";
     $name = "";
     $phone = "";
     $email = "";
@@ -72,7 +71,6 @@ if ($_GET["updateOrderNum"] != 58) {
 // Initialize error flags
 $deliveryOptionError = false;
 $quantityError = false;
-$instructionsError = false;
 $nameError = false;
 $phoneError = false;
 $emailError = false;
@@ -110,7 +108,6 @@ if (isset($_GET["btnSubmit"])) {
     foreach ($sandwiches as $sandwich) {
         $dict[$sandwich["Sandwich_Name"]] = htmlentities($_GET[$sandwich["Sandwich_Name"]], ENT_QUOTES, "UTF-8");
     }
-    $instructions = htmlentities($_GET["instructions"], ENT_QUOTES, "UTF-8");
     $name = htmlentities($_GET["name"], ENT_QUOTES, "UTF-8");
     $email = filter_var($_GET["email"], FILTER_SANITIZE_EMAIL);
     $phone = htmlentities($_GET["phone"], ENT_QUOTES, "UTF-8");
@@ -142,13 +139,6 @@ if (isset($_GET["btnSubmit"])) {
         if ($quantity < 0) {
             $errorMsg[] = "Your sandwich quantity values cannot be negative.";
             $quantityError = true;
-        }
-    }
-
-    if ($instructions != "") {
-        if (!verifyAlphaNum($instructions)) {
-            $errorMsg[] = "Your comments appear to have extra characters that are not allowed.";
-            $instructionsError = true;
         }
     }
 

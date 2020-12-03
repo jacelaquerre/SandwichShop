@@ -5,10 +5,8 @@ include ("top.php");
 $thisURL = DOMAIN . PHP_SELF;
 
 $orderNum = 0;
-$phone = "";
 
 $orderNumError = false;
-$phoneError = false;
 
 $errorMsg = array();
 
@@ -27,39 +25,19 @@ if (isset($_GET["btnSubmit"])) {
     //
     // Sanitize (clean) data
     $orderNum = htmlentities($_GET["order"], ENT_QUOTES, "UTF-8");
-    $phone = htmlentities($_GET["phone"], ENT_QUOTES, "UTF-8");
-    //eliminate every char except 0-9
-    $phone = preg_replace("/[^0-9]/", '', $phone);
-    //eliminate leading 1 if its there
-    if (strlen($phone) == 11) {
-        $phone = preg_replace("/^1/", '', $phone);
-    }
 
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     //
     // SECTION: 2c Validation
     //
-    if ($orderNum == "" and $phone == "") {
-        $errorMsg[] = 'Please enter either your order number or phone number.';
+    if ($orderNum == "") {
+        $errorMsg[] = 'Please enter your order number.';
         $orderNumError = true;
+    } elseif (!verifyNumeric($orderNum)) {
+        $errorMsg[] = 'Your order number appears to be incorrect.';
         $phoneError = true;
-    } else if ($orderNum != "" and $phone == "") {
-        if ($orderNum == "") {
-            $errorMsg[] = 'Please enter your order number.';
-            $orderNumError = true;
-        } elseif (!verifyNumeric($orderNum)) {
-            $errorMsg[] = 'Your order number appears to be incorrect.';
-            $phoneError = true;
-        }
-    } else if ($orderNum == "" and $phone != "") {
-        if ($phone == "" or strlen($phone) != 10) {
-            $errorMsg[] = 'Please enter your phone number.';
-            $phoneError = true;
-        } elseif (!verifyPhone($phone)) {
-            $errorMsg[] = 'Your phone number appears to be incorrect.';
-            $phoneError = true;
-        }
     }
+
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     //
     // Process Form - Passed Validation
@@ -70,11 +48,7 @@ if (isset($_GET["btnSubmit"])) {
         // Save Data
         //
         // This block saves the data to the global variables in top to pass to next form
-        if ($orderNum != "" and $phone == "") {
-            header('Location: https://jlaquerr.w3.uvm.edu/cs148/live-final/order.php' . '?updateOrderNum=' . strval($orderNum));
-        } else if ($orderNum == "" and $phone != "") {
-            header('Location: https://jlaquerr.w3.uvm.edu/cs148/live-final/order.php' . '?updateOrderPhone=' . $phone);
-        }
+        header('Location: https://jlaquerr.w3.uvm.edu/cs148/live-final/order.php' . '?updateOrderNum=' . strval($orderNum));
     } else {
         print '';
 
@@ -109,16 +83,6 @@ if (isset($_GET["btnSubmit"])) {
             <section class="col-75">
                 <label for="order">Order #</label>
                 <input type="text" id="order" name="order">
-            </section>
-        </fieldset>
-
-        <fieldset class="contact row">
-            <section class="col-25">
-                <legend class="legend">Search by Phone Number</legend>
-            </section>
-            <section class="col-75">
-                <label for="phone">Phone #</label>
-                <input type="text" id="phone" name="phone">
             </section>
         </fieldset>
 
