@@ -71,9 +71,9 @@ if (isset($_GET["btnSubmit"])) {
         //
         // This block saves the data to the global variables in top to pass to next form
         if ($orderNum != "" and $phone == "") {
-            header('Location: https://jlaquerr.w3.uvm.edu/cs148/live-final/order.php' . '?updateOrderNum=' . strval($orderNum));
+            header('Location: https://mzahar.w3.uvm.edu/cs148/final/order.php' . '?updateOrderNum=' . strval($orderNum));
         } else if ($orderNum == "" and $phone != "") {
-            header('Location: https://jlaquerr.w3.uvm.edu/cs148/live-final/order.php' . '?updateOrderPhone=' . $phone);
+            header('Location: https://mzahar.w3.uvm.edu/cs148/final/order.php' . '?updateOrderPhone=' . $phone);
         }
     } else {
         print '';
