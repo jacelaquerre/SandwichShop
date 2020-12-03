@@ -4,10 +4,10 @@ include ("top.php");
 // Get URL
 $thisURL = DOMAIN . PHP_SELF;
 
-$updateOrderNum = -1;
+$updateOrderNum = "-1";
 $updating = false;
 
-if ($_GET["updateOrderNum"] != -1) {
+if ($_GET["updateOrderNum"] != "-1") {
     $updateOrderNum = $_GET["updateOrderNum"];
     $updating = true;
 
@@ -19,8 +19,7 @@ if ($_GET["updateOrderNum"] != -1) {
            LEFT JOIN Customer ON Customer.Customer_ID = cust_id
            LEFT JOIN Cart ON Cart.Cart_OrderNum = Order_Num
            LEFT JOIN Sandwiches on Sandwiches.Sandwich_Code = Cart.Cart_SandwhichCode
-               WHERE Order_Num = 20";
-    print Strval($updateOrderNum);
+               WHERE Order_Num = " . $updateOrderNum;
     print $query;
     if ($thisDatabaseReader->querySecurityOk($query, 1, 3, 2, 0, 0)) {
         print '<p>reached ifffffffffffffffffffffffffffffffffffffffffffff</p>';
