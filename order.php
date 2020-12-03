@@ -19,7 +19,8 @@ if ($_GET["updateOrderNum"] != -1) {
            LEFT JOIN Customer ON Customer.Customer_ID = cust_id
            LEFT JOIN Cart ON Cart.Cart_OrderNum = Order_Num
            LEFT JOIN Sandwiches on Sandwiches.Sandwich_Code = Cart.Cart_SandwhichCode
-               WHERE Order_Num = " . Strval($updateOrderNum);
+               WHERE Order_Num = 20";
+    print Strval($updateOrderNum);
     print $query;
     if ($thisDatabaseReader->querySecurityOk($query, 1, 3, 2, 0, 0)) {
         print '<p>reached ifffffffffffffffffffffffffffffffffffffffffffff</p>';
