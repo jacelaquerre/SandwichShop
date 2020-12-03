@@ -4,10 +4,19 @@ include ("top.php");
 // Get URL
 $thisURL = DOMAIN . PHP_SELF;
 
-$updateOrderNum = "-1";
-$updating = false;
+$deliveryOption = "pickup";
+$name = "";
+$phone = "";
+$email = "";
+$street = "";
+$town = "";
+$state = "";
+$zipcode = "";
+$messages = [];
+$dict = [];
 
-if ($_GET["updateOrderNum"] != "-1") {
+
+if (isset($_GET["updateOrderNum"])) {
     $updateOrderNum = $_GET["updateOrderNum"];
     $updating = true;
 
@@ -15,19 +24,24 @@ if ($_GET["updateOrderNum"] != "-1") {
 //    `Customer_Zip`, `Customer_Email`, `Customer_Phone`, `Cart_OrderNum`, `Cart_SandwhichCode`, `Cart_Quantity`
 //                FROM `Orders`
 //           LEFT JOIN ";
+    $query = "SELECT * FROM `Sandwiches`";
+
+    if ($thisDatabaseReader->querySecurityOk($query, 0, 0, 0, 0, 0)) {
+        $query = $thisDatabaseReader->sanitizeQuery($query, 0, 0, 0, 0, 0);
+        $sandwiches = $thisDatabaseReader->select($query, '');
+    }
+
     $query = "SELECT * FROM `Orders` 
-           LEFT JOIN Customer ON Customer.Customer_ID = cust_id
-           LEFT JOIN Cart ON Cart.Cart_OrderNum = Order_Num
+           LEFT JOIN Customer ON Customer.Customer_ID = `cust_id`
+           LEFT JOIN Cart ON Cart.Cart_OrderNum = `Order_Num`
            LEFT JOIN Sandwiches ON Sandwiches.Sandwich_Code = Cart.Cart_SandwhichCode
-               WHERE Order_Num = " . $updateOrderNum;
-    print $query;
+               WHERE `Order_Num` = ?";
+
     if ($thisDatabaseReader->querySecurityOk($query, 1, 0, 0, 0, 0)) {
         print '<p>reached ifffffffffffffffffffffffffffffffffffffffffffff</p>';
         $query = $thisDatabaseReader->sanitizeQuery($query, 1, 0, 1, 0, 0);
-        $records = $thisDatabaseReader->select($query, '');
+        $records = $thisDatabaseReader->select($query, array($updateOrderNum));
     }
-
-    print_r($records);
 
     foreach ($records as $record) {
         $deliveryOption = $record['Order_Type'];
@@ -38,6 +52,11 @@ if ($_GET["updateOrderNum"] != "-1") {
         $zipcode = $record['Customer_Zip'];
         $email = $record['Customer_Email'];
         $phone = $record['Customer_Phone'];
+        foreach ($sandwiches as $sandwich) {
+            if ($sandwich["Sandwich_Name"] == $record["Sandwich_Name"]) {
+                $dict[$sandwich["Sandwich_Name"]] = $record["Cart_Quantity"];
+            }
+        }
         $record['Cart_OrderNum'];
         $record['Cart_SandwhichCode'];
         print PHP_EOL;
@@ -45,15 +64,6 @@ if ($_GET["updateOrderNum"] != "-1") {
 } else {
     print '<p>reached elseeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee</p>';
     // Initialize variables
-    $deliveryOption = "pickup";
-    $name = "";
-    $phone = "";
-    $email = "";
-    $street = "";
-    $town = "";
-    $state = "";
-    $zipcode = "";
-    $messages = [];
 
     $query = "SELECT * FROM `Sandwiches`";
 
@@ -77,12 +87,8 @@ $streetError = false;
 $townError = false;
 $stateError = false;
 $zipcodeError = false;
-
 $errorMsg = array();
-
 $mailed = false;
-
-$dict = array();
 
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 //
@@ -327,6 +333,7 @@ if (isset($_GET["btnSubmit"]) AND empty($errorMsg)) { //closing if marked with: 
     }
     ?>
     <section>
+        <?php print_r($dict); ?>
         <form action = "<?php print PHP_SELF; ?>"
               id="frmOption"
               method = "get"
@@ -357,8 +364,12 @@ if (isset($_GET["btnSubmit"]) AND empty($errorMsg)) { //closing if marked with: 
                         $english_format_money = "$" . number_format($sandwich["Price"], 2, '.', ',');
                         print '<input type="number" value="';
 
-                        if (isset($dict[$sandwich[ "Sandwich_Name"]]))
+                        if (isset($dict[$sandwich["Sandwich_Name"]])) {
                             echo $dict[$sandwich["Sandwich_Name"]];
+                        }
+                        else{
+                            echo 0;
+                        }
 
                         print '"name="' . $sandwich["Sandwich_Name"] . '">';
                         print '<label for="' . $sandwich["Sandwich_Name"] . '">' . $sandwich["Sandwich_Name"] . "      " .  $english_format_money . '</label>';
