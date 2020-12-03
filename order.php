@@ -21,9 +21,9 @@ if ($_GET["updateOrderNum"] != "-1") {
            LEFT JOIN Sandwiches on Sandwiches.Sandwich_Code = Cart.Cart_SandwhichCode
                WHERE Order_Num = " . $updateOrderNum;
     print $query;
-    if ($thisDatabaseReader->querySecurityOk($query, 1, 3, 2, 0, 0)) {
+    if ($thisDatabaseReader->querySecurityOk($query, 1, 0, 0, 0, 0)) {
         print '<p>reached ifffffffffffffffffffffffffffffffffffffffffffff</p>';
-        $query = $thisDatabaseReader->sanitizeQuery($query, 0, 0, 1, 0, 0);
+        $query = $thisDatabaseReader->sanitizeQuery($query, 0, 0, 0, 0, 0);
         $records = $thisDatabaseReader->select($query, '');
     }
 
