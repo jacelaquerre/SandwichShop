@@ -1,6 +1,9 @@
 /*//////////////////////////////// General CSS /////////////////////////*/
 html{
-  background-color: white;
+  background-color: darkseagreen;
+}
+header{
+  font-size: 40px;
 }
 
 /*//////////////////////////////////// Nav /////////////////////////*/
@@ -11,12 +14,11 @@ nav {
   z-index: 1;
   top: 0;
   left: 0;
-  background-color: #eeeeee;
   overflow-x: hidden;
+  background-color: antiquewhite;
 }
 
-@media only screen and (min-device-width: 320px) and (max-device-width: 900px)
-  and (-webkit-min-device-pixel-ratio: 2) {
+@media only screen  and (max-device-width: 900px) and (-webkit-min-device-pixel-ratio: 2) {
   header{
     font-size: 40px;
   }
@@ -39,12 +41,12 @@ nav a {
   display: block;
 }
 nav a:hover {
-  background-color: black;
-  color: #dddddd;
+  background-color: tan;
+  color: black;
 }
 .activePage {
-  background-color: grey;
-  color: #dddddd;
+  background-color: saddlebrown;
+  color: white;
 }
 
 /*//////////////////////////// Accounts for Side Nav /////////////////////////*/
@@ -54,8 +56,7 @@ body{
   color: black;
 }
 
-@media only screen and (min-device-width: 320px) and (max-device-width: 900px)
-and (-webkit-min-device-pixel-ratio: 3) {
+@media only screen  and (max-device-width: 900px) and (-webkit-min-device-pixel-ratio: 2) {
   .container, header, footer, main{
     margin-left: 0px;
     padding-left: 0px;
@@ -63,10 +64,16 @@ and (-webkit-min-device-pixel-ratio: 3) {
 }
 
 @media only screen and (min-device-width: 900px) {
-  .container, header, footer, main{
+  .container, footer, main{
     margin-left: 200px;
     padding-left: 20px;
   }
+
+  header{
+    margin-left: 200px;
+    padding-left: 40px;
+  }
+
 }
 
 /*///////////////////////////////// Form /////////////////////////*/
@@ -82,8 +89,8 @@ label {
   display: inline-block;
 }
 input[type=submit] {
-  background-color: #bbbbbb;
-  color: white;
+  background-color: white;
+  color: black;
   padding: 12px 20px;
   border: none;
   border-radius: 4px;
@@ -92,15 +99,14 @@ input[type=submit] {
   float: right;
 }
 input[type=submit]:hover {
-  background-color: #839e99;
+  background-color: saddlebrown;
 }
 fieldset{
   border-style: dashed;
-  border-color: lightsteelblue;
+  border-color: saddlebrown;
 }
 .form_container {
   border-radius: 7px;
-  /*background-color: white;*/
   padding: 20px;
   width: 80%;
 }
@@ -121,8 +127,7 @@ fieldset{
   clear: both;
 }
 
-@media only screen and (min-device-width: 320px) and (max-device-width: 900px)
-and (-webkit-min-device-pixel-ratio: 2) {
+@media only screen  and (max-device-width: 900px) and (-webkit-min-device-pixel-ratio: 2) {
   .col-25, .col-75, input[type=submit] {
     width: 100%;
     margin-top: 0;

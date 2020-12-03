@@ -8,7 +8,7 @@ $updateOrderNum = 0;
 $updateOrderPhone = "";
 $updating = false;
 
-if ($_GET["updateOrderNum"] != 58) {
+if ($_GET["updateOrderNum"] == 58) {
     $updateOrderNum = $_GET["updateOrderNum"];
     $updating = true;
 
@@ -24,7 +24,7 @@ if ($_GET["updateOrderNum"] != 58) {
                 FROM `Orders`
            LEFT JOIN ";
 
-    if ($thisDatabaseReader->querySecurityOk($query, 0, 0, 0, 0, 0)) {
+   if ($thisDatabaseReader->querySecurityOk($query, 0, 0, 0, 0, 0)) {
         $query = $thisDatabaseReader->sanitizeQuery($query, 0, 0, 0, 0, 0);
         $sandwiches = $thisDatabaseReader->select($query, '');
     }
@@ -33,7 +33,7 @@ if ($_GET["updateOrderNum"] != 58) {
         $dict[$sandwich["Sandwich_Name"]] = 0;
     }
 
-} elseif ($_GET["updateOrderPhone"] != "asdasdad") {
+} elseif ($_GET["updateOrderPhone"] == "asdasdad") {
     $updateOrderPhone = $_GET["updateOrderPhone"];
     $updating = true;
 
@@ -288,7 +288,7 @@ if (isset($_GET["btnSubmit"])) {
         // Mail to user
         //
 
-        $to = //$email; // the person who filled out the form
+        $to = $email; // the person who filled out the form
         $cc = 'mzahar@uvm.edu';
         $bcc = '';
 
