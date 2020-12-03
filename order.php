@@ -211,10 +211,15 @@ if (isset($_GET["btnSubmit"])) {
         //
         // This block saves the data to the SQL database
         if (isset($_GET["updateOrderNum"])) {
-            $query = "UPDATE `Customer` SET `Customer_Name`=[value-2],
-                    `Customer_Street`=[value-3], `Customer_City`=[value-4],`Customer_State`=[value-5],
-                    `Customer_Zip`=[value-6],`Customer_Email`=[value-7],`Customer_Phone`=[value-8] 
-                       WHERE `Customer_ID`= [value-1]";
+            $query = "UPDATE `Customer` 
+                         SET `Customer_Name`= ?,
+                             `Customer_Street`= ?, `Customer_City`= ?,`Customer_State`= ?,
+                             `Customer_Zip`= ?,`Customer_Email`= ?,`Customer_Phone`= ? 
+                       WHERE `Customer_ID`= ?";
+            if ($thisDatabaseWriter->querySecurityOk($query, 1, 0, 0, 0, 0)) {
+                $query = $thisDatabaseWriter->sanitizeQuery($query, 0, 0, 0, 0, 0);
+                $thisDatabaseWriter->update($query, array($name, $street, $town, $state, strval($zipcode), $email, $phone, $customerID));
+            }
         } else {
             $query = "INSERT INTO `Customer`(`Customer_ID`, `Customer_Name`, `Customer_Street`, 
                        `Customer_City`, `Customer_State`, `Customer_Zip`, `Customer_Email`, `Customer_Phone`) 
