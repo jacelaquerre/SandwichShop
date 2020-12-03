@@ -14,6 +14,7 @@ $state = "";
 $zipcode = "";
 $messages = [];
 $dict = [];
+$updating = false;
 
 $updateOrderNum = "";
 $customerID = 0;
@@ -25,10 +26,8 @@ if ($thisDatabaseReader->querySecurityOk($query, 0, 0, 0, 0, 0)) {
     $sandwiches = $thisDatabaseReader->select($query, '');
 }
 
-$updateOrderNum = $_GET["updateOrderNum"];
-
-if ($updateOrderNum != "") {
-
+if (isset($_GET["updateOrderNum"])) {
+    $updateOrderNum = $_GET["updateOrderNum"];
     $updating = true;
 
 //    $query = "SELECT `Order_Type`, `Customer_Name`, `Customer_Street`, `Customer_City`, `Customer_State`,
@@ -46,7 +45,7 @@ if ($updateOrderNum != "") {
         $query = $thisDatabaseReader->sanitizeQuery($query, 1, 0, 1, 0, 0);
         $records = $thisDatabaseReader->select($query, array($updateOrderNum));
     }
-    print_r($records);
+
     foreach ($records as $record) {
         $deliveryOption = $record['Order_Type'];
         $name = $record['Customer_Name'];
@@ -121,7 +120,8 @@ if (isset($_GET["btnSubmit"])) {
     $town = htmlentities($_GET["town"], ENT_QUOTES, "UTF-8");
     $state = htmlentities($_GET["state"], ENT_QUOTES, "UTF-8");
     $zipcode = htmlentities($_GET["zip"], ENT_QUOTES, "UTF-8");
-
+    $updating = htmlentities($_GET["updating"], ENT_QUOTES, "UTF-8");
+    $updateOrderNum = htmlentities($_GET["updateOrderNum"], ENT_QUOTES, "UTF-8");
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     // 
     // SECTION: 2c Validation
@@ -213,9 +213,10 @@ if (isset($_GET["btnSubmit"])) {
         // Save Data
         //
         // This block saves the data to the SQL database
-        print ($updateOrderNum);
-        if ($updateOrderNum != "") {
-            print '<p>ifffffffffffffffffffffffffffffffffff</p>';
+
+        // get current date/time
+        $date = date('Y-m-d H:i:s');
+        if ($updating) {
             $query = "UPDATE `Customer` 
                          SET `Customer_Name`= ?,
                              `Customer_Street`= ?, `Customer_City`= ?,`Customer_State`= ?,
@@ -225,8 +226,26 @@ if (isset($_GET["btnSubmit"])) {
                 $query = $thisDatabaseWriter->sanitizeQuery($query, 0, 0, 0, 0, 0);
                 $thisDatabaseWriter->update($query, array($name, $street, $town, $state, strval($zipcode), $email, $phone, $customerID));
             }
+
+            $query = "UPDATE `Orders` 
+                         SET `Order_Date`= ?,`Order_Type` = ? 
+                       WHERE `Order_Num` = ?";
+            if ($thisDatabaseWriter->querySecurityOk($query, 1, 0, 0, 0, 0)) {
+                $query = $thisDatabaseWriter->sanitizeQuery($query, 0, 0, 0, 0, 0);
+                $thisDatabaseWriter->update($query, array($date, $deliveryOption, $updateOrderNum));
+            }
+
+            foreach ($sandwiches as $sandwich) {
+                $query = "UPDATE `Cart`
+                             SET `Cart_Quantity`= ?
+                           WHERE `Cart_OrderNum`= ?";
+                if ($thisDatabaseWriter->querySecurityOk($query, 1, 0, 0, 0, 0)) {
+                    $query = $thisDatabaseWriter->sanitizeQuery($query, 0, 0, 0, 0, 0);
+                    $thisDatabaseWriter->insert($query, array($sandwich["Sandwich_Code"], $dict[$sandwich["Sandwich_Name"]]), $updateOrderNum);
+                }
+            }
+
         } else {
-            print '<p>elseeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee</p>';
             $query = "INSERT INTO `Customer`(`Customer_ID`, `Customer_Name`, `Customer_Street`, 
                        `Customer_City`, `Customer_State`, `Customer_Zip`, `Customer_Email`, `Customer_Phone`) 
                        VALUES (?,?,?,?,?,?,?,?)";
@@ -241,19 +260,16 @@ if (isset($_GET["btnSubmit"])) {
                        VALUES (?,?,?,?)";
             if ($thisDatabaseWriter->querySecurityOk($query, 0, 0, 0, 0, 0)) {
                 $query = $thisDatabaseWriter->sanitizeQuery($query, 0, 0, 0, 0, 0);
-                $thisDatabaseWriter->insert($query, array(null, 'now()', $deliveryOption, $customerID));
+                $thisDatabaseWriter->insert($query, array(null, $date, $deliveryOption, $customerID));
                 $orderID = $thisDatabaseWriter->lastInsert();
-                print '<h1>' . $orderID . '</h1>';
             }
 
             foreach ($sandwiches as $sandwich) {
-                if ($dict[$sandwich["Sandwich_Name"]] > 0) {
-                    $query = "INSERT INTO `Cart`(`Cart_OrderNum`, `Cart_SandwhichCode`, `Cart_Quantity`) 
-                               VALUES (?,?,?)";
-                    if ($thisDatabaseWriter->querySecurityOk($query, 0, 0, 0, 0, 0)) {
-                        $query = $thisDatabaseWriter->sanitizeQuery($query, 0, 0, 0, 0, 0);
-                        $thisDatabaseWriter->insert($query, array($orderID, $sandwich["Sandwich_Code"], $dict[$sandwich["Sandwich_Name"]]));
-                    }
+                $query = "INSERT INTO `Cart`(`Cart_OrderNum`, `Cart_SandwhichCode`, `Cart_Quantity`) 
+                           VALUES (?,?,?)";
+                if ($thisDatabaseWriter->querySecurityOk($query, 0, 0, 0, 0, 0)) {
+                    $query = $thisDatabaseWriter->sanitizeQuery($query, 0, 0, 0, 0, 0);
+                    $thisDatabaseWriter->insert($query, array($orderID, $sandwich["Sandwich_Code"], $dict[$sandwich["Sandwich_Name"]]));
                 }
             }
         }
@@ -262,8 +278,13 @@ if (isset($_GET["btnSubmit"])) {
         //
         // Create message
         //
-        $message = '<h2>Your order:</h2>';
-        $message .= '<p> Your order number is: $orderID </p>';
+        if ($updating) {
+            $message = '<h2>Your order:</h2>';
+            $message .= '<p> Your order number is: ' . $updateOrderNum . '</p>';
+        } else {
+            $message = '<h2>Your order:</h2>';
+            $message .= '<p> Your order number is: ' . $orderID . '</p>';
+        }
 
         foreach($sandwiches as $sandwich) {
             if ($dict[$sandwich["Sandwich_Name"]] > 0) {
@@ -321,7 +342,7 @@ if (isset($_GET["btnSubmit"]) AND empty($errorMsg)) { //closing if marked with: 
     print '<p> To: ' . $email . '</p>';
 
     print $message;
-    } else {
+} else {
     print '';
 
     //#########################################################################
@@ -415,7 +436,8 @@ if (isset($_GET["btnSubmit"]) AND empty($errorMsg)) { //closing if marked with: 
                 <input type="text" id="zip" name="zip" value="<?php if (isset($zipcode)) echo $zipcode; ?>">
                 </section>
             </fieldset>
-
+            <input type="hidden" name="updating" value="<?php echo $updating; ?>">
+            <input type="hidden" name="updateOrderNum" value="<?php echo $updateOrderNum; ?>">
             <!-- Start Submit button -->
             <fieldset class="buttons row">
                 <input
