@@ -15,6 +15,14 @@ $zipcode = "";
 $messages = [];
 $dict = [];
 
+$customerID = 0;
+
+$query = "SELECT * FROM `Sandwiches`";
+
+if ($thisDatabaseReader->querySecurityOk($query, 0, 0, 0, 0, 0)) {
+    $query = $thisDatabaseReader->sanitizeQuery($query, 0, 0, 0, 0, 0);
+    $sandwiches = $thisDatabaseReader->select($query, '');
+}
 
 if (isset($_GET["updateOrderNum"])) {
     $updateOrderNum = $_GET["updateOrderNum"];
@@ -24,12 +32,6 @@ if (isset($_GET["updateOrderNum"])) {
 //    `Customer_Zip`, `Customer_Email`, `Customer_Phone`, `Cart_OrderNum`, `Cart_SandwhichCode`, `Cart_Quantity`
 //                FROM `Orders`
 //           LEFT JOIN ";
-    $query = "SELECT * FROM `Sandwiches`";
-
-    if ($thisDatabaseReader->querySecurityOk($query, 0, 0, 0, 0, 0)) {
-        $query = $thisDatabaseReader->sanitizeQuery($query, 0, 0, 0, 0, 0);
-        $sandwiches = $thisDatabaseReader->select($query, '');
-    }
 
     $query = "SELECT * FROM `Orders` 
            LEFT JOIN Customer ON Customer.Customer_ID = `cust_id`
@@ -38,11 +40,10 @@ if (isset($_GET["updateOrderNum"])) {
                WHERE `Order_Num` = ?";
 
     if ($thisDatabaseReader->querySecurityOk($query, 1, 0, 0, 0, 0)) {
-        print '<p>reached ifffffffffffffffffffffffffffffffffffffffffffff</p>';
         $query = $thisDatabaseReader->sanitizeQuery($query, 1, 0, 1, 0, 0);
         $records = $thisDatabaseReader->select($query, array($updateOrderNum));
     }
-
+    print_r($records);
     foreach ($records as $record) {
         $deliveryOption = $record['Order_Type'];
         $name = $record['Customer_Name'];
@@ -52,6 +53,7 @@ if (isset($_GET["updateOrderNum"])) {
         $zipcode = $record['Customer_Zip'];
         $email = $record['Customer_Email'];
         $phone = $record['Customer_Phone'];
+        $customerID = $record['Customer_ID'];
         foreach ($sandwiches as $sandwich) {
             if ($sandwich["Sandwich_Name"] == $record["Sandwich_Name"]) {
                 $dict[$sandwich["Sandwich_Name"]] = $record["Cart_Quantity"];
@@ -62,16 +64,6 @@ if (isset($_GET["updateOrderNum"])) {
         print PHP_EOL;
     }
 } else {
-    print '<p>reached elseeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee</p>';
-    // Initialize variables
-
-    $query = "SELECT * FROM `Sandwiches`";
-
-    if ($thisDatabaseReader->querySecurityOk($query, 0, 0, 0, 0, 0)) {
-        $query = $thisDatabaseReader->sanitizeQuery($query, 0, 0, 0, 0, 0);
-        $sandwiches = $thisDatabaseReader->select($query, '');
-    }
-
     foreach ($sandwiches as $sandwich) {
         $dict[$sandwich["Sandwich_Name"]] = 0;
     }
@@ -218,33 +210,39 @@ if (isset($_GET["btnSubmit"])) {
         // Save Data
         //
         // This block saves the data to the SQL database
-        $customerID = 0;
-        $query = "INSERT INTO `Customer`(`Customer_ID`, `Customer_Name`, `Customer_Street`, 
+        if (isset($_GET["updateOrderNum"])) {
+            $query = "UPDATE `Customer` SET `Customer_Name`=[value-2],
+                    `Customer_Street`=[value-3], `Customer_City`=[value-4],`Customer_State`=[value-5],
+                    `Customer_Zip`=[value-6],`Customer_Email`=[value-7],`Customer_Phone`=[value-8] 
+                       WHERE `Customer_ID`= [value-1]";
+        } else {
+            $query = "INSERT INTO `Customer`(`Customer_ID`, `Customer_Name`, `Customer_Street`, 
                        `Customer_City`, `Customer_State`, `Customer_Zip`, `Customer_Email`, `Customer_Phone`) 
                        VALUES (?,?,?,?,?,?,?,?)";
-        if ($thisDatabaseWriter->querySecurityOk($query, 0, 0, 0, 0, 0)) {
-            $query = $thisDatabaseWriter->sanitizeQuery($query, 0, 0, 0, 0, 0);
-            $thisDatabaseWriter->insert($query, array(null, $name, $street, $town, $state, strval($zipcode), $email, $phone));
-            $customerID = $thisDatabaseWriter->lastInsert();
-        }
+            if ($thisDatabaseWriter->querySecurityOk($query, 0, 0, 0, 0, 0)) {
+                $query = $thisDatabaseWriter->sanitizeQuery($query, 0, 0, 0, 0, 0);
+                $thisDatabaseWriter->insert($query, array(null, $name, $street, $town, $state, strval($zipcode), $email, $phone));
+                $customerID = $thisDatabaseWriter->lastInsert();
+            }
 
-        $orderID = 0;
-        $query = "INSERT INTO `Orders`(`Order_Num`, `Order_Date`, `Order_Type`, `cust_id`)
+            $orderID = 0;
+            $query = "INSERT INTO `Orders`(`Order_Num`, `Order_Date`, `Order_Type`, `cust_id`)
                        VALUES (?,?,?,?)";
-        if ($thisDatabaseWriter->querySecurityOk($query, 0, 0, 0, 0, 0)) {
-            $query = $thisDatabaseWriter->sanitizeQuery($query, 0, 0, 0, 0, 0);
-            $thisDatabaseWriter->insert($query, array(null, 'now()', $deliveryOption, $customerID));
-            $orderID = $thisDatabaseWriter->lastInsert();
-            print '<h1>' . $orderID . '</h1>';
-        }
+            if ($thisDatabaseWriter->querySecurityOk($query, 0, 0, 0, 0, 0)) {
+                $query = $thisDatabaseWriter->sanitizeQuery($query, 0, 0, 0, 0, 0);
+                $thisDatabaseWriter->insert($query, array(null, 'now()', $deliveryOption, $customerID));
+                $orderID = $thisDatabaseWriter->lastInsert();
+                print '<h1>' . $orderID . '</h1>';
+            }
 
-        foreach($sandwiches as $sandwich) {
-            if ($dict[$sandwich["Sandwich_Name"]] > 0) {
-                $query = "INSERT INTO `Cart`(`Cart_OrderNum`, `Cart_SandwhichCode`, `Cart_Quantity`) 
+            foreach ($sandwiches as $sandwich) {
+                if ($dict[$sandwich["Sandwich_Name"]] > 0) {
+                    $query = "INSERT INTO `Cart`(`Cart_OrderNum`, `Cart_SandwhichCode`, `Cart_Quantity`) 
                                VALUES (?,?,?)";
-                if ($thisDatabaseWriter->querySecurityOk($query, 0, 0, 0, 0, 0)) {
-                    $query = $thisDatabaseWriter->sanitizeQuery($query, 0, 0, 0, 0, 0);
-                    $thisDatabaseWriter->insert($query, array($orderID, $sandwich["Sandwich_Code"], $dict[$sandwich["Sandwich_Name"]]));
+                    if ($thisDatabaseWriter->querySecurityOk($query, 0, 0, 0, 0, 0)) {
+                        $query = $thisDatabaseWriter->sanitizeQuery($query, 0, 0, 0, 0, 0);
+                        $thisDatabaseWriter->insert($query, array($orderID, $sandwich["Sandwich_Code"], $dict[$sandwich["Sandwich_Name"]]));
+                    }
                 }
             }
         }
@@ -255,7 +253,6 @@ if (isset($_GET["btnSubmit"])) {
         //
         $message = '<h2>Your order:</h2>';
         $message .= '<p> Your order number is: $orderID </p>';
-        print_r($_GET);
 
         foreach($sandwiches as $sandwich) {
             if ($dict[$sandwich["Sandwich_Name"]] > 0) {
