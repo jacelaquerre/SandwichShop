@@ -15,6 +15,7 @@ $zipcode = "";
 $messages = [];
 $dict = [];
 
+$updateOrderNum = "";
 $customerID = 0;
 
 $query = "SELECT * FROM `Sandwiches`";
@@ -24,8 +25,10 @@ if ($thisDatabaseReader->querySecurityOk($query, 0, 0, 0, 0, 0)) {
     $sandwiches = $thisDatabaseReader->select($query, '');
 }
 
-if (isset($_GET["updateOrderNum"])) {
-    $updateOrderNum = $_GET["updateOrderNum"];
+$updateOrderNum = $_GET["updateOrderNum"];
+
+if ($updateOrderNum != "") {
+
     $updating = true;
 
 //    $query = "SELECT `Order_Type`, `Customer_Name`, `Customer_Street`, `Customer_City`, `Customer_State`,
@@ -210,7 +213,7 @@ if (isset($_GET["btnSubmit"])) {
         // Save Data
         //
         // This block saves the data to the SQL database
-        if (isset($_GET["updateOrderNum"])) {
+        if ($updateOrderNum != "") {
             $query = "UPDATE `Customer` 
                          SET `Customer_Name`= ?,
                              `Customer_Street`= ?, `Customer_City`= ?,`Customer_State`= ?,
