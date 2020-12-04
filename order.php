@@ -241,7 +241,7 @@ if (isset($_GET["btnSubmit"])) {
                            WHERE `Cart_OrderNum`= ? AND `Cart_SandwhichCode`= ?";
                 if ($thisDatabaseWriter->querySecurityOk($query, 1, 1, 0, 0, 0)) {
                     $query = $thisDatabaseWriter->sanitizeQuery($query, 0, 0, 0, 0, 0);
-                    $thisDatabaseWriter->update($query, array($dict[$sandwich["Sandwich_Name"]]), $updateOrderNum, $sandwich["Sandwich_Code"]);
+                    $thisDatabaseWriter->update($query, array($dict[$sandwich["Sandwich_Name"]], $updateOrderNum, $sandwich["Sandwich_Code"]));
                 }
             }
 
