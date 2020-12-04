@@ -67,7 +67,7 @@ if (isset($_GET["btnSubmit"]) or isset($_GET["btnCancel"])) {
         if (isset($_GET["btnSubmit"])) {
             header('Location: https://jlaquerr.w3.uvm.edu/cs148/live-final/order.php' . '?updateOrderNum=' . strval($orderNum));
         } else {
-            $query = "SELECT `Customer_Email` 
+            $query = "SELECT `Customer_Email`
                         FROM `Orders` 
                    LEFT JOIN Customer ON Customer.Customer_ID = `cust_id` 
                        WHERE `Order_Num` = ?";
@@ -80,11 +80,14 @@ if (isset($_GET["btnSubmit"]) or isset($_GET["btnCancel"])) {
                 $email = $eml["Customer_Email"];
             }
 
-            $query = "DELETE FROM `Orders` WHERE `Order_Num` = ?";
+            print $email;
+
+            $query = "DELETE FROM `Customer` WHERE `Customer_Email` = ?";
             if ($thisDatabaseWriter->querySecurityOk($query, 1, 0, 0, 0, 0)) {
                 $query = $thisDatabaseWriter->sanitizeQuery($query, 0, 0, 0, 0, 0);
-                $thisDatabaseWriter->delete($query, array(strval($orderNum)));
+                $thisDatabaseWriter->delete($query, array(strval($email)));
             }
+
         }
         if (isset($_GET["btnCancel"])) {
             //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -177,7 +180,12 @@ if (isset($_GET["btnCancel"]) AND empty($errorMsg)) { //closing if marked with: 
                             name="btnSubmit"
                             tabindex="1500"
                             type="submit"
-                            value="Update">
+                            value="Look Up">
+                </section>
+            </fieldset>
+            <fieldset class="buttons row">
+                <section class="col-25">
+                    <legend class="legend">Cancel Order</legend>
                 </section>
                 <section class="col-75">
                     <input
@@ -186,7 +194,7 @@ if (isset($_GET["btnCancel"]) AND empty($errorMsg)) { //closing if marked with: 
                             name="btnCancel"
                             tabindex="1500"
                             type="submit"
-                            value="Cancel">
+                            value="Cancel Order">
                 </section>
             </fieldset>
             <!-- ends submit button -->
