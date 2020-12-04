@@ -5,10 +5,11 @@ include ("top.php");
 $thisURL = DOMAIN . PHP_SELF;
 
 $orderNum = 0;
-
+$email = "";
 $orderNumError = false;
 
 $errorMsg = array();
+$orderNumCheck = array();
 
 if (isset($_GET["btnSubmit"]) or isset($_GET["btnCancel"])) {
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -35,9 +36,23 @@ if (isset($_GET["btnSubmit"]) or isset($_GET["btnCancel"])) {
         $orderNumError = true;
     } elseif (!verifyNumeric($orderNum)) {
         $errorMsg[] = 'Your order number appears to be incorrect.';
-        $phoneError = true;
+        $orderNumError = true;
     }
+    if (!$orderNumError) {
+        // Check if the order number exists
+        $query = "SELECT `Order_Num` 
+                    FROM `Orders` 
+                   WHERE `Order_Num` = ?";
+        if ($thisDatabaseReader->querySecurityOk($query, 1, 0, 0, 0, 0)) {
+            $query = $thisDatabaseReader->sanitizeQuery($query, 0, 0, 0, 0, 0);
+            $orderNumCheck = $thisDatabaseReader->select($query, array(strval($orderNum)));
+        }
 
+        if (empty($orderNumCheck)) {
+            $errorMsg[] = 'Your order number appears to be incorrect.';
+            $phoneError = true;
+        }
+    }
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     //
     // Process Form - Passed Validation
@@ -48,9 +63,23 @@ if (isset($_GET["btnSubmit"]) or isset($_GET["btnCancel"])) {
         // Save/Delete Data
         //
         // This block saves the data to the global variables in top to pass to next form or deletes it
+
         if (isset($_GET["btnSubmit"])) {
             header('Location: https://jlaquerr.w3.uvm.edu/cs148/live-final/order.php' . '?updateOrderNum=' . strval($orderNum));
         } else {
+            $query = "SELECT `Customer_Email` 
+                        FROM `Orders` 
+                   LEFT JOIN Customer ON Customer.Customer_ID = `cust_id` 
+                       WHERE `Order_Num` = ?";
+            if ($thisDatabaseReader->querySecurityOk($query, 1, 0, 0, 0, 0)) {
+                $query = $thisDatabaseReader->sanitizeQuery($query, 1, 0, 1, 0, 0);
+                $data = $thisDatabaseReader->select($query, array(strval($orderNum)));
+            }
+
+            foreach ($data as $eml) {
+                $email = $eml["Customer_Email"];
+            }
+
             $query = "DELETE FROM `Orders` WHERE `Order_Num` = ?";
             if ($thisDatabaseWriter->querySecurityOk($query, 1, 0, 0, 0, 0)) {
                 $query = $thisDatabaseWriter->sanitizeQuery($query, 0, 0, 0, 0, 0);
@@ -63,24 +92,24 @@ if (isset($_GET["btnSubmit"]) or isset($_GET["btnCancel"])) {
             // Create message
             //
 
-//            $message = '<h2>Order Cancelled</h2>';
-//            $message .= "<p>You order (#" . strval($orderNum) . ") Has been cancelled.</p>";
-//            $message .= "<p>You will be sent an email confirmation.</p>";
+            $message = '<h2>Your order has been Cancelled</h2>';
+            $message .= "<p>You order (#" . strval($orderNum) . ") Has been cancelled.</p>";
+            $message .= "<p>You will be sent an email confirmation.</p>";
             //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
             //
             // Mail to user
             //
 
-            //            $to = $email; // the person who filled out the form
-            //            $cc = 'mzahar@uvm.edu';
-            //            $bcc = '';
-            //
-            //            $from = 'mzahar@uvm.edu';
-            //
-            //            // subject of main should make sense to your form
-            //            $subject = 'Your sandwiches order: ';
-            //
-            //            $mailed = sendMail($to, $cc, $bcc, $from, $subject, $message);
+            $to = $email; // the person who filled out the form
+            $cc = 'mzahar@uvm.edu';
+            $bcc = '';
+
+            $from = 'mzahar@uvm.edu';
+
+            // subject of main should make sense to your form
+            $subject = 'Order Cancelled';
+
+            $mailed = sendMail($to, $cc, $bcc, $from, $subject, $message);
         }
     }
 }
@@ -91,7 +120,7 @@ if (isset($_GET["btnSubmit"]) or isset($_GET["btnCancel"])) {
 <?php
 if (isset($_GET["btnCancel"]) AND empty($errorMsg)) { //closing if marked with: end body submit
     print '<h2>Order Cancelled</h2>';
-    print"<p>You order (#" . strval($orderNum) . ") Has been cancelled.</p>";
+    print"<p>Your order (#" . strval($orderNum) . ") Has been cancelled.</p>";
     print '';
     print "<p>You will be sent an email confirmation.</p>";
 

@@ -234,21 +234,22 @@ if (isset($_GET["btnSubmit"])) {
                 $query = $thisDatabaseWriter->sanitizeQuery($query, 0, 0, 0, 0, 0);
                 $thisDatabaseWriter->update($query, array($date, $deliveryOption, $updateOrderNum));
             }
-
+            print($sandwiches);
+            print($dict);
             foreach ($sandwiches as $sandwich) {
                 $query = "UPDATE `Cart`
                              SET `Cart_Quantity`= ?
-                           WHERE `Cart_OrderNum`= ?";
-                if ($thisDatabaseWriter->querySecurityOk($query, 1, 0, 0, 0, 0)) {
+                           WHERE `Cart_OrderNum`= ? AND `Cart_SandwhichCode`= ?";
+                if ($thisDatabaseWriter->querySecurityOk($query, 1, 1, 0, 0, 0)) {
                     $query = $thisDatabaseWriter->sanitizeQuery($query, 0, 0, 0, 0, 0);
-                    $thisDatabaseWriter->insert($query, array($sandwich["Sandwich_Code"], $dict[$sandwich["Sandwich_Name"]]), $updateOrderNum);
+                    $thisDatabaseWriter->update($query, array($dict[$sandwich["Sandwich_Name"]]), $updateOrderNum, $sandwich["Sandwich_Code"]);
                 }
             }
 
         } else {
             $query = "INSERT INTO `Customer`(`Customer_ID`, `Customer_Name`, `Customer_Street`, 
                        `Customer_City`, `Customer_State`, `Customer_Zip`, `Customer_Email`, `Customer_Phone`) 
-                       VALUES (?,?,?,?,?,?,?,?)";
+                           VALUES (?,?,?,?,?,?,?,?)";
             if ($thisDatabaseWriter->querySecurityOk($query, 0, 0, 0, 0, 0)) {
                 $query = $thisDatabaseWriter->sanitizeQuery($query, 0, 0, 0, 0, 0);
                 $thisDatabaseWriter->insert($query, array(null, $name, $street, $town, $state, strval($zipcode), $email, $phone));
@@ -257,7 +258,7 @@ if (isset($_GET["btnSubmit"])) {
 
             $orderID = 0;
             $query = "INSERT INTO `Orders`(`Order_Num`, `Order_Date`, `Order_Type`, `cust_id`)
-                       VALUES (?,?,?,?)";
+                           VALUES (?,?,?,?)";
             if ($thisDatabaseWriter->querySecurityOk($query, 0, 0, 0, 0, 0)) {
                 $query = $thisDatabaseWriter->sanitizeQuery($query, 0, 0, 0, 0, 0);
                 $thisDatabaseWriter->insert($query, array(null, $date, $deliveryOption, $customerID));
@@ -266,7 +267,7 @@ if (isset($_GET["btnSubmit"])) {
 
             foreach ($sandwiches as $sandwich) {
                 $query = "INSERT INTO `Cart`(`Cart_OrderNum`, `Cart_SandwhichCode`, `Cart_Quantity`) 
-                           VALUES (?,?,?)";
+                               VALUES (?,?,?)";
                 if ($thisDatabaseWriter->querySecurityOk($query, 0, 0, 0, 0, 0)) {
                     $query = $thisDatabaseWriter->sanitizeQuery($query, 0, 0, 0, 0, 0);
                     $thisDatabaseWriter->insert($query, array($orderID, $sandwich["Sandwich_Code"], $dict[$sandwich["Sandwich_Name"]]));
