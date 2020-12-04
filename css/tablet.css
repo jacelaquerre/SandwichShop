@@ -1,0 +1,26 @@
+header{
+    font-size: 20px;
+}
+
+.container, header, footer, main{
+    margin-left: 200px;
+    padding-left: 40px;
+}
+
+.form_container {
+    border-radius: 7px;
+    padding: 20px;
+    width: 80%;
+    font-size: 20px;
+}
+
+input[type=submit] {
+    background-color: #bbbbbb;
+    color: white;
+    padding: 12px 15px;
+    border: none;
+    border-radius: 4px;
+    width: 80%;
+    cursor: pointer;
+    font-size: 20px;
+}
