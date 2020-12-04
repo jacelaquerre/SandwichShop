@@ -234,8 +234,7 @@ if (isset($_GET["btnSubmit"])) {
                 $query = $thisDatabaseWriter->sanitizeQuery($query, 0, 0, 0, 0, 0);
                 $thisDatabaseWriter->update($query, array($date, $deliveryOption, $updateOrderNum));
             }
-            print($sandwiches);
-            print($dict);
+
             foreach ($sandwiches as $sandwich) {
                 $query = "UPDATE `Cart`
                              SET `Cart_Quantity`= ?
@@ -279,34 +278,28 @@ if (isset($_GET["btnSubmit"])) {
         //
         // Create message
         //
+        $message = "";
         if ($updating) {
-            $message = '<h2>Your order:</h2>';
-            $message .= '<p> Your order number is: ' . $updateOrderNum . '</p>';
+            $message .= '<h3> Your order number is: #' . $updateOrderNum . '</h3>';
         } else {
-            $message = '<h2>Your order:</h2>';
-            $message .= '<p> Your order number is: ' . $orderID . '</p>';
+            $message .= '<h3> Your order number is: #' . $orderID . '</h3>';
         }
 
+        $message .= '<table>';
+        $total = 0;
         foreach($sandwiches as $sandwich) {
             if ($dict[$sandwich["Sandwich_Name"]] > 0) {
-                $message .= $sandwich["Sandwich_Name"] . $dict[$sandwich["Sandwich_Name"]];
+                $total = $total + ($sandwich["Price"] * $dict[$sandwich["Sandwich_Name"]]);
+                $message .= '<tr>';
+                $message .= '<td>' . htmlentities($sandwich["Sandwich_Name"], ENT_QUOTES, "UTF-8") . '</td>';
+                $message .= '<td>' . htmlentities($dict[$sandwich["Sandwich_Name"]], ENT_QUOTES, "UTF-8") . '</td>';
+                $message .= '</tr>' . PHP_EOL;
             }
         }
-
-        /*
-        foreach ($_GET as $htmlName => $value) {
-
-            $message .= '<p>';
-
-            $camelCase = preg_split('/(?=[A-Z])/', substr($htmlName, 0));
-
-            foreach ($camelCase as $oneWord) {
-                $message .= $oneWord . ' ';
-            }
-
-            $message .= ' = ' . htmlentities($value, ENT_QUOTES, "UTF-8") . '</p>';
-        }
-        */
+        $message .= '</table>';
+        $formattedTotal = "$" . number_format($total, 2, '.', ',');
+        $message .= '<h3> Your Total is ' . $formattedTotal . '</h3>';
+        $message .= '<p>Thank you for your business!</p>';
 
         //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         //
@@ -331,16 +324,16 @@ if (isset($_GET["btnSubmit"])) {
 
 <?php
 if (isset($_GET["btnSubmit"]) AND empty($errorMsg)) { //closing if marked with: end body submit
-    print '<h2>Thank you for providing your information.</h2>';
+    print '<h1>You Order Has Been Received</h1>';
 
-    print '<p>For your records a copy of this data has ';
+    print '<h2>For your records a copy of this data has ';
 
     if (!$mailed) {
         print "not ";
     }
 
-    print 'been sent: </p>';
-    print '<p> To: ' . $email . '</p>';
+    print 'been sent: </h2>';
+    print '<h2> To: ' . $email . '</h2>';
 
     print $message;
 } else {
@@ -369,7 +362,7 @@ if (isset($_GET["btnSubmit"]) AND empty($errorMsg)) { //closing if marked with: 
               class = "form_container">
             <fieldset class="deliveryOption row">
                 <section class="col-25">
-                    <legend>Delivery Option</legend>
+                    <h4>Delivery Option</h4>
                 </section>
                 <section class="col-75">
                     <input type="radio" id="pickup" name="deliveryOption" value=pickup <?php if($deliveryOption === 'pickup') echo 'checked'; ?>>
@@ -383,7 +376,7 @@ if (isset($_GET["btnSubmit"]) AND empty($errorMsg)) { //closing if marked with: 
 
             <fieldset class="row">
                 <section class="col-25">
-                    <legend class="legend">Select Your Sandwiches</legend>
+                    <h4>Select Your Sandwiches</h4>
                 </section>
                 
                 <section class="col-75">
@@ -391,7 +384,7 @@ if (isset($_GET["btnSubmit"]) AND empty($errorMsg)) { //closing if marked with: 
                     foreach ($sandwiches as $sandwich) {
                         print '<p>';
                         $english_format_money = "$" . number_format($sandwich["Price"], 2, '.', ',');
-                        print '<input type="number" value="';
+                        print '<input type= "number" value="';
 
                         if (isset($dict[$sandwich["Sandwich_Name"]])) {
                             echo $dict[$sandwich["Sandwich_Name"]];
@@ -400,7 +393,7 @@ if (isset($_GET["btnSubmit"]) AND empty($errorMsg)) { //closing if marked with: 
                             echo 0;
                         }
 
-                        print '"name="' . $sandwich["Sandwich_Name"] . '">';
+                        print '" name="' . $sandwich["Sandwich_Name"] . '" id="' . $sandwich["Sandwich_Name"] .'">';
                         print '<label for="' . $sandwich["Sandwich_Name"] . '">' . $sandwich["Sandwich_Name"] . "      " .  $english_format_money . '</label>';
                         print '</p>';
                     }
@@ -410,7 +403,7 @@ if (isset($_GET["btnSubmit"]) AND empty($errorMsg)) { //closing if marked with: 
 
             <fieldset class="contact row">
                 <section class="col-25">
-                    <legend class="legend">Contact Information</legend>
+                    <h4>Contact Information</h4>
                 </section>
                 <section class="col-75">
                     <label for="name">Name</label>
@@ -424,7 +417,7 @@ if (isset($_GET["btnSubmit"]) AND empty($errorMsg)) { //closing if marked with: 
 
             <fieldset class="address row">
                 <section class="col-25">
-                    <legend class="legend">Delivery Information</legend>
+                    <h4>Delivery Information</h4>
                 </section>
                 <section class="col-75">
                 <label for="street">Street Address</label>

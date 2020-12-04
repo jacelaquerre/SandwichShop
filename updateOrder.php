@@ -122,7 +122,13 @@ if (isset($_GET["btnCancel"]) AND empty($errorMsg)) { //closing if marked with: 
     print '<h2>Order Cancelled</h2>';
     print"<p>Your order (#" . strval($orderNum) . ") Has been cancelled.</p>";
     print '';
-    print "<p>You will be sent an email confirmation.</p>";
+    print "<p>A confirmation of this cancellation has ";
+    if (!$mailed) {
+        print "not ";
+    }
+
+    print 'been sent: </p>';
+    print '<p> To: ' . $email . '</p>';
 
 } else {
     print '';
@@ -151,7 +157,7 @@ if (isset($_GET["btnCancel"]) AND empty($errorMsg)) { //closing if marked with: 
               class="form_container">
             <fieldset class="contact row">
                 <section class="col-25">
-                    <legend class="legend">Search by Order Number</legend>
+                    <h4>Search by Order Number</h4>
                 </section>
                 <section class="col-75">
                     <label for="order">Order #</label>
@@ -162,7 +168,7 @@ if (isset($_GET["btnCancel"]) AND empty($errorMsg)) { //closing if marked with: 
             <!-- Start Submit button -->
             <fieldset class="buttons row">
                 <section class="col-25">
-                    <legend class="legend">Lookup Order</legend>
+                    <h4>Lookup Order</h4>
                 </section>
                 <section class="col-75">
                     <input
