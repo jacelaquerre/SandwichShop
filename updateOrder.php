@@ -183,7 +183,7 @@ if (isset($_GET["btnCancel"]) AND empty($errorMsg)) { //closing if marked with: 
             </fieldset>
             <fieldset class="buttons row">
                 <section class="col-25">
-                    <legend class="legend">Cancel Order</legend>
+                    <h4>Cancel Order</h4>
                 </section>
                 <section class="col-75">
                     <input
