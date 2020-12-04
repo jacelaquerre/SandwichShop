@@ -16,9 +16,9 @@
 
         <meta name="viewport" content="width=device-width">
         <link rel="stylesheet" href= "css/custom4.css">
-        <link rel="stylesheet" media="only screen and (max-width: 400px)" href="css/phone.css" />
-        <link rel="stylesheet" media="only screen and (min-width: 401px)" href="" />
-        <link rel="stylesheet" media="only screen and (min-width: 401px)" href="css/laptop.css" />
+
+        <link rel="stylesheet" media="screen and (max-width: 450px)" href="css/phone.css" />
+        <link rel="stylesheet" media="screen and (min-width: 450px)" href="css/tablet.css" />
 
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Nerko+One&display=swap" rel="stylesheet">
