@@ -1,0 +1,39 @@
+input[type=submit] {
+    background-color: #bbbbbb;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    width: 100%;
+    cursor: pointer;
+    font-size: 40px;
+}
+
+.container, header, footer, main{
+    margin-left: 200px;
+    padding-left: 20px;
+}
+
+.prev, .next,.text {font-size: 11px}
+
+header{
+    font-size: 50px;
+}
+nav{
+    width: 100%;
+    height: auto;
+    position: relative;
+    font-size: 40px;
+}
+
+header{
+    margin-left: 200px;
+    padding-left: 40px;
+}
+
+.form_container {
+    border-radius: 7px;
+    width: 100%;
+    /*background-color: white;*/
+    font-size: 40px;
+}

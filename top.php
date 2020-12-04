@@ -6,21 +6,28 @@
         <title>Bob's Sandwiches</title>
         <meta name="author" content="Matt Zahar & Jace Laquerre">
         <meta name="description" content="CS148 final project">
+        <meta name="apple-mobile-web-app-title" content="Bob's Sandwich">
+        <meta name="application-name" content="Bob's Sandwich">
+        <meta name="msapplication-TileColor" content="#da532c">
+        <meta name="theme-color" content="#ffffff">
+
         <script data-require="jquery@3.1.1" data-semver="3.1.1" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script src="js/quantity.js"></script>
+
+        <meta name="viewport" content="width=device-width">
+        <link rel="stylesheet" href= "css/custom4.css">
+        <link rel="stylesheet" media="only screen and (max-width: 400px)" href="css/phone.css" />
+        <link rel="stylesheet" media="only screen and (min-width: 401px)" href="" />
+        <link rel="stylesheet" media="only screen and (min-width: 401px)" href="css/laptop.css" />
+
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Nerko+One&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="css/custom4.css">
-
         <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
         <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
-        <meta name="apple-mobile-web-app-title" content="Bob's Sandwich">
-        <meta name="application-name" content="Bob's Sandwich">
         <link rel="manifest" href="favicon/site.webmanifest">
         <link rel="mask-icon" href="favicon/safari-pinned-tab.svg" color="#ff0000">
-        <meta name="msapplication-TileColor" content="#da532c">
-        <meta name="theme-color" content="#ffffff">
+
 
         <?php
         // %^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%

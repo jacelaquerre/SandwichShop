@@ -41,7 +41,7 @@ include ("top.php");
 
     </section>
     <!-- JavaScript -->
-    <script src="js/jquery.js" type="text/javascript"></script>
+    <script src="js/jquery.js"></script>
 <?php
 include ("footer.php");
 ?>

@@ -18,18 +18,6 @@ nav {
   background-color: antiquewhite;
 }
 
-@media only screen  and (max-device-width: 900px) and (-webkit-min-device-pixel-ratio: 2) {
-  header{
-    font-size: 40px;
-  }
-  nav{
-    width: 100%;
-    height: auto;
-    position: relative;
-    font-size: 40px;
-  }
-}
-
 li{
   text-decoration: none;
 }
@@ -49,31 +37,10 @@ nav a:hover {
   color: white;
 }
 
-/*//////////////////////////// Accounts for Side Nav /////////////////////////*/
 body{
   /*background-image: url("");
   background-size: cover;*/
   color: black;
-}
-
-@media only screen  and (max-device-width: 900px) and (-webkit-min-device-pixel-ratio: 2) {
-  .container, header, footer, main{
-    margin-left: 0px;
-    padding-left: 0px;
-  }
-}
-
-@media only screen and (min-device-width: 900px) {
-  .container, footer, main{
-    margin-left: 200px;
-    padding-left: 20px;
-  }
-
-  header{
-    margin-left: 200px;
-    padding-left: 40px;
-  }
-
 }
 
 /*///////////////////////////////// Form /////////////////////////*/
@@ -125,38 +92,6 @@ fieldset{
   content: "";
   display: table;
   clear: both;
-}
-
-@media only screen  and (max-device-width: 900px) and (-webkit-min-device-pixel-ratio: 2) {
-  .col-25, .col-75, input[type=submit] {
-    width: 100%;
-    margin-top: 0;
-  }
-
-  .form_container {
-    border-radius: 7px;
-    width: 100%;
-    /*background-color: white;*/
-    font-size: 40px;
-  }
-
-  input[type=submit] {
-    background-color: #bbbbbb;
-    color: white;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 4px;
-    width: 100%;
-    cursor: pointer;
-    font-size: 40px;
-  }
-}
-
-@media only screen and (min-device-width: 900px) {
-  .container, header, footer, main{
-    margin-left: 200px;
-    padding-left: 20px;
-  }
 }
 
 /*//////////////////////////////////// JQuery Slider /////////////////////////*/
@@ -227,8 +162,6 @@ body {font-family: 'Nerko One', cursive;}
 }
 /* Fading animation */
 .fade {
-  -webkit-animation-name: fade;
-  -webkit-animation-duration: 1.5s;
   animation-name: fade;
   animation-duration: 1.5s;
 }
@@ -236,8 +169,5 @@ body {font-family: 'Nerko One', cursive;}
   from {opacity: .4}
   to {opacity: 1}
 }
-/* On smaller screens, decrease text size */
-@media only screen and (max-width: 300px) {
-  .prev, .next,.text {font-size: 11px}
-}
+
 
