@@ -65,7 +65,7 @@ if (isset($_GET["btnSubmit"]) or isset($_GET["btnCancel"])) {
         // This block saves the data to the global variables in top to pass to next form or deletes it
 
         if (isset($_GET["btnSubmit"])) {
-            header('Location: https://' . $_SERVER['HTTP_HOST'] . '/cs148/final/order.php' . '?updateOrderNum=' . strval($orderNum));
+            header('Location: https://' . $_SERVER['HTTP_HOST'] . '/cs148/live-final/order.php' . '?updateOrderNum=' . strval($orderNum));
         } else {
             $query = "SELECT `Customer_Email`
                         FROM `Orders` 
