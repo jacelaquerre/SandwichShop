@@ -30,11 +30,6 @@ if (isset($_GET["updateOrderNum"])) {
     $updateOrderNum = $_GET["updateOrderNum"];
     $updating = true;
 
-//    $query = "SELECT `Order_Type`, `Customer_Name`, `Customer_Street`, `Customer_City`, `Customer_State`,
-//    `Customer_Zip`, `Customer_Email`, `Customer_Phone`, `Cart_OrderNum`, `Cart_SandwhichCode`, `Cart_Quantity`
-//                FROM `Orders`
-//           LEFT JOIN ";
-
     $query = "SELECT * FROM `Orders` 
            LEFT JOIN Customer ON Customer.Customer_ID = `cust_id`
            LEFT JOIN Cart ON Cart.Cart_OrderNum = `Order_Num`
